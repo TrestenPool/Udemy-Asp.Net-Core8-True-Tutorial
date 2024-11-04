@@ -1,22 +1,22 @@
 ﻿using Delegates_and_events_example;
+using System.Security.Cryptography.X509Certificates;
 using static System.Console;
+using System; 
 
 namespace Delegates_and_events_example {
     class Program {
-        public static async Task Main() {
-            Console.WriteLine("delegates and events example");
+        public static void Main() {
+            Dictionary<int, string> dict = new Dictionary<int, string> {
+                {1, "Josepth"},
+                {2, "David"},
+                {3, "Kyle"},
+            };
 
-            Player player = new Player();
-            player.AchievementUnlocked += OnAchievementUnlocked; // subscribe
+            foreach(var student in dict) {
+                Console.WriteLine($"{student.Key} {student.Value}");
+            }
 
-            await player.AddPoints(30);
-            await player.AddPoints(40);
-            await player.AddPoints(35);
-            await player.AddPoints(1);
-        }
-
-        static void OnAchievementUnlocked(int points) {
-            WriteLine($"Congratulations! Achievement unlocked for earning {points} points!");
+            WriteLine($"But {dict[3]} is the best");
         }
     }
 }
