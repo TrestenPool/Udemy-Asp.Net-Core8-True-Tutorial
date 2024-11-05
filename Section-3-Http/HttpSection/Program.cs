@@ -1,4 +1,5 @@
 using Microsoft.Extensions.Primitives;
+using System.Security.Cryptography.X509Certificates;
 using System.Text.Json;
 
 namespace HttpSection {
@@ -9,8 +10,9 @@ namespace HttpSection {
 
             //app.MapGet("/", Examples.HelloWorld());
             //app.MapGet("/", Examples.QueryStringExample());
-            app.MapGet("/", Examples.RequestHeadersExample());
-            app.MapPost("/", Examples.PostRequestParsingRaw());
+            //app.MapGet("/", Examples.RequestHeadersExample());
+            //app.MapPost("/", Examples.PostRequestParsingRaw());
+            app.MapGet("/", Examples.OperationAssignment());
 
             app.Run();
         }
@@ -87,6 +89,49 @@ namespace HttpSection {
                     }
 
 
+                }
+                return HandleRequest;
+            }
+
+            public static Func<HttpContext, Task> OperationAssignment() {
+                async Task HandleRequest(HttpContext context) {
+                    // Define a delegate to represent an operation
+                    Func<int, int, int> add = (x, y) => x + y;
+                    Func<int, int, int> subtract = (x, y) => x - y;
+                    Func<int, int, int> multiply = (x, y) => x * y;
+                    Func<int, int, int> divide = (x, y) => x / y;
+
+                    Func<int, int, int> operation = add;
+
+
+                    int firstNumber = 0;
+                    int secondNumber = 0;
+
+                    if(context.Request.Query.ContainsKey("firstNumber")) {
+                        int.TryParse(context.Request.Query["firstNumber"], out firstNumber);
+                    }
+                    if(context.Request.Query.ContainsKey("secondNumber")) {
+                        int.TryParse(context.Request.Query["secondNumber"], out secondNumber);
+                    }
+                    if(context.Request.Query.ContainsKey("operation")) {
+                        switch(context.Request.Query["operation"]) {
+                            case "+":
+                                operation = add;
+                                break;
+                            case "-":
+                                operation = subtract;
+                                break;
+                            case "*":
+                                operation = multiply;
+                                break;
+                            case "/":
+                                operation = divide;
+                                break;
+                        }
+                    }
+
+                    // return the operation
+                    await context.Response.WriteAsync($"{operation(firstNumber,secondNumber)}");
                 }
                 return HandleRequest;
             }
