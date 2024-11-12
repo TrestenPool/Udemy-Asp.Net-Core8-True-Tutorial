@@ -1,29 +1,37 @@
-namespace Middleware_intro {
-    public class Program {
-        public static void Main(string[] args) {
-            var builder = WebApplication.CreateBuilder(args);
-            var app = builder.Build();
+using Microsoft.Extensions.Diagnostics.HealthChecks;
+using Middleware_intro.CustomMiddleware;
 
+namespace Middleware_intro;
+public class Program {
+    public static void Main(string[] args) {
+        // setup the builder
+        var builder = WebApplication.CreateBuilder(args);
 
-            // middlware 1
-            app.Use(async (HttpContext context, RequestDelegate next) => {
-                await context.Response.WriteAsync("Hello mate, I am the first middleware");
-                await next(context);
-            });
+        // registering the custom middleware
+        builder.Services.AddTransient<MyCustomMiddleware>();
+        //builder.Services.AddTransient<CorsBeer>();
+        //builder.Services.AddTransient<HelloCustomMiddleware>();
 
-            // middleware 2
-            app.Use(async (HttpContext context, RequestDelegate next) => {
-                await context.Response.WriteAsync("\nBye, I am the second middleware");
-                await next(context);
-            });
+        // get our app
+        var app = builder.Build();
 
+        // call our middleware
+        //app.UseMiddleware<HelloCustomMiddleware>();
 
-            // middleware 3 (aka terminating middleware)
-            app.Run(async (HttpContext context) => {
-                await context.Response.WriteAsync("\n\nAnd I'm at the end");
-            });
+        // run our custom middleware
+        app.UseMyCustomMiddleware();
+        //app.UseCorsBeer();
 
-            app.Run();
-        }
+        // more middleware
+        app.Use(async (HttpContext context, RequestDelegate next) => {
+            await context.Response.WriteAsync("Hello world\n");
+            await next(context);
+        });
+        app.Use(async (HttpContext context, RequestDelegate next) => {
+            await context.Response.WriteAsync("Goodbye world\n");
+        });
+
+        app.Run();
     }
+
 }
