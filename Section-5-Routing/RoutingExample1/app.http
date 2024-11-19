@@ -1,0 +1,13 @@
+# For more info on HTTP files go to https://aka.ms/vs/httpfile
+# Ctrl + alt + s to run 
+
+
+GET http://localhost:5152
+
+###
+
+GET http://localhost:5152/something
+
+###
+
+GET http://localhost:5152/hi
