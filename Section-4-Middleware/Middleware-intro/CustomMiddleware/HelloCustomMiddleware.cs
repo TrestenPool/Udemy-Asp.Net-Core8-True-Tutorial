@@ -12,6 +12,7 @@ public class HelloCustomMiddleware {
         _next = next;
     }
 
+    // extension method
     public async Task Invoke(HttpContext httpContext) {
 
         // check if query string contains both keys
@@ -27,12 +28,14 @@ public class HelloCustomMiddleware {
         }
 
         await _next(httpContext);
-        // after logic
     }
 }
 
 
-// Extension method used to add the middleware to the HTTP request pipeline.
+/*
+    Our static class that contains our extension method that can be called as seen below
+    app.UseHelloCUstomMiddleware();
+*/
 public static class HelloCustomMiddlewareExtensions {
     public static IApplicationBuilder UseHelloCustomMiddleware(this IApplicationBuilder builder) {
         return builder.UseMiddleware<HelloCustomMiddleware>();

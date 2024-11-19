@@ -8,7 +8,7 @@ public class Program {
         var builder = WebApplication.CreateBuilder(args);
 
         // registering the custom middleware
-        builder.Services.AddTransient<MyCustomMiddleware>();
+        //builder.Services.AddTransient<MyCustomMiddleware>();
         //builder.Services.AddTransient<CorsBeer>();
         //builder.Services.AddTransient<HelloCustomMiddleware>();
 
@@ -16,11 +16,11 @@ public class Program {
         var app = builder.Build();
 
         // call our middleware
-        //app.UseMiddleware<HelloCustomMiddleware>();
-
-        // run our custom middleware
-        app.UseMyCustomMiddleware();
-        //app.UseCorsBeer();
+        /** 
+            Using either of these work for some reason
+         **/
+        //app.UseMiddleware<HelloCustomMiddleware>(); // passing the UseMiddleware function our custom generic class as generic
+        app.UseHelloCustomMiddleware(); // calling our extension method, PREFERRED
 
         // more middleware
         app.Use(async (HttpContext context, RequestDelegate next) => {
