@@ -85,6 +85,11 @@ namespace RouteParameters {
                     await context.Response.WriteAsync($"year = {year}\nmonth = {month}");
                 });
 
+                // example showing precedence over the route above
+                endpoints.MapGet("report/2024/jan", async context => {
+                    await context.Response.WriteAsync($"Report for 2024 - jan");
+                });
+
                 
             });
             #pragma warning enable
