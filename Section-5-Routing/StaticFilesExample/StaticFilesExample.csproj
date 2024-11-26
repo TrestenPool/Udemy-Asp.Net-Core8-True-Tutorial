@@ -7,7 +7,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="mywebroot\cat.txt" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Content Include="myroot\dog.txt" />
+    <Content Include="mywebroot\cat.txt" />
   </ItemGroup>
 
   <ItemGroup>

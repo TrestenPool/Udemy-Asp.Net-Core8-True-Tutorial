@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RoutingExample1", "RoutingE
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RouteParameters", "..\RouteParameters\RouteParameters.csproj", "{61DD2A53-E6B8-43DA-9A91-0ECCADD946B5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StaticFilesExample", "..\StaticFilesExample\StaticFilesExample.csproj", "{0A1CD3D8-7A21-4705-9F60-5552EA28818F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StaticFilesExample", "..\StaticFilesExample\StaticFilesExample.csproj", "{0A1CD3D8-7A21-4705-9F60-5552EA28818F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
