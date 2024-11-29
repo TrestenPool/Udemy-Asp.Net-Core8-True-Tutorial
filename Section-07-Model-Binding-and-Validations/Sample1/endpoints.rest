@@ -1,0 +1,14 @@
+@host = localhost
+@port = 5245
+
+GET http://{{host}}:{{port}}/?bookid=2 HTTP/1.1
+Content-Type: application/json
+
+### 
+
+POST http://{{host}}:{{port}}?bookid=0 HTTP/1.1
+Content-Type: application/json
+
+{
+  "bookid": 23
+}

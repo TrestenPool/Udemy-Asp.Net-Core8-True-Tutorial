@@ -10,9 +10,10 @@ namespace IActionResultExample.Controllers
     [Route("/store")]
     public class StoreController : ControllerBase
     {
-        [Route("books")]
+        [Route("books/{id=1}")]
         public IActionResult Index() {
-          return Ok("store controller index");
+          int id = Convert.ToInt32(HttpContext.Request.RouteValues["id"]);
+          return Ok($"store id of {id}");
         }
     }
 }
