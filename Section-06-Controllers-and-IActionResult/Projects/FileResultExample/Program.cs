@@ -15,6 +15,8 @@ public class Program
         /***************** Build or app *******************/
         var app = builder.Build();
 
+        app.UseStaticFiles();
+
        // map controllers in 1 step
        app.MapControllers();
 
