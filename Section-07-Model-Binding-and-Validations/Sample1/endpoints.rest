@@ -6,9 +6,24 @@ Content-Type: application/json
 
 ### 
 
-POST http://{{host}}:{{port}}?bookid=0 HTTP/1.1
-Content-Type: application/json
+POST http://{{host}}:{{port}}/book?bookid=3&author=James HTTP/1.1
+Content-Type: application/x-www-form-urlencoded; 
 
-{
-  "bookid": 23
-}
+bookid=55&author=JamesMartin
+
+###
+
+POST http://{{host}}:{{port}}/book HTTP/1.1
+Content-Type: multipart/form-data; boundary=trestenp
+
+--trestenp
+Content-Disposition: form-data; name="Bookid";
+
+25
+--trestenp
+Content-Disposition: form-data; name="Author";
+
+Tony Parker
+--trestenp--
+
+#  make sure the last boundary has a double dash -- to indicate the end
