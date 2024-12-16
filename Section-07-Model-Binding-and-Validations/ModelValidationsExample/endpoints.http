@@ -27,12 +27,30 @@ Content-Type: application/json
   "Phone": "361-446-2936",
   "Password": "password",
   "ConfirmationPassword": "password",
-  "Dob": "1998-01-29",
+  "Dob": "1999-01-29",
   "Price": 100.0
 }
 
 
 ###
+
+POST {{base}}/person HTTP/1.1
+Content-Type: application/json
+
+{
+  "Name": "Tresten Pool",
+  "Email": "trestenpool@gmail.com",
+  "Phone": "361-446-2936",
+  "Password": "password",
+  "ConfirmationPassword": "password",
+  "Dob": "1999-01-29",
+  "FromDate": "2010-01-01",
+  "ToDate": "2009-01-01",
+  "Price": 100.0
+}
+
+###
+
 
 # make sure [FromForm] is set in the controller
 

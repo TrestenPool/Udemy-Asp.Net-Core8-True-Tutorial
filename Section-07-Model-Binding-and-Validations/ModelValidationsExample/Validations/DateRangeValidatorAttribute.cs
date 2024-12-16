@@ -24,20 +24,28 @@ public class DateRangeValidatorAttribute : ValidationAttribute{
     
     // checks if value is null
     if(value != null) {
+      // convert the value to datetime
+      DateTime to_date = Convert.ToDateTime(value);
+      
+      // gets the property info called whose name is stored in OtherPropertyName variable
+      PropertyInfo? otherProperty = 
+        validationContext.ObjectType.GetProperty(OtherPropertyName);
 
-      // the value is a string
-      if(value is string propertyName) {
+      // get the value of the other property if there is one
+      if(otherProperty != null){
 
-        // grabs the other property 
-        PropertyInfo? otherProperty = validationContext.ObjectType.GetProperty(OtherPropertyName);
+        // get the value of otherProperty
+        DateTime from_date = Convert.ToDateTime(otherProperty?.GetValue(validationContext.ObjectInstance));
 
-        var validationInstance = validationContext.ObjectInstance;
-
+        // the from date is greater than the to date, fail...
+        if(from_date > to_date) {
+          return new ValidationResult($"The from date {from_date} should be less than the to_date {to_date}",
+            new string[] {OtherPropertyName});
+        }
       }
-
     }
 
-
+    return ValidationResult.Success;
   }
   
 }

@@ -40,6 +40,9 @@ public class Person{
 
     public DateTime FromDate {get; set;}  
 
-    [DateRangeValidator("FromDate", ErrorMessage = "'FromDate' should be older than or equal to the 'ToDate'")]
+    [DateRangeValidator(
+      // the date we will be comparing with
+      "FromDate", 
+      ErrorMessage = "'FromDate' should be older than or equal to the 'ToDate'")]
     public DateTime ToDate {get; set;}  
 }
