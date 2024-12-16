@@ -23,18 +23,20 @@ public class DateRangeValidatorAttribute : ValidationAttribute{
   protected override ValidationResult? IsValid(object? value, ValidationContext validationContext){
 
     if(value != null) {
-      // try to parse string to datetime variable
-      if( DateTime.TryParse(value.ToString(), out DateTime mydate) ) {
-        Console.WriteLine("converted to mydate");
-      }
-      else {
-        Console.WriteLine("Unable to convert to datetime");
+
+      // the value is a string
+      if(value is string propertyName) {
+
+        // grabs the other property 
+        PropertyInfo? otherProperty = validationContext.ObjectType.GetProperty(OtherPropertyName);
+
+        var validationInstance = validationContext.ObjectInstance;
+
       }
 
     }
 
-    // return successful other wise
-    return ValidationResult.Success;
+
   }
   
 }
