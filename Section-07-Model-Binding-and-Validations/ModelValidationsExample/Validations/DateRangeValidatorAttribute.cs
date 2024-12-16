@@ -10,6 +10,7 @@ namespace ModelValidationsExample.Validations;
 public class DateRangeValidatorAttribute : ValidationAttribute{
 
   /****** Properties *********/
+  // the other date we will be comparing against
   public string OtherPropertyName { get; set; }
 
 
@@ -18,26 +19,22 @@ public class DateRangeValidatorAttribute : ValidationAttribute{
     OtherPropertyName = otherPropertyName;
   }
   
-
   /** isvalid method **/
   protected override ValidationResult? IsValid(object? value, ValidationContext validationContext){
-    
-    // checks if value is null
+
     if(value != null) {
-
-      // the value is a string
-      if(value is string propertyName) {
-
-        // grabs the other property 
-        PropertyInfo? otherProperty = validationContext.ObjectType.GetProperty(OtherPropertyName);
-
-        var validationInstance = validationContext.ObjectInstance;
-
+      // try to parse string to datetime variable
+      if( DateTime.TryParse(value.ToString(), out DateTime mydate) ) {
+        Console.WriteLine("converted to mydate");
+      }
+      else {
+        Console.WriteLine("Unable to convert to datetime");
       }
 
     }
 
-
+    // return successful other wise
+    return ValidationResult.Success;
   }
   
 }
