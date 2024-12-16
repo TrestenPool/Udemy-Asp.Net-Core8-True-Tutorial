@@ -23,20 +23,30 @@ public class DateRangeValidatorAttribute : ValidationAttribute{
   protected override ValidationResult? IsValid(object? value, ValidationContext validationContext){
 
     if(value != null) {
+      // get the value in a datetime variable
+      DateTime to_date = Convert.ToDateTime(value);
 
-      // the value is a string
-      if(value is string propertyName) {
+      // gets the property
+      PropertyInfo? otherProperty = validationContext.ObjectType.GetProperty(OtherPropertyName);
 
-        // grabs the other property 
-        PropertyInfo? otherProperty = validationContext.ObjectType.GetProperty(OtherPropertyName);
+      // the other property is valid
+      if(otherProperty != null) {
+        
+        // get the value of the from_date variable
+        DateTime from_date = Convert.ToDateTime(
+          otherProperty.GetValue(validationContext.ObjectInstance)
+        );
 
-        var validationInstance = validationContext.ObjectInstance;
-
+        // from date is after the to date
+        if(from_date > to_date) {
+          return new ValidationResult($"From Date {from_date} should be before To Date {to_date}");;
+        }
+        else {
+          return ValidationResult.Success;
+        }
       }
-
     }
-
-
+    return null;
   }
   
 }
