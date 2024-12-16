@@ -27,7 +27,7 @@ Content-Type: application/json
   "Phone": "361-446-2936",
   "Password": "password",
   "ConfirmationPassword": "password",
-  "Dob": "1999-01-29",
+  "Dob": "1998-01-29",
   "Price": 100.0
 }
 
