@@ -45,14 +45,23 @@ Content-Type: application/json
   "Password": "password",
   "ConfirmationPassword": "password",
   "Dob": "1999-01-29",
+  "FromDate": "2010-01-01",
+  "ToDate": "2001-01-01",
   "Price": 100.0
 }
 
 ###
 
-# make sure [FromForm] is set in the controller
+# [FromForm] is optional to have before the object being model binding in the controller
 
 POST {{base}}/person HTTP/1.1
 Content-Type: application/x-www-form-urlencoded
 
-Name=Tresten Pool&Email=trestenpool@gmail.com&Phone=361-446-2936&Password=my password
+Name=Tresten Pool&Email=trestenpool@gmail.com&Phone=361-446-2936
+
+###
+
+POST {{base}}/person HTTP/1.1
+Content-Type: application/x-www-form-urlencoded
+
+Name=James French&Email=trestenpool@gmail.com&Phone=361-446-2936&Tags[0]=#happy&Tags[1]=#taken

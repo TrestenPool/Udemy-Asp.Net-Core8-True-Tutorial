@@ -39,7 +39,7 @@ public class DateRangeValidatorAttribute : ValidationAttribute{
 
         // from date is after the to date
         if(from_date > to_date) {
-          return new ValidationResult($"From Date {from_date} should be before To Date {to_date}");;
+          return new ValidationResult($"From Date {from_date} should be before To Date {to_date}", new string[]{OtherPropertyName} );;
         }
         else {
           return ValidationResult.Success;
