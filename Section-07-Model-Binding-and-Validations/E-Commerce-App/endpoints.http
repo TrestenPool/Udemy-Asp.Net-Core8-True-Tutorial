@@ -1,0 +1,40 @@
+@host = localhost
+@port = 5109
+@base = http://{{host}}:{{port}}
+
+
+###
+
+# Index page
+GET {{base}}/
+
+###
+
+# /orders using www-form-encoded
+POST {{base}}/order
+Content-Type: application/x-www-form-urlencoded
+
+OrderNo=1234&OrderDate=2007-01-29&InvoicePrice=72.33
+
+###
+
+# /orders using json
+POST {{base}}/order
+Content-Type: application/json
+
+{
+  "OrderDate": "2005-01-01",
+  "InvoicePrice": 100,
+  "Products" : [
+    {
+      "ProductCode": 23,
+      "Price": 50.0,
+      "Quantity": 1
+    },
+    {
+      "ProductCode": 5,
+      "Price": 25.0,
+      "Quantity": 2
+    }
+  ]
+}

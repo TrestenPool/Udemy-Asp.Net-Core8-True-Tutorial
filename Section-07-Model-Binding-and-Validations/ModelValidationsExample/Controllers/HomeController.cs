@@ -16,7 +16,7 @@ public class HomeController : ControllerBase {
     return Ok("Hello world");
   }
 
-  [Route(template:"person")]
+  [Route("person")]
   public IActionResult FetchPerson(
     // no longer needed because defined ModelBinderProvider
     // [ModelBinder(BinderType=typeof(PersonModelBinder))]
