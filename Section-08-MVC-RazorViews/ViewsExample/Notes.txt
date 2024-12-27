@@ -1,0 +1,83 @@
+Execution Flow of a Request in MVC:
+  Routing -> Model Binding -> Model Validtion -> Controller Action Execution ...
+  -> View Selection -> View Rendering -> Response
+
+
+Benefits of MVC
+  - (SOC) separation of concerns
+  - Testability
+  - Reusability
+  - Parallel Development
+  - Maintainability
+  - Extensibility
+  - Scalability
+
+builder.AddControllersWithViews() method
+  - Shortcut for adding multiple services at once:
+    - Controller discovery
+    - View Engine set to Razor
+    - Sets up model Binding
+    - Sets up model Validation
+
+ViewResult class
+  - an action result type that represents a view to be rendered
+  - View() is a helper method that really returns a ViewResult object under the hood
+
+Views/Shared
+  - Views that are shared between different controllers
+  - First searches Views/ControllerName/view.cshtml then Views/Shared/view.cshtml
+
+Html.Raw
+  - enters raw html into the cshtml file that can be stored dynamically like in a variable
+
+ViewData and ViewBag
+  - Both used to pass data from controller to view
+
+  ViewData
+    - Dictionary-based
+    - ViewDataDictionary
+    - Requires casting
+    - Access values like ViewData["person"]
+    - Typical use case
+    @ {
+      Person myperson? = ViewData["person"] as Person;
+    }
+  
+  ViewBag
+    - Dynamic wrapper around the ViewData dictionary
+    - Allows you to access data using dot notation
+    - No explicit casting is needed
+    - Types are calculated calculated at runtime
+    - Doesn't work with intelliscense
+    - Typically not the best solution
+  
+Strongly Typed Views
+  - The @model directive is used to define the type in the view
+  - Compile time checking and intellisense
+
+
+ViewModels
+  - View models are when you want to use multiple types for Strongly typed views
+  - You can create viewmodels that have multiple types of what you want to send to the model as the properties
+
+  Classes: Person, Product
+  
+  // this would be an example of a ViewModel
+  public class ViewModel {
+    public Person? personData {get; set;}
+    public Product? ProductData {get; set;}
+  }
+
+
+_ViewImports.cshtml
+  - special file in ASP.NET Core MVC that allows you to centralize common directives and settings that apply to multiple views within your application
+  Benefits:
+    - Reduced Redundancy
+    - Improved readability
+
+
+Partials
+  - common convention to use _. Example: _ProductCard.cshtml
+
+
+

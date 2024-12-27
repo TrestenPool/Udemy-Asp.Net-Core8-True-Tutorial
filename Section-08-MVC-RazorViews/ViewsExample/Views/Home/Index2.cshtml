@@ -1,0 +1,69 @@
+@using ViewsExample.Models;
+
+@{
+  string appTitle = "Asp.Net Core Demo App";
+
+  @* list of people *@
+  List<Person> people = new List<Person>(){
+    new(){Name="Tresten",Dob=new DateTime(1999,1,29)},
+    new(){Name="John",Dob=new DateTime(1967,12,12)},
+    new(){Name="Dave"},
+    new(){Name="Rex",Dob=new DateTime(1973,7,22)}
+  };
+
+  // js code
+  string alertMessage = $"<script>alert('{people.Count} people found')</script>";
+}
+
+@functions{
+  string GetAge(Person person){
+    if(person.Dob.HasValue) {
+     return (Math.Floor((DateTime.Today - person.Dob.Value).TotalDays / 365)).ToString();
+    }
+    else {
+      return "No Dob set";
+    }
+  } 
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>@appTitle</title>
+</head>
+
+<body>
+  @Html.Raw(alertMessage)
+  <h1>@appTitle</h1>
+  @foreach(Person person in people) {
+    <div>
+      <h2>@(person.Name)</h2>
+      @if(person.Dob.HasValue) {
+        <p>Date of birth: @(person.Dob.Value.ToLongDateString())</p>
+      }
+      <p>Age = @GetAge(person)</p>
+    </div>
+  }
+
+
+  <br>
+  <h2>Counting numbers</h2>
+  @for(var i = 0; i <= 10; i++) {
+    <span>@(i)</span>
+  }
+
+  <br><br>
+
+  @{
+    var idx = 10;
+  }
+  @do{
+    <span>@(idx)</span>
+    idx--;
+  }while(idx > 0);
+
+</body>
+
+</html>

@@ -1,0 +1,57 @@
+@model PersonAndProductWrapper;
+
+@{
+  string? title = ViewData["title"]?.ToString();
+  Person? person = ViewData["person"] as Person;
+  Product? product = ViewData["product"] as Product;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>@title</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <h1>Multiple strongly typed model views</h1>
+
+  @* person *@
+  <div class="box w-100">
+    <h3>Person</h3>
+    <table class="table w-50">
+      <tbody>
+        <tr>
+          <td>Person Name</td>
+          <td>@person?.Name</td>
+        </tr>
+        <tr>
+          <td>Person Dob</td>
+          <td>@Model?.PersonData?.Dob.Value.ToShortDateString()</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  @* product *@
+  <div class="box w-100">
+    <h3>Product</h3>
+    <table class="table w-50">
+      <tbody>
+        <tr>
+          <td>Product Id</td>
+          <td>@product?.Id</td>
+        </tr>
+        <tr>
+          <td>Product Name</td>
+          <td>@Model?.ProductData?.Name</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+</body>
+
+</html>

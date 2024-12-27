@@ -1,0 +1,43 @@
+@model List<Person>;
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Title</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <h1>Using strongly typed model</h1>
+
+  <div class="page-content">
+    <h1>@(ViewData["PageTitle"])</h1>
+    @if (Model is not null){
+      @foreach (var person in Model){
+        <div class="box float-left w-50">
+          <table class="table w-100">
+            <tbody>
+              <tr>
+                <td>Gender</td>
+                <td>@person.PersonGender</td>
+              </tr>
+              <tr>
+                <td>Name</td>
+                <td>@person.Name</td>
+              </tr>
+              <tr>
+                <td>Date of birth</td>
+                <td>@person.Dob</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      }
+    }
+  </div>
+
+</body>
+
+</html>

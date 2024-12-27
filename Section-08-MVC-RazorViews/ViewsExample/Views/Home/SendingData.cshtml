@@ -1,0 +1,47 @@
+@{
+  List<Person>? people = ViewData["people"] as List<Person>;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My title</title>
+  <link rel="stylesheet" href="~/style.css">
+</head>
+
+<body>
+
+  <div class="page-content">
+    <h1>@(ViewData["PageTitle"])</h1>
+    @if (people is not null){
+      @for (var i = 0; i < people.Count; i++){
+        <div class="box float-left w-50">
+          <table class="table w-100">
+            <tbody>
+              <tr>
+                <td>Gender</td>
+                <td>@people[i].PersonGender</td>
+              </tr>
+              <tr>
+                <td>Name</td>
+                <td>@people[i].Name</td>
+              </tr>
+              <tr>
+                <td>Date of birth</td>
+                <td>@people[i].Dob</td>
+              </tr>
+            </tbody>
+          </table>
+          <a href="/person/@(i)">Detail</a>
+        </div>
+      }
+      <a href="/person-with-product/">Person With Product</a>
+    }
+  </div>
+
+
+</body>
+
+</html>
