@@ -1,10 +1,17 @@
-  var builder = WebApplication.CreateBuilder(args);
-  // add mvc
-  builder.Services.AddControllersWithViews();
+var builder = WebApplication.CreateBuilder(args);
 
-  var app = builder.Build();
-  app.MapControllers();
-  app.UseRouting();
-  app.UseStaticFiles();
+// add mvc
+builder.Services.AddControllersWithViews();
+
+var app = builder.Build();
+
+// add controller support
+app.MapControllers();
+
+// add routing
+app.UseRouting();
+
+// add static files
+app.UseStaticFiles();
 
 app.Run();
