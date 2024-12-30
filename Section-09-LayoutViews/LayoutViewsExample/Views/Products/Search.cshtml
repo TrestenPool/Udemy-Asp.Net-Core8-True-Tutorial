@@ -1,0 +1,17 @@
+@{
+  ViewData["title"] = "Search";
+  Layout="~/Views/Shared/_ProductsLayout.cshtml";
+
+  int? productId = (int?)ViewData["productId"];
+}
+
+<h1>Search products</h1>
+
+@if(productId.HasValue) {
+  <h3>Product Id = @(productId.Value)</h3>
+}
+else {
+  <h3>Product id not supplied</h3>
+}
+
+

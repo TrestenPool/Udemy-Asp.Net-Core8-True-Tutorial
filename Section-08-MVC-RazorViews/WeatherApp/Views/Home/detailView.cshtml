@@ -1,0 +1,31 @@
+@model CityWeather
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Detail view</title>
+</head>
+
+<body>
+  <h1>Detail View</h1>
+  <a href="/">Go back</a>
+
+  @if(@Model != null) {
+    <h3>@Model.CityName</h3>
+    <ul>
+      <li>@Model.CityUniqueCode</li>
+      <li>@Model.TemperatureFahrenheit</li>
+      @if(@Model.DateAndTime.HasValue) {
+        <li>@Model.DateAndTime.Value.ToShortDateString()</li>
+      }
+      else {
+        <li>No DateTime set</li>
+      }
+    </ul>
+  }
+
+</body>
+
+</html>

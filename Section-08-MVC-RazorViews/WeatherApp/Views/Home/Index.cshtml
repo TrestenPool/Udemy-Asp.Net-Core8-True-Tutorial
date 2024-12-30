@@ -1,0 +1,35 @@
+@{
+  List<CityWeather> cities = ViewData["citiesInfo"] as List<CityWeather> 
+    ?? new List<CityWeather>(){};  
+}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Title</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+  <h1>Index page</h1>
+  @foreach(var city in cities) {
+    <div class="container">
+      <a href="/weather/@city.CityUniqueCode"><h3>@city.CityName</h3></a>
+      <ul>
+        <li>@city.CityUniqueCode</li>
+        <li>@city.TemperatureFahrenheit</li>
+        @if(city.DateAndTime.HasValue) {
+          <li>@city.DateAndTime.Value.ToShortDateString()</li>
+        }
+        else {
+          <li>No DateAndTimeValue</li>
+        }
+      </ul>
+    </div>
+  }
+</body>
+
+</html>

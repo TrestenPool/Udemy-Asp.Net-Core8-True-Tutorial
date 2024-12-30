@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>@(ViewData["title"] ?? "Asp.Net Core Demo App")</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+  <div class="container">
+
+    @* navbar *@
+    <div class="navbar">
+      <div class="navbar-brand">Aspnet Core App</div>
+      <ul>
+        <li><a href="/home">Home</a></li>
+        <li><a href="/about">About</a></li>
+        <li><a href="/contact">Contacts</a></li>
+        <li><a href="/products">Products</a></li>
+        <li><a href="/products/search">Search Products</a></li>
+        <li><a href="/products/order">Order Product</a></li>
+      </ul>
+    </div>
+
+    @* page content *@
+    <div class="page-content">
+      @RenderBody()
+    </div>
+
+    @* footer content *@
+    <div class="footer_content">
+      @RenderSection("footer_section", false)
+    </div>
+
+  </div>
+</body>
+
+</html>
