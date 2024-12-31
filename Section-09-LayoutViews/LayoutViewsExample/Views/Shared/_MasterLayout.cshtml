@@ -5,18 +5,23 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>@ViewData["title"] ?? Asp.Net Core Tutorial </title>
-  <link rel="stylesheet" href="~/style.css"/>
+  <link rel="stylesheet" href="~/styles.css"/>
 </head>
 
 <body>
+
+  @* Our header *@
   <div class="container">
     <div class="header">
       ASP.NET Core Demo app
     </div>
   </div>
 
+  @* Render the content *@
   <div>
+    @RenderBody()
   </div>
+
 </body>
 
 </html>

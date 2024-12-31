@@ -2,24 +2,9 @@
   Layout="~/Views/Shared/_MasterLayout.cshtml";
 }
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>@(ViewData["title"] ?? "Asp.Net Core Demo App")</title>
-  <link rel="stylesheet" href="~/styles.css">
-</head>
-
-<body>
-
-  <div class="flex full-size-height">
-    <div class="flex-1 grey-back">Sidebar</div>
-    <div class="flex-3 white-back">
-      @RenderBody()
-    </div>
+<div class="flex full-size-height">
+  <div class="flex-1 grey-back">Sidebar</div>
+  <div class="flex-3 white-back">
+    @RenderBody()
   </div>
-
-</body>
-
-</html>
+</div>
