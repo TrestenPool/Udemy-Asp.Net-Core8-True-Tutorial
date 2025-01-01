@@ -1,5 +1,14 @@
 @{
-  ViewData["title"] = "Index";
+  ListModel listModel = new ListModel();
+  listModel.ListTitle = "Countries";
+  listModel.ListItems = new List<string>(){
+    "USA","Japan", "Cuba", "Denmark"
+  };
+  ViewData["title"] = "Home";
 }
 
 <h1>Home page</h1>
+
+<div class="box">
+  <partial model="listModel" name="~/Views/Shared/_ListPartialView.cshtml"></partial>
+</div>

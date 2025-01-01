@@ -1,0 +1,28 @@
+@model ListModel
+@{
+  @* string? title = (string?)ViewData["ListTitle"] ?? "Default Title";
+  List<string> cities = (List<string>?) ViewData["ListItems"] ?? new List<string>(){}; *@
+
+  string title = "Default title";
+  List<string> cities = new List<string>();
+
+  if(@Model != null) {
+    title = @Model.ListTitle;
+    cities = @Model.ListItems;
+  }
+
+}
+
+<div class="list-container">
+
+  @if(cities.Count > 0) {
+    <h3>@(title)</h3>
+  }
+
+  <ul class="list">
+    @foreach(var city in cities) {
+      <li>@(city)</li>
+    }
+  </ul>
+
+</div>

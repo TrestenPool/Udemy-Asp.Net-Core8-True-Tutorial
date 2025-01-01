@@ -1,0 +1,25 @@
+
+Adding Taghelpers
+  - Adding taghelpers are required to invoke the partial views
+  - It is typically placed in _ViewImports.cshtml at the Root of Views/
+  @addTagHelper "*, Microsoft.AspNetCore.Mvc.TagHelpers"
+
+
+Invoking Partial views
+  - 3 ways
+  
+  1. 
+    <partial name="~/Views/Shared/_ListPartialView.cshtml"/>
+    - Returns the content to the parent view
+
+  2. 
+    @await Html.PartialAsync("_ListPartialView")
+    - Returns the content to the parent view
+  
+  3. 
+    @{await Html.RenderPartialAsync("_ListPartialView");}
+    - Streams the content to the browser
+  
+
+When using partials
+  - A copy of viewdata is sent to the partial to act upon
