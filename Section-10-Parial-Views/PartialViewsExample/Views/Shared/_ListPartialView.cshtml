@@ -6,6 +6,7 @@
   string title = "Default title";
   List<string> cities = new List<string>();
 
+  // assign the model to local variables for easier use
   if(@Model != null) {
     title = @Model.ListTitle;
     cities = @Model.ListItems;
@@ -17,6 +18,9 @@
 
   @if(cities.Count > 0) {
     <h3>@(title)</h3>
+  }
+  else {
+    <h3>No cities list provided</h3>
   }
 
   <ul class="list">

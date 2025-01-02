@@ -23,3 +23,21 @@ Invoking Partial views
 
 When using partials
   - A copy of viewdata is sent to the partial to act upon
+
+
+Strongly Typed Model
+  - You can pass in any object of your choice to the model argument to the <partial> tag helper
+  <partial model="listModel" name="~/Views/Shared/_ListPartialView.cshtml"></partial>
+  - we defined listModel in another code block but it can be another reference object of your choice
+  - And in the partial you can reference the model with @Model how you would typically reference it with strongly typed views
+  
+  @await Html.PartialAsync("_ListPartialView",listModel)
+  - or you can pass the model to the other way of doing it by passing in the second argument
+  
+
+
+Returning PartialViewResult for javascript fetch requests
+  - You can return PartialViewResult in the controller which will return the code in the partial
+  - This can be used when we have a view where we can click a button to populate the results by calling the endpoint defined in our controller that returns the html contents of the partial
+
+  - PartialViewResult => the wrapper function is PartialView("partialview", model)
