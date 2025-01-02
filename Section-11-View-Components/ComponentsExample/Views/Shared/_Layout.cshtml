@@ -1,0 +1,35 @@
+@{
+  string title = (string?)ViewData["title"] ?? "Default title";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>@(title)</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+
+  <div class="container">
+    @* navbar *@
+    <div class="navbar">
+      <div class="navbar-brand">View Components Demo App</div>
+      @* links *@
+      <ul>
+        <li><a href="~/">Home</a></li>
+        <li><a href="~/about">About</a></li>
+      </ul>
+    </div>
+  </div> @*End of navbar*@
+
+  @* Render the body of the parent view *@
+  <div class="page-content">
+    @RenderBody()
+  </div>
+
+</body>
+
+</html>

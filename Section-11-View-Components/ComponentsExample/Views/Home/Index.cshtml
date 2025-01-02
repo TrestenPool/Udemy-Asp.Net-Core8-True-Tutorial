@@ -1,0 +1,55 @@
+@{
+  // setting our title
+  ViewData["title"] = "Home";
+
+  // object will be used as a parameter to the view component
+  PersonGridModel personGridModel = new PersonGridModel(){
+    GridTitle = "Persons LIST",
+    Persons = new List<Person>(){
+      new(){Name="Tresten",JobTitle="Software engineer"},
+      new(){Name="Ross",JobTitle="Coal Miner"},
+      new(){Name="Manuel",JobTitle="Night grocer shelves stocker"}
+    }
+
+  };
+
+}
+
+<h1>Home route</h1>
+
+@* call our grid component, with parameters *@
+@* @await Component.InvokeAsync("Grid",new {
+  grid=personGridModel
+}) *@
+
+
+
+
+
+
+<button class="button button-blue-back" id="load-friends-button">Load Friends</button>
+
+
+<script>
+  // get the button
+  const button = document.getElementById("load-friends-button");
+
+  // the function that will be executed when we click on the button
+  async function loadFriends(){
+
+    const response = await fetch('/friends')
+      .then(data => {
+        console.log(data)
+        return data.text();
+      })
+      .then(data => {
+
+      })
+
+
+  }
+
+  // add event listner to the button
+  button.addEventListener("click",loadFriends);
+
+</script>

@@ -1,0 +1,32 @@
+@using ComponentsExample.Models
+@model PersonGridModel
+
+@{
+  // grab the model from ViewComponent
+  @* PersonGridModel model = (PersonGridModel?)ViewData["Grid"] ?? new PersonGridModel(); *@
+  var model = @Model;
+
+  // storing the model variables into local variables to
+  string gridTitle = model.GridTitle ?? "Default grid title";
+  List<Person> persons = model.Persons ?? new List<Person>(){};
+}
+
+<div class="box">
+  <h3>@(gridTitle)</h3>
+  <table class="table w-100">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Job title</th>
+      </tr>
+    </thead>
+      @foreach(Person person in persons) {
+        <tr>
+          <td>@(person.Name)</td>
+          <td>@(person.JobTitle)</td>
+        </tr>
+      }
+    </tbody>
+
+  </table>
+</div>

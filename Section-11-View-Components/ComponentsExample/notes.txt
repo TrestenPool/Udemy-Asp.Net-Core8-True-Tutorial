@@ -1,0 +1,38 @@
+- Place View component in a folder called ViewComponents in the root of the project
+
+- Also suffix the name of your component with "ViewComponent" like "GridViewComponent.cs"
+
+- If there is no ViewComponent suffix you can use the [ViewComponent] attribute above the class declaration
+  [ViewComponent]
+  public class MyViewComponent{
+  }
+
+About View Components
+  - they are similar to view partials but much more powerful
+  - they don't use model binding, they depend on the data passed when calling the view component
+  - Renders a chunk rather than a whole response
+  - can have parameters and business logic
+  - is typically invoked from the layout page
+
+Passing data
+  - The ViewComponent class can share ViewData object to the ViewComponent view
+  - It is not possible the other way around
+  ViewComponent Class ====(ViewData)===> ViewComponent View
+
+
+You can make ViewComponents strongly typed
+  - you just use @model and pass in the model from the ViewComponent code by passing into the View() method
+  - then in the view, use the @Model to access the properties on it
+
+You can also pass parameters to the viewcomponent from the view
+  - you do this by passing the parameters in an object as a second argument from the Component.InvokeAsync() method
+  
+  @await Component.InvokeAsync("Grid",new {
+    x = 10,
+    y = 20
+  })
+
+ViewComponentResult
+  - How to make the viewcomponent return the html it generates instead of generating a page and directing you there
+  - this is good for ajax or fetch calls in js
+

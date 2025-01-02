@@ -16,6 +16,7 @@
 
 <div class="list-container">
 
+  @* Print out list title *@
   @if(cities.Count > 0) {
     <h3>@(title)</h3>
   }
@@ -23,6 +24,7 @@
     <h3>No cities list provided</h3>
   }
 
+  @* Print all of the cities in an unordered list *@
   <ul class="list">
     @foreach(var city in cities) {
       <li>@(city)</li>

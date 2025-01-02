@@ -1,0 +1,20 @@
+@{
+  ViewData["title"] = "About";
+  PersonGridModel grid = new PersonGridModel(){
+    GridTitle = "Cats",
+    Persons = new List<Person>(){
+      new(){Name="Cheeto",JobTitle="Biscuit factory ceo"},
+      new(){Name="Hammerhead",JobTitle="Biscuit factory worker"}
+    }
+  };
+}
+
+<h1>About route</h1>
+<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Amet, tenetur laborum nisi hic sint dignissimos blanditiis laboriosam! Quasi illo libero nihil eaque tempora tempore nulla fugit eveniet aut ea. Neque!</p>
+
+@* using a method *@
+@await Component.InvokeAsync("Grid", new{
+})
+
+@* using taghelper *@
+<vc:grid></vc:grid>

@@ -10,16 +10,18 @@
 
 <h1>Home page</h1>
 
+@* Button that will initiate the request and load the div below with the programming languages *@
 <button 
   class="button button-blue-back" 
   type="button" 
   id="button-load">Load Programming languages</button>
 
+@* Where the partial will load its contents into *@
 <div class="box programming-languages-content">
-
 </div>
 
 <script>
+  // loads the div with the partial view that is returned from the endpoint /programming
   document.querySelector("#button-load").addEventListener("click",async function() {
     const response = await fetch("programming")
       .then(response => {

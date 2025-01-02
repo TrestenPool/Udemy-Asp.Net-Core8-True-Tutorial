@@ -41,3 +41,11 @@ Returning PartialViewResult for javascript fetch requests
   - This can be used when we have a view where we can click a button to populate the results by calling the endpoint defined in our controller that returns the html contents of the partial
 
   - PartialViewResult => the wrapper function is PartialView("partialview", model)
+
+Common Convention for partials
+  - They are prefixed with _ underscore like _ListViewPartial
+  - They are stored in Views/Shared
+
+
+PartialViewResult
+  - Frequently used in conjunction with AJAX to load content dynamically without full page refreshes
