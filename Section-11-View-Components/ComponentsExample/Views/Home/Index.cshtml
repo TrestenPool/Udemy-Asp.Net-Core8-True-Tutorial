@@ -24,26 +24,32 @@
 
 
 
-
-
-
 <button class="button button-blue-back" id="load-friends-button">Load Friends</button>
+
+<div id="tableResults">
+</div>
 
 
 <script>
   // get the button
   const button = document.getElementById("load-friends-button");
+  // get the div where we will place the content
 
   // the function that will be executed when we click on the button
   async function loadFriends(){
 
     const response = await fetch('/friends')
       .then(data => {
-        console.log(data)
+
+        // network error
+        if(!data.ok) {
+          throw new Error("There was a network error");
+        }
+
         return data.text();
       })
       .then(data => {
-
+        document.getElementById("tableResults").innerHTML = data;
       })
 
 
