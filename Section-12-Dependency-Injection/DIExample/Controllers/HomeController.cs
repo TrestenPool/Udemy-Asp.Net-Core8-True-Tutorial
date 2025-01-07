@@ -11,19 +11,21 @@ namespace DIExample.Controllers;
 
 [Route("/")]
 public class HomeController : Controller{
-  // // Variables
+  // Variables
   private readonly CitiesListService citiesListService;
 
-  // // constructor
+  // constructor
   public HomeController() {
+    // you should never do this. why??
     citiesListService = new CitiesListService();
-    citiesListService.Name = "Test name";
   }
 
   
   [Route("")]
   [Route("home")]
   public IActionResult Index(){
-    return View();
+    // get the list of cities
+    List<string> cities = citiesListService.GetCitiesList();
+    return View(cities);
   }
 }
