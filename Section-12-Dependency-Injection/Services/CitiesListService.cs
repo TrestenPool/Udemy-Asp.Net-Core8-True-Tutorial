@@ -1,6 +1,8 @@
-﻿namespace Services;
+﻿using ServiceContracts;
 
-public class CitiesListService{
+namespace Services;
+
+public class CitiesListService : ICitiesService{
 
   private readonly List<string> Cities = new List<string> {
     "Bishop",
@@ -10,8 +12,7 @@ public class CitiesListService{
     "Corpus Christi Moody"
   };
 
-  public List<string> GetCitiesList() {
+  public List<string> GetCities() {
     return Cities;
   }
-
 }

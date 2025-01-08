@@ -6,26 +6,26 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Services;
+using ServiceContracts;
 
 namespace DIExample.Controllers;
 
 [Route("/")]
 public class HomeController : Controller{
   // Variables
-  private readonly CitiesListService citiesListService;
+  // private readonly ICitiesService citiesService;
 
   // constructor
   public HomeController() {
-    // you should never do this. why??
-    citiesListService = new CitiesListService();
+    // this.citiesService = citiesService;
   }
 
   
   [Route("")]
   [Route("home")]
-  public IActionResult Index(){
+  public IActionResult Index([FromServices] ICitiesService citiesService){
     // get the list of cities
-    List<string> cities = citiesListService.GetCitiesList();
+    List<string> cities = citiesService.GetCities();
     return View(cities);
   }
 }
