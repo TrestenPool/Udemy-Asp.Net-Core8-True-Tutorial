@@ -10,14 +10,14 @@ var builder = WebApplication.CreateBuilder(args);
 //   ServiceLifetime.Transient
 // ));
 
-// per injection
-// builder.Services.AddScoped<ICitiesService, CitiesListService>();
+// per scope (per request)
+builder.Services.AddScoped<ICitiesService, CitiesListService>();
 
-// Per scope (browser request)
+// Transient (per injection)
 // builder.Services.AddTransient<ICitiesService, CitiesListService>();
 
 // For Entire application lifetime
-builder.Services.AddSingleton<ICitiesService, CitiesListService>();
+// builder.Services.AddSingleton<ICitiesService, CitiesListService>();
 
 
 // add mvc support

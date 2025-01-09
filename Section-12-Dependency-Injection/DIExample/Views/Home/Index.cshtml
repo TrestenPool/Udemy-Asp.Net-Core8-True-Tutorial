@@ -1,6 +1,10 @@
 @model IEnumerable<string>
 
 @{
+  Guid guid1 = (Guid?)ViewData["guid1"] ?? Guid.Empty;
+  Guid guid2 = (Guid?)ViewData["guid2"] ?? Guid.Empty;
+  Guid guid3 = (Guid?)ViewData["guid3"] ?? Guid.Empty;
+  Guid guid4 = (Guid?)ViewData["guid4"] ?? Guid.Empty;
   ViewData["title"] = "Home";
 }
 
@@ -11,3 +15,10 @@
     <li>@(city)</li>
   }
 </ul>
+
+
+<h3>Guids</h3>
+<p>@(guid1)</p>
+<p>@(guid2)</p>
+<p>@(guid3)</p>
+<p>@(guid4)</p>

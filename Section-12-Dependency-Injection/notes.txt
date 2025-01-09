@@ -1,0 +1,38 @@
+Service Lifetimes
+  - Transient
+    - created each time they are injected
+    - disposed at the end of the browser request (scope)
+  
+  - Scoped
+    - created once per scope (browser request)
+    - disposed at the end of the scope (browser request)
+  
+  - Singleton
+    - created for the first time when they are requested
+    - Disposed at app shutdown
+  
+
+
+DI through method in controller
+  - Only this route will get the object
+  - Not really used
+  - Used when only one method in the controller needs access to the object
+  [Route("home")]
+  public IActionResult Index([FromServices] ICitiesService citiesService){
+    List<string> cities = citiesService.GetCities();
+    return View(cities);
+  }
+
+
+
+Creating a child scope
+  - This is creating a child scope
+  - The object will get removed after the end of the code block because it will call dispose on the CitiesService Service object
+  - we don't have to call Dispose directly because we are using the "using" keyword
+
+  using(var scope = _serviceScopeFactory.CreateScope()){
+
+    var citiesService4 = scope.ServiceProvider.GetService<ICitiesService>();
+    ViewData["Guid4"] = citiesService4?.ServiceInstanceId;
+
+  } // end of scope; it calls CitiesService.Dispose()
