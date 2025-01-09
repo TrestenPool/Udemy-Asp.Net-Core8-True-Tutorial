@@ -36,3 +36,33 @@ Creating a child scope
     ViewData["Guid4"] = citiesService4?.ServiceInstanceId;
 
   } // end of scope; it calls CitiesService.Dispose()
+
+
+@inject in views
+  - Used for injecting object into views
+  - Most of the time the object will get passed by the controller but this is used when you don't want to do that and the object is 
+  .. specific to a view
+  @inject ICitiesService citiesServiceList
+
+
+Best practices for Dependency injection
+  Global State in services
+    - Avoid using static classes to store some data globally for all users / all requests
+    - use singleton services for simple scenarios 
+    - ConcurrentDictionary instead of Dictionary, which better handles concurrent access via multiple threads
+    - Alternatively, prefer to use Distrubuted Cache / Redis for any signifcant amount of data or complex scenarios
+
+  Request state in services
+    - Don't use scoped services to share data among services within the same request, because they are not thread safe
+    - Use HttpContext.items instead
+  
+  Service Locator Pattern
+    - Avoid using service locator pattern, without creating a child scope, because it will
+     be harder to know about dependencies of a class
+    - For example, don't invoke GetService() in the default scope that is created
+      when a new request is received
+    - use the IServiceScopeFactory.ServiceProvider.GetService() within a child scope
+
+  Captive dependencies
+    - Don't inject scoped or transient services in singleton services
+    - Because, in this case, transient or scoped services act as singleton services, inside of a Singleton service

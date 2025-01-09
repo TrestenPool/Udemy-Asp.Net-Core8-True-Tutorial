@@ -1,10 +1,13 @@
 @model IEnumerable<string>
+@inject ICitiesService citiesServiceInView
 
 @{
   Guid guid1 = (Guid?)ViewData["guid1"] ?? Guid.Empty;
   Guid guid2 = (Guid?)ViewData["guid2"] ?? Guid.Empty;
   Guid guid3 = (Guid?)ViewData["guid3"] ?? Guid.Empty;
   Guid guid4 = (Guid?)ViewData["guid4"] ?? Guid.Empty;
+
+  Guid guid5 = (Guid)citiesServiceInView.ServiceInstanceId;
   ViewData["title"] = "Home";
 }
 
@@ -17,8 +20,11 @@
 </ul>
 
 
-<h3>Guids</h3>
+<h3>Guids from ViewData passed by the controller</h3>
 <p>@(guid1)</p>
 <p>@(guid2)</p>
 <p>@(guid3)</p>
 <p>@(guid4)</p>
+
+<h3>Guid from @@inject</h3>
+<p>@(guid5)</p>

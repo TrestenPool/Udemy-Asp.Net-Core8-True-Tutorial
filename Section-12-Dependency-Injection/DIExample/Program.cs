@@ -1,7 +1,26 @@
+using System.ComponentModel;
+using Autofac;
+using Autofac.Core.Lifetime;
+using Autofac.Extensions.DependencyInjection;
 using ServiceContracts;
 using Services;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory());
+
+// equivalent to AddTransient
+builder.Host.ConfigureContainer<ContainerBuilder>(ContainerBuilder => {
+  // TRANSIENT
+  ContainerBuilder.RegisterType<ICitiesService>().As<CitiesListService>().InstancePerDependency();
+  
+  // SCOPED
+  // ContainerBuilder.RegisterType<ICitiesService>().As<CitiesListService>().InstancePerLifetimeScope();
+
+  // SINGLETON
+  // ContainerBuilder.RegisterType<ICitiesService>().As<CitiesListService>().SingleInstance();
+});
+
 
 // add to our ioc container
 // builder.Services.Add(new ServiceDescriptor(
@@ -11,7 +30,7 @@ var builder = WebApplication.CreateBuilder(args);
 // ));
 
 // per scope (per request)
-builder.Services.AddScoped<ICitiesService, CitiesListService>();
+// builder.Services.AddScoped<ICitiesService, CitiesListService>();
 
 // Transient (per injection)
 // builder.Services.AddTransient<ICitiesService, CitiesListService>();
