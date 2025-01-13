@@ -66,3 +66,8 @@ Best practices for Dependency injection
   Captive dependencies
     - Don't inject scoped or transient services in singleton services
     - Because, in this case, transient or scoped services act as singleton services, inside of a Singleton service
+  
+
+Avoid the Service Locator pattern
+  - The service locator patten involves directly accessing the DI container from within your classes
+  - IServiceProvider.GetService()

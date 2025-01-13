@@ -7,12 +7,13 @@ using Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
+/************** Setting up DI Using Autofac **********************/
 builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory());
 
 // equivalent to AddTransient
 builder.Host.ConfigureContainer<ContainerBuilder>(ContainerBuilder => {
   // TRANSIENT
-  ContainerBuilder.RegisterType<ICitiesService>().As<CitiesListService>().InstancePerDependency();
+  ContainerBuilder.RegisterType<CitiesListService>().As<ICitiesService>().InstancePerDependency();
   
   // SCOPED
   // ContainerBuilder.RegisterType<ICitiesService>().As<CitiesListService>().InstancePerLifetimeScope();
@@ -20,6 +21,7 @@ builder.Host.ConfigureContainer<ContainerBuilder>(ContainerBuilder => {
   // SINGLETON
   // ContainerBuilder.RegisterType<ICitiesService>().As<CitiesListService>().SingleInstance();
 });
+/*****************************************************************/
 
 
 // add to our ioc container
