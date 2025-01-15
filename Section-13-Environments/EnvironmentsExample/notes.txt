@@ -1,0 +1,65 @@
+UseDeveloperException()
+  - Allow you to show a detailed exception page in development environment
+  if(app.Environment.IsDevelopment()){
+    Console.WriteLine("======== DEVELOPMENT MODE =======");
+    app.UseDeveloperExceptionPage();
+  }
+
+
+Setting different environments by env variable
+  
+  Env variables to set
+    - ASPNETCORE_ENVIRONMENT
+    - DOTNET_ENVIRONMENT
+
+  ContentRootPath
+    - gets or sets absolute path of the application folder
+
+
+Methods to use in Program.cs to check the environment
+  - IsDevelopment()
+  - IsStaging()
+  - IsProduction()
+  - IsEnvironment(string to check)
+
+How to access environment in controller and other classes
+  - IWebHostEnvironment _webHost
+  [Route("/")]
+  public class HomeController : Controller{
+    private readonly IWebHostEnvironment _webHostEnvironment;
+    
+    public HomeController(IWebHostEnvironment webHostEnvironment){
+      _webHostEnvironment = webHostEnvironment;
+    }
+    
+    [Route("")]
+    public IActionResult Index(){
+      if(_webHostEnvironment.IsDevelopment()){
+        Console.WriteLine("DEVELOPMENT MODE");
+      }
+      else {
+        Console.WriteLine("NOT DEVELOPMENT MODE");
+      }
+      return View();
+    }
+  }
+
+
+<environment> in the Views
+  - You can use the environment to specify which environment you would like to populate or not populate the view with
+  <environment include="dev">Hi Developer</environment
+    - this will show only when the environment is set to dev
+  
+  <environment exclude="dev,production">Hi Non developer</environment
+    - this will show up for everyone except when it is not in dev or production mode
+  
+  - keep in mind this is rarely used, it is more common to create a view that is seen in dev mode or not and this is controlled in the controller
+
+
+
+
+
+
+  
+
+  

@@ -10,8 +10,17 @@ namespace EnvironmentsExample.Controllers;
 
 [Route("/")]
 public class HomeController : Controller{
+
+  private readonly IWebHostEnvironment _webHostEnvironment;
+
+  public HomeController(IWebHostEnvironment webHostEnvironment){
+    _webHostEnvironment = webHostEnvironment;
+  }
+  
   [Route("")]
   public IActionResult Index(){
+    // set viewdata key with environment name
+    ViewData["environment"] = _webHostEnvironment.EnvironmentName;
     return View();
   }
 

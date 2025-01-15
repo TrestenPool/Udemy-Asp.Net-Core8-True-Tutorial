@@ -1,0 +1,16 @@
+Configuration Settings
+  - they are constant key/value pairs that are set at a common location and 
+  can be read from anywhere in the same application
+  - ex. Connection strings, api keys/secrets
+
+appsettings.json
+  - the file that is be able to be read from any of the files in the program
+
+Reading from appsettings.json in the Program.cs
+  Getting Key/Value from appsettings.json
+    string keyvalue = app.Configuration["MyKey"] ?? "no MyKey key present";
+    string? othervalue = app.Configuration.GetValue<string>("othervalue","no key called othervalue");
+  
+
+Reading from appsettings.json in the controller
+  

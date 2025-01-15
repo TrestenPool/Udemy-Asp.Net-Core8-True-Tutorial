@@ -1,5 +1,12 @@
 @{
   ViewData["title"] = "Index page";
+  string environment = (string?)ViewData["environment"] ?? "Unkknown";
 }
 
 <h1>Hello world</h1> 
+<div class="box">
+  Environment: @environment
+</div>
+<environment include="Development">
+  <button class="button button-blue-back">Button only for development mode</button>
+</environment>
