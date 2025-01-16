@@ -13,4 +13,44 @@ Reading from appsettings.json in the Program.cs
   
 
 Reading from appsettings.json in the controller
+  - IConfiguration has access to the appsettings.json file
+  
+  public class HomeController : Controller{
+    private readonly IConfiguration _configuration;
+
+    public HomeController(IConfiguration configuration){
+      _configuration = configuration;
+    }
+    
+    ViewData["result"] = _configuration.GetValue<string>("MyKey","no MyKey supplied in appsettings.json");
+    ViewData["result"] = _configuration["MyKey"];
+    ViewData["result"] = _configuration["MyKey:nestedkey"];
+  
+
+Get hierarchial data in appsettings.json
+  == Example Data ==
+  "userdata":
+  {
+    "username": "john@gmail.com",
+    "password": "password123!"
+  }
+
+  // this will get the hierarchial data
+  _configuration["something:mydata"]
+
+  // using GetSection()
+  var userdata = _configuration.GetSection("userdata")
+  var username = userdata["username"]
+  var password = userdata["password"]
+
+
+
+
+Options pattern
+  - create a model class with the particular keys you want from appsettings.json
+  
+
+
+
+
   

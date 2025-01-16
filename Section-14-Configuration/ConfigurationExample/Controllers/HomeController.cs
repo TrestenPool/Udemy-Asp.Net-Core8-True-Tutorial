@@ -19,7 +19,19 @@ public class HomeController : Controller{
   }
 
   public IActionResult Index(){
+    // using GetValue
     ViewData["result"] = _configuration.GetValue<string>("MyKey","no MyKey supplied in appsettings.json");
+    // accessing dictionary directly
+    // ViewData["result"] = _configuration["weatherApi:Clientsecret"];
+
+    // hierarchy
+    // ViewData["username"] = _configuration["userdata:username"];
+    // ViewData["password"] = _configuration["userdata:password"];
+
+    var userdata = _configuration.GetSection("userdata");
+    ViewData["username"] = userdata["username"];
+    ViewData["password"] = userdata["password"];
+
     return View();
   }
 }
