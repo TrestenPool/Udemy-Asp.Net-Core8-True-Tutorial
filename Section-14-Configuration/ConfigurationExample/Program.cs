@@ -1,5 +1,12 @@
+using ConfigurationExample;
+
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
+
+// register the options pattern class
+builder.Services.Configure<UserdataOptions>(
+  builder.Configuration.GetSection("userdata")
+);
 
 var app = builder.Build();
 

@@ -1,0 +1,52 @@
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
+
+namespace ConfigurationExample.Controllers;
+
+/****************
+  Options using IConfiguration
+****************/
+
+[Route("/")]
+public class HomeController : Controller{
+  private readonly IConfiguration _configuration;
+
+  // constructor
+  public HomeController(IConfiguration configuration){
+    // di 
+    _configuration = configuration;
+  }
+
+  public IActionResult Index(){
+    // using GetValue
+    ViewData["result"] = _configuration.GetValue<string>("MyKey","no MyKey supplied in appsettings.json");
+    // accessing dictionary directly
+    // ViewData["result"] = _configuration["weatherApi:Clientsecret"];
+
+    // hierarchy
+    // ViewData["username"] = _configuration["userdata:username"];
+    // ViewData["password"] = _configuration["userdata:password"];
+
+    // var userdata = _configuration.GetSection("userdata");
+    // ViewData["username"] = userdata["username"];
+    // ViewData["password"] = userdata["password"];
+
+    
+
+
+    var userdata = 
+      _configuration.GetSection("userdata").Get<UserdataOptions>();
+    
+    ViewData["username"] = userdata?.Username;
+    ViewData["password"] = userdata?.Password;
+
+
+
+    return View();
+  }
+}

@@ -5,32 +5,25 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 
 namespace ConfigurationExample.Controllers;
 
+/***********
+  Example that shows how to use Options using services
+************/
+
 [Route("/")]
 public class HomeController : Controller{
-  private readonly IConfiguration _configuration;
+  private readonly UserdataOptions _options;
 
-  // constructor
-  public HomeController(IConfiguration configuration){
-    // di 
-    _configuration = configuration;
+  public HomeController(IOptions<UserdataOptions> options){
+    _options = options.Value;
   }
 
   public IActionResult Index(){
-    // using GetValue
-    ViewData["result"] = _configuration.GetValue<string>("MyKey","no MyKey supplied in appsettings.json");
-    // accessing dictionary directly
-    // ViewData["result"] = _configuration["weatherApi:Clientsecret"];
-
-    // hierarchy
-    // ViewData["username"] = _configuration["userdata:username"];
-    // ViewData["password"] = _configuration["userdata:password"];
-
-    var userdata = _configuration.GetSection("userdata");
-    ViewData["username"] = userdata["username"];
-    ViewData["password"] = userdata["password"];
+    ViewData["username"] = _options.Username;
+    ViewData["password"] = _options.Password;
 
     return View();
   }

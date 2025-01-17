@@ -48,6 +48,42 @@ Get hierarchial data in appsettings.json
 
 Options pattern
   - create a model class with the particular keys you want from appsettings.json
+  - options class should be non-abstract with public parameterless constructor
+    - public read-write properties are bound. Fields are not bound.   
+
+  // options class
+  public class UserdataOptions{
+    public string Username {get; set;} = string.Empty;
+    public string Password {get; set;} = string.Empty;
+  }
+
+  // using it in the controller
+  var userdata = 
+    _configuration.GetSection("userdata").Get<UserdataOptions>();
+    
+  // setting the viewdata to be sent to the view
+  ViewData["username"] = userdata?.Username;
+  ViewData["password"] = userdata?.Password;
+
+
+
+Different methods to use to apply the options pattern in the controller
+  GetSection(string key)
+    - Returns an IConfigurationSection based on the specific key
+  Bind(object instance)
+    - Binds(loads) configuration key/value pairs into properties of the existing object
+  Get<T>()
+    - Binds (loads) configuration key/value pairs into a new object of the specified type
+  
+
+Environment Specific Configuration
+  - Order of precedence of configuration sources
+  - it loads from top to bottom, so commandline arguments will beat out any
+    appsettings.json
+    appsettings.EnvironmentName.json
+    User Secrets (secrets manager)
+    Environment Variables
+    Command Line Arguments
   
 
 
