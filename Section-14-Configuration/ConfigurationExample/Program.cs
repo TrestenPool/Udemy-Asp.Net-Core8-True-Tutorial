@@ -8,11 +8,15 @@ builder.Services.Configure<UserdataOptions>(
   builder.Configuration.GetSection("userdata")
 );
 
+// load custom config json file
+builder.Configuration.AddJsonFile("myOwnConfig.json", optional: true, reloadOnChange: true);
+
 var app = builder.Build();
 
 app.MapControllers();
 app.UseStaticFiles();
 app.UseRouting();
+
 
 
 // app.UseEndpoints(endpoints => {

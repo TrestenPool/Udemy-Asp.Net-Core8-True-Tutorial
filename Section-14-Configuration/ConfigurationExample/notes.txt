@@ -84,9 +84,14 @@ Environment Specific Configuration
     User Secrets (secrets manager)
     Environment Variables
     Command Line Arguments
-  
+
+
+To load environment variables
+  - USE 2 UNDERSCORES FOR HIERARCHIAL DATA
+  - ex. userdata__username = "tresten@gmail.com"
+  - ex. userdata__password = "ILoveGod!!123"
 
 
 
-
-  
+HttpClient
+  - class for sending/receiving HTTP requests 
