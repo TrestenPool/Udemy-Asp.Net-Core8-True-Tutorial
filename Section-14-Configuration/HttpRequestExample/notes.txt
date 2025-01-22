@@ -1,0 +1,2 @@
+IHttpClientFactory
+  - interface that provides a method called CreateClient() that automatially disposes the same instance (closes the connetion) immeditely after usage
