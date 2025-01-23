@@ -398,6 +398,3 @@ FodyWeavers.xsd
 
 # JetBrains Rider
 *.sln.iml
-
-appsettings.*.json
-Section-14-Configuration/HttpRequestExample/appsettings.json

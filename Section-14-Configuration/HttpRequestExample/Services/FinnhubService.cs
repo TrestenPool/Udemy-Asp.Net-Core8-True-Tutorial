@@ -4,22 +4,24 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text.Json;
 using System.Threading.Tasks;
+using HttpRequestExample.ServiceContracts;
 
 namespace HttpRequestExample.Services;
 
-public class MyService{
+public class FinnhubService : IFinnhubService{
   // fields
   private readonly IHttpClientFactory _httpClientFactory;
   private readonly IConfiguration _configuration;
 
   // constructor
-  public MyService(IHttpClientFactory httpClientFactory, IConfiguration configuration) {
+  public FinnhubService(IHttpClientFactory httpClientFactory, IConfiguration configuration) {
     _httpClientFactory = httpClientFactory;
     _configuration = configuration;
   }
 
-  public async Task<Dictionary<string,object>?> Method() {
+  public async Task<Dictionary<string,object>?> GetMarketStatus() {
 
+    // get the api token from settings
     string apiToken = _configuration["ApiKey"] ?? "";
 
     // make the http request using the factory to create a client for us
@@ -39,22 +41,14 @@ public class MyService{
       // store the json content in a dictionary
       var dictionary = JsonSerializer.Deserialize<Dictionary<string,object>>(content);
 
+      if(dictionary == null) {
+        throw new InvalidOperationException($"No response from finnhubserver");
+      }
+      if(dictionary.ContainsKey("Error")) {
+        throw new InvalidOperationException($"There was an error in the response from finnhub server\nERROR: {dictionary["Error"]}");
+      }
+
       return dictionary;
-
-      // // there was no response from the api
-      // if(responseDictionary == null) {
-      //   throw new InvalidOperationException("No response from api server");
-      // }
-
-      // // The api sent back an error
-      // if(responseDictionary.ContainsKey("error")) {
-      //   throw new InvalidOperationException(
-      //     Convert.ToString(responseDictionary["error"])
-      //   );
-      // }
-
-      // // return the dictionary to the user
-      // return responseDictionary;
     }
 
   }

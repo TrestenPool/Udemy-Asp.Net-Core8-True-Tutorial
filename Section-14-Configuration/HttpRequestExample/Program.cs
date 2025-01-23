@@ -6,10 +6,9 @@ builder.Services.AddControllersWithViews();
 
 // Registers IHttpClientFactory
 builder.Services.AddHttpClient();
-builder.Services.AddScoped<MyService>();
+builder.Services.AddScoped<FinnhubService>();
 
-
-// Add http client
+// Add http client factory IHttpClientFactory to be injected for use in services
 builder.Services.AddHttpClient();
 
 // load custom config
@@ -19,7 +18,7 @@ var app = builder.Build();
 
 // must provide api key
 if( app.Configuration["ApiKey"] == null ) {
-  throw new Exception("You must provide a key 'ApiKey' in the appsettings.json file");
+  throw new Exception("You must provide a key 'ApiKey' in the secrets");
 }
 
 app.MapControllers();

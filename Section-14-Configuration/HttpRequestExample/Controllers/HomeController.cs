@@ -6,16 +6,22 @@ namespace HttpRequestExample.Controllers;
 [Route("/")]
 public class HomeController : Controller {
   private readonly IConfiguration _config;
-  private readonly MyService _myservice;
+  private readonly FinnhubService _finnhubService;
 
-  public HomeController(IConfiguration config, MyService myservice) { 
+  public HomeController(IConfiguration config, FinnhubService finnhubService) { 
     _config = config;
-    _myservice = myservice;
+    _finnhubService = finnhubService;
   }
 
   [Route("")]
   public async Task<ActionResult> Index() {
-    await _myservice.Method();
+    // gets the dictionary from the service
+    var data = await _finnhubService.GetMarketStatus();
+
+    // pass the dictionary to the view
+    ViewData["dictionary"] = data;
+
+    // render the view
     return View();
   }
 

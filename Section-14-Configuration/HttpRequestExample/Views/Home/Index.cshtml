@@ -1,5 +1,10 @@
 @{
   ViewData["title"] = "Index page";
+  var dictionary = (Dictionary<string,object>?)ViewData["dictionary"] ?? new Dictionary<string, object>();
 }
 
 <h1>Hello mate</h1>
+
+@foreach(var key in dictionary.Keys) {
+  <p>@(key) = @(dictionary[key])</p>
+}
