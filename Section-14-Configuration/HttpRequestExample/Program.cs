@@ -1,6 +1,17 @@
+using System.Reflection;
 using HttpRequestExample.Services;
 
 var builder = WebApplication.CreateBuilder(args);
+
+// clear our sources
+builder.Configuration.Sources.Clear();
+
+// add our appsettings
+builder.Configuration
+  .AddJsonFile("appsettings.json")
+  .AddJsonFile("appsettings.development.json", true)
+  .AddUserSecrets(Assembly.GetEntryAssembly()!)
+  .AddEnvironmentVariables();
 
 builder.Services.AddControllersWithViews();
 
