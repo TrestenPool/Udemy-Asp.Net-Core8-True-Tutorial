@@ -1,0 +1,32 @@
+@using SocialMediaAssignment.Options
+
+@{
+  ViewData["title"] = "Index page";
+  SocialMediaOptions options = (SocialMediaOptions?)ViewData["links"] ?? new SocialMediaOptions();
+}
+
+<h1>Social Media links</h1>
+
+@if(options.OnCall?.Length > 0) {
+  <button>
+    <a href="@(options.OnCall)">OnCall</a>
+  </button>
+}
+
+@if(options.OnCallAnalyticsPowerBI?.Length > 0) {
+  <button>
+    <a href="@(options.OnCallAnalyticsPowerBI)">OnCallAnalyticsPowerBI</a>
+  </button>
+}
+
+@if(options.CADPowerBI?.Length > 0) {
+  <button>
+    <a href="@(options.CADPowerBI)">CADPowerBI</a>
+  </button>
+}
+
+@if(options.CDCJailBooking?.Length > 0) {
+  <button>
+    <a href="@(options.CDCJailBooking)">CDCJailBooking</a>
+  </button>
+}
