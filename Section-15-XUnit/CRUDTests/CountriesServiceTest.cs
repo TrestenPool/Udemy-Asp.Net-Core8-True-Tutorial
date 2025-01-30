@@ -20,7 +20,7 @@ public class CountriesServiceTest{
     Success_CountryAddRequest
   }
 
-  // our test
+  #region AddCountry
   [Theory]
   [InlineData(AddCountry.Null_CountryAddRequest)]
   [InlineData(AddCountry.Null_CountryName)]
@@ -31,9 +31,7 @@ public class CountriesServiceTest{
     // Arrange
     CountryAddRequest? request;
 
-    Type exeptionType = typeof(ArgumentException);
-
-    // switch based off of inlinedata
+    // Act & Assert
     switch(addCountryOption) {
 
       case AddCountry.Null_CountryAddRequest:
@@ -70,5 +68,67 @@ public class CountriesServiceTest{
 
 
   }
+  #endregion
+
+
+  #region GetAllCountries
+  public enum GetAllCountriesEnum {
+    EmptyList,
+    AddFewCountries,
+    AddSingleCountry
+  }
+
+  [Theory]
+  [InlineData(GetAllCountriesEnum.EmptyList)]
+  public void GetAllCountries_Test(GetAllCountriesEnum option) {
+    List<CountryResponse> countriesResponseList;
+
+    switch(option) {
+
+      case GetAllCountriesEnum.EmptyList:
+        countriesResponseList = _countriesService.GetAllCountries();
+        Assert.Empty(countriesResponseList);
+      break;
+
+      case GetAllCountriesEnum.AddFewCountries:
+        List<CountryAddRequest> countries_to_add = new List<CountryAddRequest>(){
+          new CountryAddRequest(){CountryName = "USA"},
+          new CountryAddRequest(){CountryName = "UK"}
+        };
+
+        List<CountryResponse> expected_countries_response = new List<CountryResponse>();
+        
+        // add the elements in the request list
+        foreach(var request in countries_to_add) {
+          expected_countries_response.Add( _countriesService.AddCountry(request) );
+        }
+
+        // Gets the countries
+        countriesResponseList = _countriesService.GetAllCountries();
+
+        Assert.Equal(countriesResponseList, expected_countries_response);
+      break;
+
+      case GetAllCountriesEnum.AddSingleCountry:
+        // Arrange
+        CountryAddRequest? countryAddRequest = new CountryAddRequest(){CountryName="Japan"};
+        CountryResponse response;
+
+        // Act
+        response = _countriesService.AddCountry(countryAddRequest);
+        countriesResponseList = _countriesService.GetAllCountries();
+
+        // Assert
+        Assert.True(response.CountryId != Guid.Empty);
+        Assert.Contains(response, countriesResponseList);
+
+      break;
+
+    }
+  }
+  #endregion
+
+
+
   
 }

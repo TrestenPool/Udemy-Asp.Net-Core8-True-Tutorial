@@ -12,18 +12,33 @@ public class CountriesService : ICountriesService{
     _countries = new List<Country>();
   }
 
-  // implemented interface
   public CountryResponse AddCountry(CountryAddRequest? countryAddRequest){
 
+    // argument is null
     ArgumentNullException.ThrowIfNull(countryAddRequest);
 
+    // countryname is null
     if( string.IsNullOrEmpty(countryAddRequest.CountryName) ){
-      throw new ArgumentException("CountryName can't be null");
+      throw new ArgumentException($"{nameof(countryAddRequest.CountryName)} can't be null");
     }
 
+    // convert to country
     Country country = countryAddRequest.ToCountry();
 
-    return null;
+    // check if the country is already in the _countries list
+    if(_countries.Any(c => c.Name == country.Name)){
+      throw new ArgumentException($"{country.Name}:: you are trying to insert duplicate");
+    }
+
+    // add country object into country list
+    _countries.Add(country);
+
+    // send the country response back to the user
+    return country.ToCountryResponse();
+  }
+
+  public List<CountryResponse> GetAllCountries(){
+    return _countries.Select(c => c.ToCountryResponse()).ToList();
   }
 
 }

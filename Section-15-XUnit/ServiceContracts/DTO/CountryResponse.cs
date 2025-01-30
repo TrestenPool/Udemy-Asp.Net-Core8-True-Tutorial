@@ -8,6 +8,25 @@ namespace ServiceContracts;
 public class CountryResponse{
   public Guid CountryId { get; set; }
   public string? CountryName { get; set; }
+
+  public override bool Equals(object? obj){
+    if(obj == null) {
+      return false;
+    }
+
+    if(obj.GetType() != typeof(CountryResponse)) {
+      return false;
+    }
+
+    CountryResponse argument = (CountryResponse)obj;
+    return 
+      this.CountryId == argument.CountryId && 
+      this.CountryName == argument.CountryName;
+  }
+
+  public override int GetHashCode(){
+    return base.GetHashCode();
+  }
 }
 
 public static class CountryExtensions {
