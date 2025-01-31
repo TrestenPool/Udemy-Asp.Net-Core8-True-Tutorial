@@ -129,6 +129,41 @@ public class CountriesServiceTest{
   #endregion
 
 
+  #region GetCountryByCountryId
+  public enum GetCountryByCountryId {
+    Null_CountryId,
+    Valid_CountryId,
+    Invalid_CountryId,
+  }
+
+
+  [Theory]
+  [InlineData(GetCountryByCountryId.Null_CountryId)]
+  [InlineData(GetCountryByCountryId.Valid_CountryId)]
+  [InlineData(GetCountryByCountryId.Invalid_CountryId)]
+  public void GetCountryById_Test(GetCountryByCountryId option) {
+    switch(option) {
+      case GetCountryByCountryId.Null_CountryId:
+      var response = _countriesService.GetCountryByCountryId(null);
+      Assert.Null(response);
+      break;
+
+      case GetCountryByCountryId.Valid_CountryId:
+      var countryAdded = _countriesService.AddCountry(
+        new CountryAddRequest(){CountryName="USA"}
+      );
+      var countryReceived = _countriesService.GetCountryByCountryId(countryAdded.CountryId);
+      Assert.Equal(countryReceived, countryAdded);
+
+      break;
+
+      case GetCountryByCountryId.Invalid_CountryId:
+      break;
+    }
+  }
+  #endregion
+
+
 
   
 }
