@@ -143,21 +143,28 @@ public class CountriesServiceTest{
   [InlineData(GetCountryByCountryId.Invalid_CountryId)]
   public void GetCountryById_Test(GetCountryByCountryId option) {
     switch(option) {
+
       case GetCountryByCountryId.Null_CountryId:
+      // get country with null country id
       var response = _countriesService.GetCountryByCountryId(null);
+      // should be null
       Assert.Null(response);
       break;
 
       case GetCountryByCountryId.Valid_CountryId:
+      // add new country
       var countryAdded = _countriesService.AddCountry(
         new CountryAddRequest(){CountryName="USA"}
       );
+      // attempt to retrieve the country we just added
       var countryReceived = _countriesService.GetCountryByCountryId(countryAdded.CountryId);
+      // assert the country we added is the one we just retrieved
       Assert.Equal(countryReceived, countryAdded);
-
       break;
 
       case GetCountryByCountryId.Invalid_CountryId:
+      var countryRetrieved = _countriesService.GetCountryByCountryId(new Guid());
+      Assert.Null(countryRetrieved);
       break;
     }
   }
