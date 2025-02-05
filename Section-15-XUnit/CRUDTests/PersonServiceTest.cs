@@ -64,33 +64,50 @@ public class PersonServiceTest {
   }
 
 
-public enum PersonIdOptions {
-  NullPersonId,
-  ValidPersonId,
-  InvalidPersonId
-}
-
-[Theory]
-[InlineData(PersonIdOptions.NullPersonId)]
-[InlineData(PersonIdOptions.ValidPersonId)]
-[InlineData(PersonIdOptions.InvalidPersonId)]
-public void GetPersonByPersonIdTest(PersonIdOptions personIdOption) {
-  switch(personIdOption) {
-    case PersonIdOptions.NullPersonId:
-    Assert.True(false);
-    break;
-
-    case PersonIdOptions.ValidPersonId:
-    Assert.True(false);
-    break;
-
-    case PersonIdOptions.InvalidPersonId:
-    Assert.True(false);
-    break;
+  public enum PersonIdOptions {
+    NullPersonId,
+    ValidPersonId,
+    InvalidPersonId
   }
 
-}
+  [Theory]
+  [InlineData(PersonIdOptions.NullPersonId)]
+  [InlineData(PersonIdOptions.ValidPersonId)]
+  [InlineData(PersonIdOptions.InvalidPersonId)]
+  public void GetPersonByPersonIdTest(PersonIdOptions personIdOption) {
+    PersonAddRequest? personAddRequest;
+    PersonResponse? personResponse;
 
+    switch(personIdOption) {
+
+      case PersonIdOptions.NullPersonId:
+      Assert.Throws<ArgumentNullException>(() => {
+        _personService.GetPersonByPersonId(null);
+      });
+      break;
+
+      case PersonIdOptions.ValidPersonId:
+      personAddRequest = new PersonAddRequest(){
+        PersonName="Tresten",
+        Email="tresten_email@gmail.com",
+        Address="412 North Henderson"
+      };
+      personResponse = _personService.AddPerson(personAddRequest);
+      PersonResponse? actualPerson = _personService.GetPersonByPersonId(personResponse.PersonId);
+      Assert.True(personResponse.PersonId == actualPerson?.PersonId);
+      break;
+
+      case PersonIdOptions.InvalidPersonId:
+      personResponse = _personService.GetPersonByPersonId(Guid.NewGuid());
+      Assert.Null(personResponse);
+      break;
+    }
+
+  }
+
+  public enum AllPersonsOptions {
+    Conta
+  }
 
 
 }

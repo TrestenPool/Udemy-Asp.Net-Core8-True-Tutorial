@@ -40,7 +40,14 @@ public class PersonService : IPersonService{
     return _personsList.Select(p => p.ToPersonResponse()).ToList();
   }
 
-  public PersonResponse GetPersonByPersonId(Guid? personId){
-    throw new NotImplementedException();
+  public PersonResponse? GetPersonByPersonId(Guid? personId){
+    // throw null exc if arg is null
+    ArgumentNullException.ThrowIfNull(personId,nameof(personId));
+    
+    // return the first personId that matches in the list or null if it can't find it
+    return _personsList
+      .Where(p => p.PersonId == personId)
+      .Select(p => p.ToPersonResponse())
+      .FirstOrDefault();
   }
 }
