@@ -13,4 +13,6 @@ public interface IPersonService{
   /// </summary>
   /// <returns>A list of PersonResponse</returns>
   List<PersonResponse> GetAllPersons();
+
+  PersonResponse GetPersonByPersonId(Guid? personId);
 }

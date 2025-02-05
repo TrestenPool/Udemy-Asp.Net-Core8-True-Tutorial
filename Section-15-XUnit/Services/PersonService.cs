@@ -1,4 +1,5 @@
-﻿using Entities;
+﻿using System.ComponentModel.DataAnnotations;
+using Entities;
 using ServiceContracts;
 
 namespace Services;
@@ -22,12 +23,10 @@ public class PersonService : IPersonService{
     // personaddrequest is null
     ArgumentNullException.ThrowIfNull(personAddRequest,nameof(personAddRequest));
 
-    // personname is null
-    if(personAddRequest.PersonName == null) {
-      throw new ArgumentException(nameof(personAddRequest.PersonName));
-    }
+    // Validation the properties on the arg personAddRequest
+    ValidationHelper.ModelValidation(personAddRequest);
 
-    // convert the personaddreques to person
+    // convert the personAddRequest to person
     Person person = personAddRequest.ToPerson();
 
     // add the person to the list
@@ -41,4 +40,7 @@ public class PersonService : IPersonService{
     return _personsList.Select(p => p.ToPersonResponse()).ToList();
   }
 
+  public PersonResponse GetPersonByPersonId(Guid? personId){
+    throw new NotImplementedException();
+  }
 }

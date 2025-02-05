@@ -46,6 +46,7 @@ public class PersonServiceTest {
       // arrange
       personRequest = new PersonAddRequest(){
         PersonName = "Tresten",
+        Email="trestenpool@gmail.com",
         PersonGender = Gender.Male,
         Address="1150 Carnaby St",
         DateOfBirth=new DateTime(1999,1,29)
@@ -62,6 +63,33 @@ public class PersonServiceTest {
     }
   }
 
+
+public enum PersonIdOptions {
+  NullPersonId,
+  ValidPersonId,
+  InvalidPersonId
+}
+
+[Theory]
+[InlineData(PersonIdOptions.NullPersonId)]
+[InlineData(PersonIdOptions.ValidPersonId)]
+[InlineData(PersonIdOptions.InvalidPersonId)]
+public void GetPersonByPersonIdTest(PersonIdOptions personIdOption) {
+  switch(personIdOption) {
+    case PersonIdOptions.NullPersonId:
+    Assert.True(false);
+    break;
+
+    case PersonIdOptions.ValidPersonId:
+    Assert.True(false);
+    break;
+
+    case PersonIdOptions.InvalidPersonId:
+    Assert.True(false);
+    break;
+  }
+
+}
 
 
 
