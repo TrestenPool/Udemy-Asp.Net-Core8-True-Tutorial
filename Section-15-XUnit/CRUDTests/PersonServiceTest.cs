@@ -106,7 +106,39 @@ public class PersonServiceTest {
   }
 
   public enum AllPersonsOptions {
-    Conta
+    NoPersons,
+    SomePersons
+  }
+
+  [Theory]
+  [InlineData(AllPersonsOptions.NoPersons)]
+  [InlineData(AllPersonsOptions.SomePersons)]
+  public void AllPersonsTest(AllPersonsOptions options) {
+    List<PersonResponse> list_of_persons;
+    switch(options) {
+      case AllPersonsOptions.NoPersons:
+      list_of_persons = _personService.GetAllPersons();
+      Assert.Empty(list_of_persons);
+      break;
+
+      case AllPersonsOptions.SomePersons:
+      _personService.AddPerson(
+        new PersonAddRequest(){PersonName="Tresten",Address="110 Notyourbusiness",Email="Tresten@yahoo.com"}
+      );
+      _personService.AddPerson(
+        new PersonAddRequest(){PersonName="John",Address="4513 GetOffMyLawn St",Email="John@hotmail.com"}
+      );
+      list_of_persons = _personService.GetAllPersons();
+      Assert.Collection(list_of_persons, 
+        p => {
+          Assert.Equal("Tresten", p.PersonName);
+        },
+        p => {
+          Assert.Equal("John", p.PersonName);
+        }
+      );
+      break;
+    }
   }
 
 
