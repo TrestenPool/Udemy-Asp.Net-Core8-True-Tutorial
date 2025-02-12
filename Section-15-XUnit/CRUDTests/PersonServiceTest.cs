@@ -150,4 +150,56 @@ public class PersonServiceTest {
   }
 
 
+public enum FilteredPersonsOptions {
+  SomePersons,
+  NoPersons
+}
+[Theory]
+[InlineData(FilteredPersonsOptions.SomePersons)]
+[InlineData(FilteredPersonsOptions.NoPersons)]
+public void GetFilteredPersonsTest(FilteredPersonsOptions option) {
+  switch(option) {
+    case FilteredPersonsOptions.SomePersons:
+      List<PersonResponse> list_response_persons_added = AddToPersons();
+      List<PersonResponse> actual_list = _personService.GetFilteredPersons(nameof(Person.PersonName), "Tresten");
+      Assert.Collection(actual_list,
+        p => Assert.True(p.PersonName == "Tresten"),
+        p => Assert.True(p.PersonName == "Tresten")
+      );
+      break;
+
+    case FilteredPersonsOptions.NoPersons:
+      break;
+  }
+}
+
+
+/// <summary>
+/// Returns a List<PersonResponse> of all of the persons that have been added
+/// </summary>
+/// <returns></returns>
+private List<PersonResponse> AddToPersons(){
+  List<PersonResponse> list_persons_added = new();
+
+  list_persons_added.Add(_personService.AddPerson(
+    new PersonAddRequest(){
+      PersonName="Tresten",Address="1120 Rex Dr",Email="trestenp@gmail.com"
+    }
+  ));
+
+  list_persons_added.Add(_personService.AddPerson(
+    new PersonAddRequest(){
+      PersonName="Yahan",Address="322 mulburry dr",Email="yahan@yahoo.com"
+    }
+  ));
+
+  list_persons_added.Add(_personService.AddPerson(
+    new PersonAddRequest(){
+      PersonName="Dave",Address="1243 Qwerty St",Email="DaveB@yahoo.com"
+    }
+  ));
+
+  return list_persons_added;
+}
+
 }

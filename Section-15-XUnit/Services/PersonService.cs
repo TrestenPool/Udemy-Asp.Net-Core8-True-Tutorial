@@ -50,4 +50,13 @@ public class PersonService : IPersonService{
       .Select(p => p.ToPersonResponse())
       .FirstOrDefault();
   }
+
+  public List<PersonResponse> GetFilteredPersons(string searchBy, string? searchString){
+    // get all of the persons
+    List<PersonResponse> allPersons = GetAllPersons();
+
+    List<PersonResponse> matchingPersons = allPersons;
+
+  }
+
 }

@@ -20,4 +20,12 @@ public interface IPersonService{
   /// <param name="personId"></param>
   /// <returns></returns>
   PersonResponse? GetPersonByPersonId(Guid? personId);
+
+  /// <summary>
+  /// Returns a list of persons that matches the searchString.
+  /// </summary>
+  /// <param name="searchBy">What the SearchString will filter on</param>
+  /// <param name="searchString">The Search string that will be used to filter the persons. If searchString is null it will return all of the results</param>
+  /// <returns></returns>
+  List<PersonResponse> GetFilteredPersons(string searchBy, string? searchString);
 }
