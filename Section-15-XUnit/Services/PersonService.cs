@@ -55,7 +55,29 @@ public class PersonService : IPersonService{
     // get all of the persons
     List<PersonResponse> allPersons = GetAllPersons();
 
+    // list that will contain only the matching persons
     List<PersonResponse> matchingPersons = allPersons;
+
+    // the searchBy string is empty so return all persons
+    if(string.IsNullOrEmpty(searchBy)){
+      return matchingPersons;
+    }
+
+    switch(searchBy) {
+      // Get all of the person Names where it contains the searchstring
+      case nameof(Person.PersonName):
+        return allPersons.Where(p => p.PersonName?.Contains(searchString!,StringComparison.OrdinalIgnoreCase) ?? false).ToList();
+
+      case nameof(Person.PersonGender):
+        return allPersons.Where(p => p.PersonGender.ToString() == searchString).ToList();
+
+      case nameof(Person.DateOfBirth):
+        return allPersons.Where(p => p.DateOfBirth?.ToString("dd MMMM yyyy").Contains() );
+      
+      default:
+        return allPersons;
+    }
+
 
   }
 
