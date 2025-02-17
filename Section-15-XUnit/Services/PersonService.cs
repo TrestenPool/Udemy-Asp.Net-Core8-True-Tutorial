@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using Entities;
 using ServiceContracts;
+using ServiceContracts.Enums;
 
 namespace Services;
 
@@ -72,7 +73,7 @@ public class PersonService : IPersonService{
         return allPersons.Where(p => p.PersonGender.ToString() == searchString).ToList();
 
       case nameof(Person.DateOfBirth):
-        return allPersons.Where(p => p.DateOfBirth?.ToString("dd MMMM yyyy").Contains() );
+        return allPersons.Where(p => p.DateOfBirth?.ToString("dd MMMM yyyy").Contains(searchString!, StringComparison.OrdinalIgnoreCase) ?? false ).ToList();
       
       default:
         return allPersons;
@@ -81,4 +82,31 @@ public class PersonService : IPersonService{
 
   }
 
+  public List<PersonResponse> GetSortedPersons(List<PersonResponse> allPersons, string sortBy, SortOrderEnum sortOrder){
+
+    // return original if no searchby was given
+    if(string.IsNullOrEmpty(sortBy)) {
+      return allPersons;
+    }
+
+    // list we will return to the user
+    List<PersonResponse> sortedPersons = sortBy switch{
+      nameof(Person.PersonName) => allPersons.OrderBy(p => p.PersonName).ToList(),
+      nameof(Person.Email) => allPersons.OrderBy(p => p.Email).ToList(),
+      nameof(Person.DateOfBirth) => allPersons.OrderBy(p => p.DateOfBirth).ToList(),
+      nameof(Person.PersonGender) => allPersons.OrderBy(p => p.PersonGender).ToList(),
+      _ => allPersons
+    };
+
+    // sort in descending order if necessary
+    if(sortOrder == SortOrderEnum.Descending) {
+      sortedPersons.Reverse();
+    }
+
+    return sortedPersons;
+  }
+
+  public PersonResponse UpdatePerson(PersonUpdateRequest? personUpdateRequest){
+    throw new NotImplementedException();
+  }
 }

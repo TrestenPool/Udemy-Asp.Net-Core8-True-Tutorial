@@ -1,5 +1,6 @@
 using Entities;
 using ServiceContracts;
+using ServiceContracts.Enums;
 using Services;
 using Xunit.Abstractions;
 
@@ -163,7 +164,6 @@ public void GetFilteredPersonsTest(FilteredPersonsOptions option) {
       List<PersonResponse> list_response_persons_added = AddToPersons();
       List<PersonResponse> actual_list = _personService.GetFilteredPersons(nameof(Person.PersonName), "Tresten");
       Assert.Collection(actual_list,
-        p => Assert.True(p.PersonName == "Tresten"),
         p => Assert.True(p.PersonName == "Tresten")
       );
       break;
@@ -172,6 +172,62 @@ public void GetFilteredPersonsTest(FilteredPersonsOptions option) {
       break;
   }
 }
+
+public enum SortedPersonsEnum {
+  AscendingPersonName,
+  DescendingPersonName
+}
+[Theory]
+[InlineData(SortedPersonsEnum.AscendingPersonName)]
+[InlineData(SortedPersonsEnum.DescendingPersonName)]
+public void GetSortedPersonsTest(SortedPersonsEnum options) {
+
+  // variable to be used in switch branch
+  List<PersonResponse> expected;
+  List<PersonResponse> actual;
+
+  switch(options) {
+    case SortedPersonsEnum.AscendingPersonName:
+      expected = AddToPersons();
+      expected = expected.OrderBy(p => p.PersonName).ToList();
+      actual = _personService.GetSortedPersons(expected,nameof(Person.PersonName),SortOrderEnum.Ascending);
+      Assert.Equal(expected, actual);
+      break;
+
+    case SortedPersonsEnum.DescendingPersonName:
+      expected = AddToPersons();
+      expected = expected
+        .OrderBy(p => p.PersonName)
+        .Reverse()
+        .ToList();
+      actual = _personService.GetSortedPersons(
+        expected,
+        nameof(Person.PersonName),
+        SortOrderEnum.Descending);
+      Assert.Equal(expected, actual);
+      break;
+
+    default:
+      break;
+  }
+}
+
+
+public enum UpdatePersonEnum {
+  NullPersonUpdateRequest,
+  ValidPersonUpdateRequest
+}
+[Theory]
+[InlineData(UpdatePersonEnum.NullPersonUpdateRequest)]
+[InlineData(UpdatePersonEnum.ValidPersonUpdateRequest)]
+public void UpdatePersonTest(UpdatePersonEnum option) {
+  switch(option) {
+    case UpdatePersonEnum.NullPersonUpdateRequest:
+      break;
+  }
+}
+
+
 
 
 /// <summary>

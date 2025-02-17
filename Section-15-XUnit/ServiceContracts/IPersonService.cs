@@ -1,4 +1,6 @@
-﻿namespace ServiceContracts;
+﻿using ServiceContracts.Enums;
+
+namespace ServiceContracts;
 
 public interface IPersonService{
   /// <summary>
@@ -28,4 +30,16 @@ public interface IPersonService{
   /// <param name="searchString">The Search string that will be used to filter the persons. If searchString is null it will return all of the results</param>
   /// <returns></returns>
   List<PersonResponse> GetFilteredPersons(string searchBy, string? searchString);
+
+  /// <summary>
+  /// Takes in a list and sorts based on the sortBy and the sortOrder
+  /// Primarily used for clicking on a column to return the list in the sorted order
+  /// </summary>
+  /// <param name="allPersons"></param>
+  /// <param name="sortBy"></param>
+  /// <param name="sortOrder"></param>
+  /// <returns></returns>
+  List<PersonResponse> GetSortedPersons(List<PersonResponse> allPersons, string sortBy, SortOrderEnum sortOrder);
+
+  PersonResponse UpdatePerson(PersonUpdateRequest? personUpdateRequest);
 }

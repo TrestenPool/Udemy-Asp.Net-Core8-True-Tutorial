@@ -31,10 +31,31 @@ public class PersonResponse{
   public override int GetHashCode(){
     return base.GetHashCode();
   }
+
+  /// <summary>
+  /// Converts PersonResponse to PersonUpdateRequest
+  /// </summary>
+  /// <returns></returns>
+  public PersonUpdateRequest ToPersonUpdateRequest(){
+    return new PersonUpdateRequest(){
+      PersonId = this.PersonId,
+      PersonName = this.PersonName,
+      Email = this.Email,
+      DateOfBirth = this.DateOfBirth,
+      PersonGender = this.PersonGender,
+      
+    };
+  }
+
 }
 
 public static class PersonResponseExtensions {
 
+  /// <summary>
+  /// Converts Person to PersonResponse
+  /// </summary>
+  /// <param name="person"></param>
+  /// <returns></returns>
   public static PersonResponse ToPersonResponse(this Person person){
 
     return new PersonResponse(){
