@@ -107,6 +107,44 @@ public class PersonService : IPersonService{
   }
 
   public PersonResponse UpdatePerson(PersonUpdateRequest? personUpdateRequest){
-    throw new NotImplementedException();
+    // throw an error if the arg is null
+    ArgumentNullException.ThrowIfNull(personUpdateRequest);
+
+    // validate personUpdateRequest
+    ValidationHelper.ModelValidation(personUpdateRequest);
+
+    // grab the person from the list
+    Person? personToUpdate = _personsList.FirstOrDefault(p => p.PersonId == personUpdateRequest.PersonId);
+
+    // the person by that id was not found
+    if(personToUpdate == null) {
+      throw new ArgumentException($"No person found with {personUpdateRequest.PersonId}");
+    }
+
+    // update all of the properties
+    personToUpdate.PersonName = personUpdateRequest.PersonName;
+    personToUpdate.Email = personUpdateRequest.Email;
+    personToUpdate.Address = personUpdateRequest.Address;
+    personToUpdate.DateOfBirth = personUpdateRequest.DateOfBirth;
+    personToUpdate.PersonGender = personUpdateRequest.PersonGender;
+    personToUpdate.CountryId = personUpdateRequest.CountryId;
+    personToUpdate.ReceiveNewsLetters = personUpdateRequest.ReceiveNewsLetters;
+
+    // return the object to the user
+    return personToUpdate.ToPersonResponse();
+  }
+
+  public bool DeletePerson(Guid? personId){
+    // personid is null throw exception
+    ArgumentNullException.ThrowIfNull(personId);
+
+    // get the person from the list
+    Person? personToDelete = _personsList.FirstOrDefault(p => p.PersonId == personId);
+
+    // store the result of the removal in result variable
+    bool result = _personsList.Remove(personToDelete);
+
+    // return the result
+    return result;
   }
 }

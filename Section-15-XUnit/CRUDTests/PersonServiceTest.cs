@@ -222,12 +222,76 @@ public enum UpdatePersonEnum {
 [InlineData(UpdatePersonEnum.ValidPersonUpdateRequest)]
 public void UpdatePersonTest(UpdatePersonEnum option) {
   switch(option) {
+
     case UpdatePersonEnum.NullPersonUpdateRequest:
+      PersonUpdateRequest? nullPersonUpdateRequest = null;
+      Assert.Throws<ArgumentNullException>(() => _personService.UpdatePerson(nullPersonUpdateRequest));
+      break;
+
+    case UpdatePersonEnum.ValidPersonUpdateRequest:
+      // add to the list of persons
+      List<PersonResponse> personsAdded = AddToPersons();
+      // grab the first person in the list
+      PersonResponse personToUpdate = personsAdded[0];
+      // convert the personResponse to a PersonUpdateRequest
+      PersonUpdateRequest personUpdateRequest = personToUpdate.ToPersonUpdateRequest();
+      // change something in the personName
+      personUpdateRequest.PersonName = "NotMyName Johnson";
+      // Attempt to update the person
+      PersonResponse actual = _personService.UpdatePerson(personUpdateRequest);
+
+      // assert the person name is set to what we changed
+      Assert.True(actual.PersonName == "NotMyName Johnson");
       break;
   }
 }
 
+public enum DeletePersonEnum {
+  NullPerson,
+  ValidPerson,
+  InvalidPerson
+}
+[Theory]
+[InlineData(DeletePersonEnum.NullPerson)]
+[InlineData(DeletePersonEnum.ValidPerson)]
+[InlineData(DeletePersonEnum.InvalidPerson)]
+public void DeletePersonTest(DeletePersonEnum option) {
+  List<PersonResponse> personsAdded;
+  PersonResponse? personResponse;
+  bool deleted;
+  switch(option) {
+    case DeletePersonEnum.NullPerson:
+      // add to the list of person
+      personsAdded = AddToPersons();
+      // passing null to delete person throws an exception
+      Assert.Throws<ArgumentNullException>(() => {
+        _personService.DeletePerson(null);
+      });
+      break;
 
+    case DeletePersonEnum.ValidPerson:
+      // add to the list of person
+      personsAdded = AddToPersons();
+      // grab the first person in the list
+      personResponse = personsAdded[0];
+      // delete the person
+      deleted = _personService.DeletePerson(personResponse.PersonId);
+      // make sure the person was deleted from the list
+      Assert.DoesNotContain(personResponse, _personService.GetAllPersons());
+      // make sure the response was true
+      Assert.True(deleted);
+      break;
+
+    case DeletePersonEnum.InvalidPerson:
+      // add to the list of person
+      personsAdded = AddToPersons();
+      // Attempt to delete a person that doesn't exist
+      deleted = _personService.DeletePerson(Guid.NewGuid());
+      // make sure the response was true
+      Assert.False(deleted);
+      break;
+  }
+}
 
 
 /// <summary>

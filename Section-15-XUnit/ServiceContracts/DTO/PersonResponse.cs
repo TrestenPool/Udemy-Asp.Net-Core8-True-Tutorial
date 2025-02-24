@@ -40,10 +40,10 @@ public class PersonResponse{
     return new PersonUpdateRequest(){
       PersonId = this.PersonId,
       PersonName = this.PersonName,
+      Address = this.Address,
       Email = this.Email,
       DateOfBirth = this.DateOfBirth,
       PersonGender = this.PersonGender,
-      
     };
   }
 

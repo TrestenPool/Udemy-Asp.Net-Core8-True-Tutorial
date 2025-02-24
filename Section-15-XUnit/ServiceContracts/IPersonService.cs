@@ -41,5 +41,17 @@ public interface IPersonService{
   /// <returns></returns>
   List<PersonResponse> GetSortedPersons(List<PersonResponse> allPersons, string sortBy, SortOrderEnum sortOrder);
 
+  /// <summary>
+  /// Updates a person in the person list
+  /// </summary>
+  /// <param name="personUpdateRequest">Person object we are updating</param>
+  /// <returns>Returns a PersonResponse object of the person we updated</returns>
   PersonResponse UpdatePerson(PersonUpdateRequest? personUpdateRequest);
+
+  /// <summary>
+  /// Deletes a person from the persons list
+  /// </summary>
+  /// <param name="personId"></param>
+  /// <returns>Returns true or false depending on </returns>
+  bool DeletePerson(Guid? personId);
 }
