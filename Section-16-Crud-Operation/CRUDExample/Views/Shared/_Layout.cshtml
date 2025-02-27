@@ -1,0 +1,36 @@
+@{
+  string title = (string?)ViewData["title"] ?? "Default title";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="~/stylesheet.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/fontawesome.min.css" integrity="sha512-v8QQ0YQ3H4K6Ic3PJkym91KoeNT5S3PnDKvqnwqFD1oiqIl653crGZplPdU5KKtHjO0QKcQ2aUlQZYjHczkmGw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <title>@(title)</title>
+</head>
+<body>
+
+  <div class="container">
+
+    @* Navbar *@
+    <div class="navbar">
+      <div class="navbar-brand">CRUD Demo</div>
+      <ul>
+        <li>
+          <a href="~/persons/index">Persons</a>
+        </li>
+      </ul>
+    </div>
+
+    @* Page Content *@
+    <div class="page-content">
+      @RenderBody()
+    </div>
+
+  </div>
+
+</body>
+</html>
