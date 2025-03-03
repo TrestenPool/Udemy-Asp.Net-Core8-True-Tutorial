@@ -13,16 +13,33 @@ public class PersonService : IPersonService{
     _personsList = new List<Person>();
     _countriesService = new CountriesService(initialize: false);
 
+    // initialize the persons list with data
     if(iniatalize) {
       // create list of persons to add
       List<Person> mockPersons = new List<Person>{
         new(){
           PersonName = "John Doe",
-          Email = "john@gmail.com"
+          Email = "john@gmail.com",
+          PersonGender = Gender.Male,
+          DateOfBirth = new DateTime(1999, 1, 29)
         },
         new(){
           PersonName = "Pat Johnson",
-          Email = "pat@gmail.com"
+          Email = "pat@gmail.com",
+          PersonGender = Gender.Female,
+          DateOfBirth = new DateTime(2000, 1, 1)
+        },
+        new(){
+          PersonName = "Jack Pearson",
+          Email = "jack@gmail.com",
+          PersonGender = Gender.Male,
+          DateOfBirth = new DateTime(1972, 12, 9)
+        },
+        new(){
+          PersonName = "Rebecca Pearson",
+          Email = "rebecca@gmail.com",
+          PersonGender = Gender.Female,
+          DateOfBirth = new DateTime(1980, 10, 22)
         }
       };
 

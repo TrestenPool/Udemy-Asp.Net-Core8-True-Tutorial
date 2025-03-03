@@ -1,5 +1,56 @@
 @{
   ViewData["title"] = "Persons Index";
+  List<PersonResponse> persons = (List<PersonResponse>?)ViewData["persons"] ?? new List<PersonResponse>();
+  Dictionary<string,string> SearchFields = (Dictionary<string,string>?)ViewData["SearchFields"] ?? new Dictionary<string,string>();
 }
 
 <h1>Persons index page</h1>
+
+<!-- Search Pane on top -->
+<div class="box flex">
+
+  <!-- Filter to search on -->
+  <div class="flex-1">
+    <select class="form-input">
+      @foreach(var field in SearchFields) {
+        <option value="@field.Key">@field.Value</option>
+      }
+    </select>
+  </div>
+
+  <!-- Text to search for -->
+  <div class="flex-1">
+    <input type="search" id="search" class="form-input">
+  </div>
+
+  <div class="flex-1">
+    <button class="button button-blue-back" placeholder="something">Search</button>
+    <a href="~/persons/index" class="link-hover">Clear All</a>
+  </div>
+
+</div>
+
+<!-- Table -->
+<table class="table w-100 mt">
+  <thead>
+    <tr>
+      <th>Person Name</th>
+      <th>Email</th>
+      <th>Date of Birth</th>
+      <th>Age</th>
+      <th>Gender</th>
+    </tr>
+  </thead>
+  <tbody>
+    @foreach(PersonResponse person in persons){
+      <tr>
+        <td>@person.PersonName</td>
+        <td>@person.Email</td>
+        <td>@person.DateOfBirth?.ToString("dd MMM yyyy")</td>
+        <td>@person.Age</td>
+        <td>@person.PersonGender</td>
+      </tr>
+    }
+  </tbody>
+
+</table>

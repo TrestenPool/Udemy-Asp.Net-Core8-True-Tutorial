@@ -8,6 +8,13 @@ public class PersonResponse{
   public string? Email { get; set; }
   public string? Address { get; set; }
   public DateTime? DateOfBirth { get; set; }
+  public int? Age { get{
+    if(DateOfBirth == null) return null;
+    DateTime today = DateTime.Today;
+    int age = today.Year - DateOfBirth.Value.Year;
+    if(DateOfBirth.Value.Date > today.AddYears(-age)) age--;
+    return age;
+  }}
   public Gender? PersonGender { get; set; }
   public string? Country { get; set; }
   public bool ReceiveNewsLetters { get; set; }
@@ -66,7 +73,6 @@ public static class PersonResponseExtensions {
       PersonName=person.PersonName,
       Email = person.Email,
       ReceiveNewsLetters = person.ReceiveNewsLetters,
-
     };
 
   }
