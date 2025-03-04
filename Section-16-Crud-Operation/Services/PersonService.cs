@@ -100,14 +100,20 @@ public class PersonService : IPersonService{
 
     switch(searchBy) {
       // Get all of the person Names where it contains the searchstring
-      case nameof(Person.PersonName):
+      case nameof(PersonResponse.PersonName):
         return allPersons.Where(p => p.PersonName?.Contains(searchString!,StringComparison.OrdinalIgnoreCase) ?? false).ToList();
 
-      case nameof(Person.PersonGender):
-        return allPersons.Where(p => p.PersonGender.ToString() == searchString).ToList();
+      case nameof(PersonResponse.Email):
+        return allPersons.Where(p => p.Email?.Contains(searchString!,StringComparison.OrdinalIgnoreCase) ?? false).ToList();
 
-      case nameof(Person.DateOfBirth):
+      case nameof(PersonResponse.PersonGender):
+        return allPersons.Where(p => string.Equals(p.PersonGender.ToString(), searchString, StringComparison.OrdinalIgnoreCase) ).ToList();
+
+      case nameof(PersonResponse.DateOfBirth):
         return allPersons.Where(p => p.DateOfBirth?.ToString("dd MMMM yyyy").Contains(searchString!, StringComparison.OrdinalIgnoreCase) ?? false ).ToList();
+
+      case nameof(PersonResponse.Age):
+        return allPersons.Where(p => string.Equals(p.Age.ToString(), searchString, StringComparison.OrdinalIgnoreCase)).ToList();
       
       default:
         return allPersons;
