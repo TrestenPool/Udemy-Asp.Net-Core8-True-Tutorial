@@ -55,4 +55,11 @@ public class PersonsController: Controller {
     return View();
   }
 
+  [Route("persons/create")]
+  [HttpGet]
+  public IActionResult Create() {
+    return View();
+  }
+
+
 }

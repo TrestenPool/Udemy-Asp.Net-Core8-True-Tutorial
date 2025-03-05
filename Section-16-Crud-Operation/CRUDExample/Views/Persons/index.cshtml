@@ -51,45 +51,45 @@
     <thead>
       <tr>
         <th>
-          <a href="~/persons/index?searchBy=@(searchBy)&SearchString=@(searchString)&sortBy=@(nameof(PersonResponse.PersonName))&sortOrder=@(sortOrder == SortOrderEnum.Ascending ? "Descending" : "Ascending")">Person Name</a>
-          @if(sortBy == nameof(PersonResponse.PersonName)) {
-            <i class="fa-solid @(sortOrder == SortOrderEnum.Ascending ? "fa-arrow-up" : "fa-arrow-down") "></i>
-          }
+          @await Html.PartialAsync("~/Views/Shared/_GridColumnHeader.cshtml", viewData: new ViewDataDictionary(ViewData){
+            {"ColumnName", nameof(PersonResponse.PersonName)},
+            {"VisualName", "Name"}
+          })
         </th>
         <th>
-          <a href="~/persons/index?searchBy=@(searchBy)&SearchString=@(searchString)&sortBy=@(nameof(PersonResponse.Email))&sortOrder=@(sortOrder == SortOrderEnum.Ascending ? "Descending" : "Ascending")">Email</a>
-          @if(sortBy == nameof(PersonResponse.Email)) {
-            <i class="fa-solid @(sortOrder == SortOrderEnum.Ascending ? "fa-arrow-up" : "fa-arrow-down") "></i>
-          }
+          @await Html.PartialAsync("~/Views/Shared/_GridColumnHeader.cshtml", viewData: new ViewDataDictionary(ViewData){
+            {"ColumnName", nameof(PersonResponse.Email)},
+            {"VisualName", "Email"}
+          })
         </th>
         <th>
-          <a href="~/persons/index?searchBy=@(searchBy)&SearchString=@(searchString)&sortBy=@(nameof(PersonResponse.DateOfBirth))&sortOrder=@(sortOrder == SortOrderEnum.Ascending ? "Descending" : "Ascending")">Date of Birth</a>
-          @if(sortBy == nameof(PersonResponse.DateOfBirth)) {
-            <i class="fa-solid @(sortOrder == SortOrderEnum.Ascending ? "fa-arrow-up" : "fa-arrow-down") "></i>
-          }
+          @await Html.PartialAsync("~/Views/Shared/_GridColumnHeader.cshtml", viewData: new ViewDataDictionary(ViewData){
+            {"ColumnName", nameof(PersonResponse.DateOfBirth)},
+            {"VisualName", "Date of Birth"}
+          })
         </th>
         <th>
-          <a href="~/persons/index?searchBy=@(searchBy)&SearchString=@(searchString)&sortBy=@(nameof(PersonResponse.Age))&sortOrder=@(sortOrder == SortOrderEnum.Ascending ? "Descending" : "Ascending")">Age</a>
-          @if(sortBy == nameof(PersonResponse.Age)) {
-            <i class="fa-solid @(sortOrder == SortOrderEnum.Ascending ? "fa-arrow-up" : "fa-arrow-down") "></i>
-          }
+          @await Html.PartialAsync("~/Views/Shared/_GridColumnHeader.cshtml", viewData: new ViewDataDictionary(ViewData){
+            {"ColumnName", nameof(PersonResponse.Age)},
+            {"VisualName", "Age"}
+          })
         </th>
         <th>
-          <a href="~/persons/index?searchBy=@(searchBy)&SearchString=@(searchString)&sortBy=@(nameof(PersonResponse.PersonGender))&sortOrder=@(sortOrder == SortOrderEnum.Ascending ? "Descending" : "Ascending")">Gender</a>
-          @if(sortBy == nameof(PersonResponse.PersonGender)) {
-            <i class="fa-solid @(sortOrder == SortOrderEnum.Ascending ? "fa-arrow-up" : "fa-arrow-down") "></i>
-          }
+          @await Html.PartialAsync("~/Views/Shared/_GridColumnHeader.cshtml", viewData: new ViewDataDictionary(ViewData){
+            {"ColumnName", nameof(PersonResponse.PersonGender)},
+            {"VisualName", "Gender"}
+          })
         </th>
       </tr>
     </thead>
     <tbody>
       @foreach(PersonResponse person in persons){
         <tr>
-          <td>@person.PersonName</td>
-          <td>@person.Email</td>
-          <td>@person.DateOfBirth?.ToString("dd MMM yyyy")</td>
-          <td>@person.Age</td>
-          <td>@person.PersonGender</td>
+          <td style="width:15%">@person.PersonName</td>
+          <td style="width:15%">@person.Email</td>
+          <td style="width:15%">@person.DateOfBirth?.ToString("dd MMM yyyy")</td>
+          <td style="width:15%">@person.Age</td>
+          <td style="width:15%">@person.PersonGender</td>
         </tr>
       }
     </tbody>

@@ -1,0 +1,13 @@
+@{
+  string? sortBy = (string?)ViewData["CurrentSortBy"];
+  string? searchBy = (string?)ViewData["CurrentSearchBy"];
+  string? searchString = (string?)ViewData["CurrentSearchString"];
+  string? columnName = (string?)ViewData["ColumnName"];
+  string? visualName = (string?)ViewData["VisualName"];
+  Enum.TryParse(ViewData["CurrentSortOrder"]?.ToString(), out SortOrderEnum sortOrder);
+}
+
+<a href="~/persons/index?searchBy=@(searchBy)&SearchString=@(searchString)&sortBy=@(columnName)&sortOrder=@(sortOrder == SortOrderEnum.Ascending ? "Descending" : "Ascending")">@(visualName)</a>
+@if(sortBy == columnName) {
+  <i class="fa-solid @(sortOrder == SortOrderEnum.Ascending ? "fa-arrow-up" : "fa-arrow-down") "></i>
+}
