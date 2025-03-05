@@ -131,10 +131,11 @@ public class PersonService : IPersonService{
 
     // list we will return to the user
     List<PersonResponse> sortedPersons = sortBy switch{
-      nameof(Person.PersonName) => allPersons.OrderBy(p => p.PersonName).ToList(),
-      nameof(Person.Email) => allPersons.OrderBy(p => p.Email).ToList(),
-      nameof(Person.DateOfBirth) => allPersons.OrderBy(p => p.DateOfBirth).ToList(),
-      nameof(Person.PersonGender) => allPersons.OrderBy(p => p.PersonGender).ToList(),
+      nameof(PersonResponse.PersonName) => allPersons.OrderBy(p => p.PersonName).ToList(),
+      nameof(PersonResponse.Email) => allPersons.OrderBy(p => p.Email).ToList(),
+      nameof(PersonResponse.DateOfBirth) => allPersons.OrderBy(p => p.DateOfBirth).ToList(),
+      nameof(PersonResponse.PersonGender) => allPersons.OrderBy(p => p.PersonGender).ToList(),
+      nameof(PersonResponse.Age) => allPersons.OrderBy(p => p.Age).ToList(),
       _ => allPersons
     };
 

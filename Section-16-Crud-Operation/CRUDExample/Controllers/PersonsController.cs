@@ -17,8 +17,8 @@ public class PersonsController: Controller {
   public IActionResult Index(
     [FromQuery]string searchBy, 
     [FromQuery]string searchString,
-    [FromQuery]string SortBy="PersonName",
-    [FromQuery]SortOrderEnum SortOrder=SortOrderEnum.Ascending
+    [FromQuery]string sortBy="PersonName",
+    [FromQuery]SortOrderEnum sortOrder=SortOrderEnum.Ascending
     ) {
     
     // populate options to search by
@@ -39,19 +39,18 @@ public class PersonsController: Controller {
     }
 
     // sort the persons
-    if(!string.IsNullOrEmpty(SortBy)) {
-      personsList = _personService.GetSortedPersons(personsList, SortBy, SortOrder);
+    if(!string.IsNullOrEmpty(sortBy)) {
+      personsList = _personService.GetSortedPersons(personsList, sortBy, sortOrder);
     }
 
     // populate the viewdata with the persons
     ViewData["persons"] = personsList;
 
     // persist the search criteria
+    ViewData["CurrentSortBy"] = sortBy;
     ViewData["CurrentSearchBy"] = searchBy ?? "PersonName";
     ViewData["CurrentSearchString"] = searchString;
-    ViewData["CurrentSortOrder"] = SortOrder;
-
-    Console.WriteLine($"sortOrder = {SortOrder}");
+    ViewData["CurrentSortOrder"] = sortOrder;
 
     return View();
   }

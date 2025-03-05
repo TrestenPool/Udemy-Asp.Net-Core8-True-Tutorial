@@ -2,10 +2,10 @@
   ViewData["title"] = "Persons Index";
   List<PersonResponse> persons = (List<PersonResponse>?)ViewData["persons"] ?? new List<PersonResponse>();
   Dictionary<string,string> SearchFields = (Dictionary<string,string>?)ViewData["SearchFields"] ?? new Dictionary<string,string>();
+  string? sortBy = (string?)ViewData["CurrentSortBy"];
   string? searchBy = (string?)ViewData["CurrentSearchBy"];
   string? searchString = (string?)ViewData["CurrentSearchString"];
-  Enum.TryParse(ViewData["CurrentSortBy"]?.ToString(), out SortOrderEnum sortOrder);
-  SortOrderEnum oppositeOrder = (sortOrder == SortOrderEnum.Ascending) ? SortOrderEnum.Descending : SortOrderEnum.Ascending;
+  Enum.TryParse(ViewData["CurrentSortOrder"]?.ToString(), out SortOrderEnum sortOrder);
 }
 
 <h1>Persons index page</h1>
@@ -51,12 +51,35 @@
     <thead>
       <tr>
         <th>
-          <a href="~/persons/index?searchBy=@(searchBy)&SearchString=@(searchString)&SortBy=@(nameof(PersonResponse.PersonName))&SortOrder=@(oppositeOrder.ToString())">Person Name</a>
+          <a href="~/persons/index?searchBy=@(searchBy)&SearchString=@(searchString)&sortBy=@(nameof(PersonResponse.PersonName))&sortOrder=@(sortOrder == SortOrderEnum.Ascending ? "Descending" : "Ascending")">Person Name</a>
+          @if(sortBy == nameof(PersonResponse.PersonName)) {
+            <i class="fa-solid @(sortOrder == SortOrderEnum.Ascending ? "fa-arrow-up" : "fa-arrow-down") "></i>
+          }
         </th>
-        <th>Email</th>
-        <th>Date of Birth</th>
-        <th>Age</th>
-        <th>Gender</th>
+        <th>
+          <a href="~/persons/index?searchBy=@(searchBy)&SearchString=@(searchString)&sortBy=@(nameof(PersonResponse.Email))&sortOrder=@(sortOrder == SortOrderEnum.Ascending ? "Descending" : "Ascending")">Email</a>
+          @if(sortBy == nameof(PersonResponse.Email)) {
+            <i class="fa-solid @(sortOrder == SortOrderEnum.Ascending ? "fa-arrow-up" : "fa-arrow-down") "></i>
+          }
+        </th>
+        <th>
+          <a href="~/persons/index?searchBy=@(searchBy)&SearchString=@(searchString)&sortBy=@(nameof(PersonResponse.DateOfBirth))&sortOrder=@(sortOrder == SortOrderEnum.Ascending ? "Descending" : "Ascending")">Date of Birth</a>
+          @if(sortBy == nameof(PersonResponse.DateOfBirth)) {
+            <i class="fa-solid @(sortOrder == SortOrderEnum.Ascending ? "fa-arrow-up" : "fa-arrow-down") "></i>
+          }
+        </th>
+        <th>
+          <a href="~/persons/index?searchBy=@(searchBy)&SearchString=@(searchString)&sortBy=@(nameof(PersonResponse.Age))&sortOrder=@(sortOrder == SortOrderEnum.Ascending ? "Descending" : "Ascending")">Age</a>
+          @if(sortBy == nameof(PersonResponse.Age)) {
+            <i class="fa-solid @(sortOrder == SortOrderEnum.Ascending ? "fa-arrow-up" : "fa-arrow-down") "></i>
+          }
+        </th>
+        <th>
+          <a href="~/persons/index?searchBy=@(searchBy)&SearchString=@(searchString)&sortBy=@(nameof(PersonResponse.PersonGender))&sortOrder=@(sortOrder == SortOrderEnum.Ascending ? "Descending" : "Ascending")">Gender</a>
+          @if(sortBy == nameof(PersonResponse.PersonGender)) {
+            <i class="fa-solid @(sortOrder == SortOrderEnum.Ascending ? "fa-arrow-up" : "fa-arrow-down") "></i>
+          }
+        </th>
       </tr>
     </thead>
     <tbody>
