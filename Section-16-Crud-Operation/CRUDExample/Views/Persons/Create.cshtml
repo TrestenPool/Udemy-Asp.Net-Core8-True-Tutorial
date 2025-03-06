@@ -2,4 +2,82 @@
   ViewData["title"] = "Create page";
 }
 
+<a href="~/persons/index" class="link-hover">Back to persons index page</a>
 <h1>Create page</h1>
+
+<div class="w-50">
+
+  @* form *@
+  <form action="~/persons/create" method="post">
+
+    @* personName *@
+    <div class="form-field flex">
+      <div class="w-25">
+        <label class="form-label pt" for="PersonName">Person Name</label>
+      </div>
+
+      <div class="w-75">
+        <input class="form-input" type="text" name="PersonName" id="PersonName">
+      </div>
+    </div>
+
+    @* email *@
+    <div class="form-field flex">
+      <div class="w-25">
+        <label class="form-label pt" for="Email">Email</label>
+      </div>
+
+      <div class="w-75">
+        <input class="form-input" type="email" name="Email" id="Email">
+      </div>
+    </div>
+
+    @* dob *@
+    <div class="form-field flex">
+      <div class="w-25">
+        <label class="form-label pt" for="DateOfBirth">Date of Birth</label>
+      </div>
+
+      <div class="w-75">
+        <input class="form-input" type="date" name="DateOfBirth" id="DateOfBirth">
+      </div>
+    </div>
+
+    @* Gender *@
+    <div class="form-field flex">
+
+      <div class="w-50">
+        <label class="form-label pt" for="Gender">Male</label>
+        <input class="ml" type="radio" name="Gender" id="Male" value="Male">
+
+        <label class="form-label pt" for="Female">Female</label>
+        <input class="ml" type="radio" name="Gender" id="Female" value="Female">
+      </div>
+
+    </div>
+
+    @* Address *@
+    <div class="form-field flex">
+      <div class="w-25">
+        <label for="Address" class="form-label pt">Address</label>
+      </div>
+      <div class="flex-1">
+        <textarea name="Address" id="Address" class="form-input"></textarea>
+      </div>
+    </div>
+
+    @* ReceiveNewsLetters *@
+    <div class="form-field flex">
+      <div class="w-25">
+        <label for="ReceiveNewsLetters" class="form-label pt">Do you want to receive news letters</label>
+      </div>
+      <div class="flex-1">
+        <input type="checkbox" name="ReceiveNewsLetters" id="ReceiveNewsLetters" value="true">
+      </div>
+    </div>
+
+    @* submit button *@
+    <button type="submit" class="button button-blue-back">Submit</button>
+  </form>
+
+</div>
