@@ -1,3 +1,4 @@
+using System.Text;
 using Microsoft.AspNetCore.Mvc;
 using ServiceContracts;
 using ServiceContracts.Enums;
@@ -59,6 +60,27 @@ public class PersonsController: Controller {
   [HttpGet]
   public IActionResult Create() {
     return View();
+  }
+
+  [Route("persons/create")]
+  [HttpPost]
+  public IActionResult PersonCreated(PersonAddRequest person) {
+
+    // The model validation was successful
+    if(ModelState.IsValid) {
+      return Ok("Valid");
+    }
+    // there was an issue with the model validation
+    else {
+      // pass the errors list to the view
+      ViewData["errors"] = ModelState.Values
+        .SelectMany(v => v.Errors)
+        .SelectMany(e => e.ErrorMessage)
+        .ToList();
+
+      return BadRequest(ModelState);
+    }
+
   }
 
 
