@@ -1,10 +1,11 @@
+using System.Runtime.InteropServices.Marshalling;
 using System.Text;
 using Microsoft.AspNetCore.Mvc;
 using ServiceContracts;
 using ServiceContracts.Enums;
 using Services;
 
-[Route("/")]
+[Route("[controller]")]
 public class PersonsController: Controller {
   // private fields
   private readonly IPersonService _personService;
@@ -14,7 +15,7 @@ public class PersonsController: Controller {
     _personService = personService;
   }
 
-  [Route("persons/index")]
+  [Route("[action]")]
   public IActionResult Index(
     [FromQuery]string searchBy, 
     [FromQuery]string searchString,
@@ -56,19 +57,21 @@ public class PersonsController: Controller {
     return View();
   }
 
-  [Route("persons/create")]
+  [Route("[action]")]
   [HttpGet]
   public IActionResult Create() {
     return View();
   }
 
-  [Route("persons/create")]
+  [Route("create")]
   [HttpPost]
   public IActionResult PersonCreated(PersonAddRequest person) {
 
     // The model validation was successful
     if(ModelState.IsValid) {
-      return Ok("Valid");
+      // Add the person to the list of persons
+      PersonResponse personResponse =  _personService.AddPerson(person);
+      return RedirectToAction("Index", "Persons");
     }
     // there was an issue with the model validation
     else {
@@ -82,6 +85,5 @@ public class PersonsController: Controller {
     }
 
   }
-
 
 }

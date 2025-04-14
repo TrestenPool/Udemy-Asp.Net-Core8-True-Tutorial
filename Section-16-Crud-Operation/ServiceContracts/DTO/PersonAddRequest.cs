@@ -10,6 +10,7 @@ public class PersonAddRequest{
 
   [Required(ErrorMessage = "Email can't be blank")]
   [EmailAddress]
+  [DataType(DataType.EmailAddress)]
   public string? Email { get; set; }
   public string? Address { get; set; }
   public DateTime? DateOfBirth { get; set; }

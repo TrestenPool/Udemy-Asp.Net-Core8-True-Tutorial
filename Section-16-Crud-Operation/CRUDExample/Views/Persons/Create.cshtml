@@ -1,14 +1,16 @@
+@model PersonAddRequest
+
 @{
   ViewData["title"] = "Create page";
 }
 
-<a href="~/persons/index" class="link-hover">Back to persons index page</a>
+<a asp-controller="Persons" asp-action="Index" class="link-hover">Back to index page</a>
 <h1>Create page</h1>
 
 <div class="w-50">
 
   @* form *@
-  <form action="~/persons/create" method="post">
+  <form asp-controller="Persons" asp-action="create" method="post">
 
     @* personName *@
     <div class="form-field flex">
@@ -17,7 +19,7 @@
       </div>
 
       <div class="w-75">
-        <input class="form-input" type="text" name="PersonName" id="PersonName">
+        <input class="form-input" type="text" asp-for="PersonName">
       </div>
     </div>
 
@@ -28,7 +30,7 @@
       </div>
 
       <div class="w-75">
-        <input class="form-input" type="email" name="Email" id="Email">
+        <input class="form-input" asp-for="Email">
       </div>
     </div>
 
