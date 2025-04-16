@@ -1,7 +1,10 @@
 @model PersonAddRequest
+@using System;
+@using Entities;
 
 @{
   ViewData["title"] = "Create page";
+  string[] genders = (string[]) Enum.GetNames(typeof(Gender));
 }
 
 <a asp-controller="Persons" asp-action="Index" class="link-hover">Back to index page</a>
@@ -15,7 +18,8 @@
     @* personName *@
     <div class="form-field flex">
       <div class="w-25">
-        <label class="form-label pt" for="PersonName">Person Name</label>
+        @* <label class="form-label pt" for="PersonName">Person Name</label> *@
+        <label class="form-label pt" asp-for="PersonName">Person Name</label>
       </div>
 
       <div class="w-75">
@@ -26,7 +30,7 @@
     @* email *@
     <div class="form-field flex">
       <div class="w-25">
-        <label class="form-label pt" for="Email">Email</label>
+        <label class="form-label pt" asp-for="Email">Email</label>
       </div>
 
       <div class="w-75">
@@ -37,7 +41,7 @@
     @* dob *@
     <div class="form-field flex">
       <div class="w-25">
-        <label class="form-label pt" for="DateOfBirth">Date of Birth</label>
+        <label class="form-label pt" asp-for="DateOfBirth">Date of Birth</label>
       </div>
 
       <div class="w-75">
@@ -48,12 +52,16 @@
     @* Gender *@
     <div class="form-field flex">
 
-      <div class="w-50">
-        <label class="form-label pt" for="Gender">Male</label>
-        <input class="ml" type="radio" name="Gender" id="Male" value="Male">
+      @* Label *@
+      <div class="w-25">
+        <label class="form-label" asp-for="PersonGender">Gender</label>
+      </div>
 
-        <label class="form-label pt" for="Female">Female</label>
-        <input class="ml" type="radio" name="Gender" id="Female" value="Female">
+      <div class="flex-1">
+        @foreach(var gender in genders) {
+          <input asp-for="PersonGender" type="radio" value="@gender">
+          <label for="@gender">@gender</label>
+        }
       </div>
 
     </div>
@@ -64,17 +72,17 @@
         <label for="Address" class="form-label pt">Address</label>
       </div>
       <div class="flex-1">
-        <textarea name="Address" id="Address" class="form-input"></textarea>
+        <textarea asp-for="Address" class="form-input"></textarea>
       </div>
     </div>
 
     @* ReceiveNewsLetters *@
     <div class="form-field flex">
       <div class="w-25">
-        <label for="ReceiveNewsLetters" class="form-label pt">Do you want to receive news</label>
+        <label asp-for="ReceiveNewsLetters" class="form-label pt">Do you want to receive news</label>
       </div>
       <div class="flex-1">
-        <input type="checkbox" name="ReceiveNewsLetters" id="ReceiveNewsLetters" value="true">
+        <input asp-for="ReceiveNewsLetters" value="true">
       </div>
     </div>
 
@@ -83,3 +91,8 @@
   </form>
 
 </div>
+
+  @* Scripts for client side validation *@
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.21.0/jquery.validate.min.js" integrity="sha512-KFHXdr2oObHKI9w4Hv1XPKc898mE4kgYx58oqsc/JqqdLMDI4YjOLzom+EMlW8HFUd0QfjfAvxSL6sEq/a42fQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/4.0.0/jquery.validate.unobtrusive.min.js" integrity="sha512-xq+Vm8jC94ynOikewaQXMEkJIOBp7iArs3IhFWSWdRT3Pq8wFz46p+ZDFAR7kHnSFf+zUv52B3prRYnbDRdgog==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>

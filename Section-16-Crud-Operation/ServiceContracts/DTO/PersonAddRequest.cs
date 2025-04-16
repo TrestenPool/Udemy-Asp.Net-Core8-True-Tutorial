@@ -6,6 +6,7 @@ namespace ServiceContracts;
 public class PersonAddRequest{
   public Guid PersonId { get; } = Guid.NewGuid();
   [Required(ErrorMessage = "Person Name can't be blank")]
+  [DataType(DataType.Text)]
   public string? PersonName { get; set; }
 
   [Required(ErrorMessage = "Email can't be blank")]

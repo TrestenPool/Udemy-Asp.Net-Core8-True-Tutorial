@@ -85,6 +85,12 @@
             {"VisualName", "Gender"}
           })
         </th>
+        <th>
+          @await Html.PartialAsync("~/Views/Shared/_GridColumnHeader.cshtml", viewData: new ViewDataDictionary(ViewData){
+            {"ColumnName", nameof(PersonResponse.ReceiveNewsLetters)},
+            {"VisualName", "Receive News Letters"}
+          })
+        </th>
       </tr>
     </thead>
     <tbody>
@@ -95,6 +101,7 @@
           <td style="width:15%">@person.DateOfBirth?.ToString("dd MMM yyyy")</td>
           <td style="width:15%">@person.Age</td>
           <td style="width:15%">@person.PersonGender</td>
+          <td style="width:15%">@person.ReceiveNewsLetters</td>
         </tr>
       }
     </tbody>

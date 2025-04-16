@@ -1,6 +1,7 @@
 using System.Runtime.InteropServices.Marshalling;
 using System.Text;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using ServiceContracts;
 using ServiceContracts.Enums;
 using Services;
@@ -60,6 +61,9 @@ public class PersonsController: Controller {
   [Route("[action]")]
   [HttpGet]
   public IActionResult Create() {
+    new SelectListItem(){
+      Text="Tresten", Value="t-pain"
+    };
     return View();
   }
 
