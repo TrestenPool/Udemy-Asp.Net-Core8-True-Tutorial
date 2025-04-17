@@ -24,6 +24,7 @@
 
       <div class="w-75">
         <input class="form-input" type="text" asp-for="PersonName">
+        <span asp-validation-for="PersonName" class="text-red"></span>
       </div>
     </div>
 
@@ -35,6 +36,7 @@
 
       <div class="w-75">
         <input class="form-input" asp-for="Email">
+        <span asp-validation-for="Email" class="text-red"></span>
       </div>
     </div>
 
@@ -45,7 +47,8 @@
       </div>
 
       <div class="w-75">
-        <input class="form-input" type="date" name="DateOfBirth" id="DateOfBirth">
+        <input class="form-input" asp-for="DateOfBirth">
+        <span asp-validation-for="DateOfBirth" class="text-red"></span>
       </div>
     </div>
 
@@ -61,6 +64,7 @@
         @foreach(var gender in genders) {
           <input asp-for="PersonGender" type="radio" value="@gender">
           <label for="@gender">@gender</label>
+          <span asp-validation-for="PersonGender" class="text-red"></span>
         }
       </div>
 
@@ -73,6 +77,7 @@
       </div>
       <div class="flex-1">
         <textarea asp-for="Address" class="form-input"></textarea>
+        <span asp-validation-for="Address" class="text-red"></span>
       </div>
     </div>
 
@@ -83,11 +88,16 @@
       </div>
       <div class="flex-1">
         <input asp-for="ReceiveNewsLetters" value="true">
+        <span asp-validation-for="ReceiveNewsLetters" class="text-red"></span>
       </div>
     </div>
 
     @* submit button *@
     <button type="submit" class="button button-green-back">Create</button>
+
+    @* Show all of the error messages *@
+    <div asp-validation-summary="All" class="text-red"></div>
+
   </form>
 
 </div>
