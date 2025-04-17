@@ -14,10 +14,10 @@
 <body>
 
   <div class="container">
-
     @* Navbar *@
     <div class="navbar">
-      <div class="navbar-brand">CRUD Demo</div>
+      @* <div class="navbar-brand">CRUD Demo</div> *@
+        <img src="~/logo.png" asp-append-version="true" width="100px">
       <ul>
         <li>
           <a href="~/persons/index">Persons</a>
@@ -32,5 +32,8 @@
 
   </div>
 
+  @* Load any javascript files that the user specifies in the views *@
+  @RenderSection("Scripts", required: false)
 </body>
+
 </html>

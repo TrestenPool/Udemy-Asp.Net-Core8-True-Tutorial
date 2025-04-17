@@ -421,6 +421,12 @@ a.link-hover:hover
     display: inline-block;
 }
 
+.center-box
+{
+  width: 70%;
+  margin: auto;
+}
+
 
 
 

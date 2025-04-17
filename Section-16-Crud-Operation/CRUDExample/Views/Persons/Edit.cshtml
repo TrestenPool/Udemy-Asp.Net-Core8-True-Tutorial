@@ -1,19 +1,19 @@
-@model PersonAddRequest
+@model PersonUpdateRequest
 @using System;
 @using Entities;
 
 @{
-  ViewData["title"] = "Create page";
+  ViewData["title"] = "Edit Person";
   string[] genders = (string[]) Enum.GetNames(typeof(Gender));
 }
 
 <a asp-controller="Persons" asp-action="Index" class="link-hover">Back to index page</a>
-<h1>Create page</h1>
+<h1>Edit person</h1>
 
 <div class="center-box">
 
   @* form *@
-  <form asp-controller="Persons" asp-action="create" method="post">
+  <form asp-controller="Persons" asp-action="Edit" asp-route-personId="@Model.PersonId" method="post">
 
     @* personName *@
     <div class="form-field flex">
@@ -93,7 +93,7 @@
     </div>
 
     @* submit button *@
-    <button type="submit" class="button button-green-back">Create</button>
+    <button type="submit" class="button button-green-back">Edit</button>
 
     @* Show all of the error messages *@
     <div asp-validation-summary="All" class="text-red"></div>

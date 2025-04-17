@@ -58,8 +58,8 @@ public class PersonsController: Controller {
     return View();
   }
 
-  [Route("[action]")]
   [HttpGet]
+  [Route("[action]")]
   public IActionResult Create() {
     new SelectListItem(){
       Text="Tresten", Value="t-pain"
@@ -67,8 +67,26 @@ public class PersonsController: Controller {
     return View();
   }
 
-  [Route("create")]
+  [HttpGet]
+  [Route("[action]/{personId}")]
+  public IActionResult Edit(Guid personId) {
+    // get the person object from the person id
+    PersonResponse? personResponse = _personService.GetPersonByPersonId(personId);
+    return View(personResponse?.ToPersonUpdateRequest());
+  }
+
   [HttpPost]
+  [Route("[action]/{personId}")]
+  public IActionResult Edit(PersonUpdateRequest personUpdateRequest) {
+    // update the person
+    _personService.UpdatePerson(personUpdateRequest);
+
+    // load the index view
+    return RedirectToAction("Index");
+  }
+
+  [HttpPost]
+  [Route("create")]
   public IActionResult PersonCreated(PersonAddRequest person) {
 
     // The model validation was successful

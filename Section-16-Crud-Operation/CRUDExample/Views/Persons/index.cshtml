@@ -102,6 +102,9 @@
           <td style="width:15%">@person.Age</td>
           <td style="width:15%">@person.PersonGender</td>
           <td style="width:15%">@person.ReceiveNewsLetters</td>
+          <td style="width:20%">
+            <a asp-controller="Persons" asp-action="Edit" asp-route-personId="@person.PersonId">Edit</a>
+          </td>
         </tr>
       }
     </tbody>
