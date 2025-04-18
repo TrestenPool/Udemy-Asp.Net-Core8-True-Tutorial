@@ -6,7 +6,22 @@
   string? searchBy = (string?)ViewData["CurrentSearchBy"];
   string? searchString = (string?)ViewData["CurrentSearchString"];
   Enum.TryParse(ViewData["CurrentSortOrder"]?.ToString(), out SortOrderEnum sortOrder);
+  string? ErrorAlert = (string?)ViewData["ErrorAlert"]; 
+  string? SuccessAlert = (string?)ViewData["SuccessAlert"]; 
 }
+
+@* Pass any errors to the alert if there is any *@
+@if(ErrorAlert != null) {
+  @section Alerts {
+    <div class="alert-message-error">@ErrorAlert</div>
+  }
+}
+@if(SuccessAlert != null) {
+  @section Alerts {
+    <div class="alert-message-success">@SuccessAlert</div>
+  }
+}
+
 
 <h1>Persons index page</h1>
 
@@ -91,6 +106,7 @@
             {"VisualName", "Receive News Letters"}
           })
         </th>
+        <th>options</th>
       </tr>
     </thead>
     <tbody>
@@ -104,6 +120,9 @@
           <td style="width:15%">@person.ReceiveNewsLetters</td>
           <td style="width:20%">
             <a asp-controller="Persons" asp-action="Edit" asp-route-personId="@person.PersonId">Edit</a>
+          </td>
+          <td style="width:20%">
+            <a asp-controller="Persons" asp-action="Delete" asp-route-personId="@person.PersonId">Delete</a>
           </td>
         </tr>
       }

@@ -16,6 +16,7 @@ public class PersonsController: Controller {
     _personService = personService;
   }
 
+  [Route("")]
   [Route("[action]")]
   public IActionResult Index(
     [FromQuery]string searchBy, 
@@ -23,6 +24,13 @@ public class PersonsController: Controller {
     [FromQuery]string sortBy="PersonName",
     [FromQuery]SortOrderEnum sortOrder=SortOrderEnum.Ascending
     ) {
+
+    if(TempData["SuccessAlert"] != null) {
+      ViewData["SuccessAlert"] = TempData["SuccessAlert"];
+    }
+    if(TempData["ErrorAlert"] != null) {
+      ViewData["ErrorAlert"] = TempData["ErrorAlert"];
+    }
     
     // populate options to search by
     ViewData["SearchFields"] = new Dictionary<string,string>(){
@@ -72,14 +80,29 @@ public class PersonsController: Controller {
   public IActionResult Edit(Guid personId) {
     // get the person object from the person id
     PersonResponse? personResponse = _personService.GetPersonByPersonId(personId);
+    
+    // person id was not found, redirect to index page
+    if(personResponse == null) {
+      return RedirectToAction("Index");
+    }
+
+    // go to the edit view
     return View(personResponse?.ToPersonUpdateRequest());
   }
 
   [HttpPost]
   [Route("[action]/{personId}")]
   public IActionResult Edit(PersonUpdateRequest personUpdateRequest) {
-    // update the person
-    _personService.UpdatePerson(personUpdateRequest);
+    
+    // update the the model since validation passed
+    if(ModelState.IsValid) {
+      _personService.UpdatePerson(personUpdateRequest);
+      TempData["SuccessAlert"] = $"Success updating {personUpdateRequest.PersonName}";
+    }
+    else {
+      // load the viewdata with errors
+      TempData["ErrorAlert"] = string.Join(", ", ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage));
+    }
 
     // load the index view
     return RedirectToAction("Index");
@@ -106,6 +129,35 @@ public class PersonsController: Controller {
       return BadRequest(ModelState);
     }
 
+  }
+
+  [HttpGet]
+  [Route("[action]/{personId}")]
+  public IActionResult Delete(Guid personId) {
+    // Get the person object
+    PersonResponse? personResponse = _personService.GetPersonByPersonId(personId);
+
+    if(personResponse == null){
+      TempData["ErrorAlert"] = $"Unable to find person with id {personId}";
+      return RedirectToAction("Index");
+    }
+
+    return View(personResponse);
+  }
+
+  [HttpPost]
+  [Route("[action]/{personId}")]
+  public IActionResult DeletePerson(Guid personId) {
+    bool result = _personService.DeletePerson(personId);
+
+    if(!result) {
+      TempData["ErrorAlert"] = $"There was an issue deleting person with id: {personId}";
+    }
+    else {
+      TempData["SuccessAlert"] = $"Successfully deleted person with id: {personId}";
+    }
+
+    return RedirectToAction("Index");
   }
 
 }

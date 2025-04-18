@@ -1,0 +1,50 @@
+@model PersonResponse
+@using System;
+@using Entities;
+
+@{
+  ViewData["title"] = "Delete person";
+}
+
+<a asp-controller="Persons" asp-action="Index" class="link-hover">Back to index page</a>
+<h1>Delete Person</h1>
+
+<div class="center-box">
+
+  @* form *@
+  <form asp-controller="Persons" asp-action="DeletePerson" asp-route-personId="@Model.PersonId" method="post">
+
+    @* personName *@
+    <div class="form-field flex">
+      <div class="w-25">
+        @* <label class="form-label pt" for="PersonName">Person Name</label> *@
+        <label class="form-label pt" asp-for="PersonName">Person Name</label>
+      </div>
+
+      <div class="w-75">
+        <input disabled class="form-input" type="text" asp-for="PersonName">
+        <span asp-validation-for="PersonName" class="text-red"></span>
+      </div>
+    </div>
+
+    @* email *@
+    <div class="form-field flex">
+      <div class="w-25">
+        <label class="form-label pt" asp-for="Email">Email</label>
+      </div>
+
+      <div class="w-75">
+        <input disabled class="form-input" asp-for="Email">
+        <span asp-validation-for="Email" class="text-red"></span>
+      </div>
+    </div>
+
+    @* submit button *@
+    <button type="submit" class="button button-red-back">Delete</button>
+
+    @* Show all of the error messages *@
+    <div asp-validation-summary="All" class="text-red"></div>
+
+  </form>
+
+</div>

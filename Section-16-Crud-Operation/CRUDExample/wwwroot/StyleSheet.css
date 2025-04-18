@@ -450,3 +450,34 @@ a.link-hover:hover
         width: auto;
     }
 }
+
+/* for my alert box */
+.alert-message-error {
+  /* Your initial styling for the alert div */
+  background-color: #d20b1c;
+  color: #f0ecec;
+  border: 1px solid #f5c6cb;
+  padding: 15px;
+  border-radius: 5px;
+  opacity: 1; /* Initially visible */
+  animation: fadeOut 2s forwards; /* Apply the fadeOut animation */
+}
+
+.alert-message-success {
+  /* Your initial styling for the alert div */
+  background-color: #1aec0b;
+  color: #060000;
+  border: 1px solid #ffffff;
+  padding: 15px;
+  border-radius: 5px;
+  opacity: 1; /* Initially visible */
+  animation: fadeOut 2s forwards; /* Apply the fadeOut animation */
+}
+
+@keyframes fadeOut {
+  0% { opacity: 1; }
+  25% { opacity: 0.75; } /* Keep visible for most of the duration */
+  50% { opacity: 0.50; } /* Keep visible for most of the duration */
+  75% { opacity: 0.25; } /* Keep visible for most of the duration */
+  100% { opacity: 0; display: none; } /* Fade out and then hide */
+}

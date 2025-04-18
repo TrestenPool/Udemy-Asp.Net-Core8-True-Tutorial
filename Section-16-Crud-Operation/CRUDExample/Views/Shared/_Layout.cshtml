@@ -25,6 +25,9 @@
       </ul>
     </div>
 
+    @* Render any alerts *@
+    @RenderSection("Alerts", required:false)
+
     @* Page Content *@
     <div class="page-content">
       @RenderBody()
