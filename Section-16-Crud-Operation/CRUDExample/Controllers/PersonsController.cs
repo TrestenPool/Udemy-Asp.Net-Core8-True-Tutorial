@@ -25,6 +25,7 @@ public class PersonsController: Controller {
     [FromQuery]SortOrderEnum sortOrder=SortOrderEnum.Ascending
     ) {
 
+    // Add the alerts to the top of the page
     if(TempData["SuccessAlert"] != null) {
       ViewData["SuccessAlert"] = TempData["SuccessAlert"];
     }
@@ -116,6 +117,7 @@ public class PersonsController: Controller {
     if(ModelState.IsValid) {
       // Add the person to the list of persons
       PersonResponse personResponse =  _personService.AddPerson(person);
+      TempData["SuccessAlert"] = $"Successfully created person: {personResponse.PersonName}";
       return RedirectToAction("Index", "Persons");
     }
     // there was an issue with the model validation
