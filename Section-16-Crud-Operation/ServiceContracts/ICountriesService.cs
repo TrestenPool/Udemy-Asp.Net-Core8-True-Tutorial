@@ -1,9 +1,13 @@
-﻿namespace ServiceContracts;
+﻿using Entities;
+
+namespace ServiceContracts;
 
 /// <summary>
 /// Represents business logic for manipulating country entity
 /// </summary>
 public interface ICountriesService{
+  //  List<Country> _countries {get; set;}
+
   /// <summary>
   /// Adds a country object to the list of countries
   /// </summary>

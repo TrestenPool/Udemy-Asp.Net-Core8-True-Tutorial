@@ -17,6 +17,7 @@ public class PersonUpdateRequest{
   public DateTime? DateOfBirth { get; set; }
   public Gender? PersonGender { get; set; }
   public Guid? CountryId { get; set; }
+  public string? Country { get; set; }
   public bool ReceiveNewsLetters { get; set; }
 
   /// <summary>

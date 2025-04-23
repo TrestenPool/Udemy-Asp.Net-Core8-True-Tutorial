@@ -4,24 +4,23 @@ using ServiceContracts;
 namespace Services;
 
 public class CountriesService : ICountriesService{
-  // private field
+  // fields
   private readonly List<Country> _countries;
 
   // constructor
   public CountriesService(bool initialize = true) {
+    // initialize
     _countries = new List<Country>();
 
-    // if initialize is true, then add some countries to the list
-    if(initialize) {
-      List<Country> countries = new List<Country>{
-        new(){Name="USA"},
-        new(){Name="Mexico"},
-        new(){Name="Canada"},
-        new(){Name="Brazil"}
-      };
-      _countries.AddRange(countries);
-    }
-
+    _countries.Add(
+      new Country(){Name="USA", CountryId=new Guid("e170468d-a1d2-4f2b-b1b0-ff4df8dac50d")}
+    );
+    _countries.Add(
+      new Country(){Name="Russia", CountryId=new Guid("fc4ad2d2-8c12-4eb1-840d-2e8d9f0687eb")}
+    );
+    _countries.Add(
+      new Country(){Name="China", CountryId=new Guid("84e34617-ea13-4025-af68-e6a027865c76")}
+    );
   }
 
   public CountryResponse AddCountry(CountryAddRequest? countryAddRequest){

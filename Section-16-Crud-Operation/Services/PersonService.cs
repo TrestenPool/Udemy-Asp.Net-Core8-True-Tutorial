@@ -7,11 +7,9 @@ namespace Services;
 
 public class PersonService : IPersonService{
   private List<Person> _personsList;
-  private readonly ICountriesService _countriesService;
 
   public PersonService(bool iniatalize = true) {
     _personsList = new List<Person>();
-    _countriesService = new CountriesService(initialize: false);
 
     // initialize the persons list with data
     if(iniatalize) {
@@ -21,25 +19,29 @@ public class PersonService : IPersonService{
           PersonName = "John Doe",
           Email = "john@gmail.com",
           PersonGender = Gender.Male,
-          DateOfBirth = new DateTime(1999, 1, 29)
+          DateOfBirth = new DateTime(1999, 1, 29),
+          CountryId = new Guid("e170468d-a1d2-4f2b-b1b0-ff4df8dac50d")
         },
         new(){
           PersonName = "Pat Johnson",
           Email = "pat@gmail.com",
           PersonGender = Gender.Female,
-          DateOfBirth = new DateTime(2000, 1, 1)
+          DateOfBirth = new DateTime(2000, 1, 1),
+          CountryId = new Guid("fc4ad2d2-8c12-4eb1-840d-2e8d9f0687eb")
         },
         new(){
           PersonName = "Jack Pearson",
           Email = "jack@gmail.com",
           PersonGender = Gender.Male,
-          DateOfBirth = new DateTime(1972, 12, 9)
+          DateOfBirth = new DateTime(1972, 12, 9),
+          CountryId = new Guid("e170468d-a1d2-4f2b-b1b0-ff4df8dac50d")
         },
         new(){
           PersonName = "Rebecca Pearson",
           Email = "rebecca@gmail.com",
           PersonGender = Gender.Female,
-          DateOfBirth = new DateTime(1980, 10, 22)
+          DateOfBirth = new DateTime(1980, 10, 22),
+          CountryId = new Guid("84e34617-ea13-4025-af68-e6a027865c76")
         }
       };
 
@@ -50,7 +52,6 @@ public class PersonService : IPersonService{
 
   private PersonResponse ConvertPersonToPersonResponse(Person person) {
     PersonResponse personResponse = person.ToPersonResponse();
-    personResponse.Country = _countriesService.GetCountryByCountryId(person.CountryId)?.CountryName;
     return personResponse;
   }
 

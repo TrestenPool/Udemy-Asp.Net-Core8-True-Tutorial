@@ -1,3 +1,5 @@
+using Entities;
+using Microsoft.EntityFrameworkCore;
 using ServiceContracts;
 using Services;
 
@@ -8,6 +10,13 @@ builder.Services.AddControllers();
 // registering an interface with a concrete type
 builder.Services.AddSingleton<ICountriesService, CountriesService>();
 builder.Services.AddSingleton<IPersonService, PersonService>();
+
+// add the connection to the sql db
+builder.Services.AddDbContext<PersonsDbContext>(
+  options => {
+    options.UseSqlServer(builder.Configuration.GetConnectionString("Default"));
+  } 
+);
 
 var app = builder.Build();
 app.UseStaticFiles();

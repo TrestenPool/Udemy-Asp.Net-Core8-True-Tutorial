@@ -10,10 +10,12 @@ using Services;
 public class PersonsController: Controller {
   // private fields
   private readonly IPersonService _personService;
+  private readonly ICountriesService _countriesService;
 
   // constructor
-  public PersonsController(IPersonService personService) {
+  public PersonsController(IPersonService personService, ICountriesService countriesService) {
     _personService = personService;
+    _countriesService = countriesService;
   }
 
   [Route("")]
@@ -44,6 +46,7 @@ public class PersonsController: Controller {
 
     // get the list of persons
     List<PersonResponse> personsList = _personService.GetAllPersons();
+    personsList.ForEach(p => p.Country = _countriesService.GetCountryByCountryId(p?.CountryId)?.CountryName );
 
     // filter the persons
     if(!string.IsNullOrEmpty(searchBy) && !string.IsNullOrEmpty(searchString)) {

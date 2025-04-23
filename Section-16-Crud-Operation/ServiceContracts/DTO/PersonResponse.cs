@@ -16,6 +16,7 @@ public class PersonResponse{
     return age;
   }}
   public Gender? PersonGender { get; set; }
+  public Guid? CountryId { get; set; }
   public string? Country { get; set; }
   public bool ReceiveNewsLetters { get; set; }
 
@@ -51,6 +52,7 @@ public class PersonResponse{
       Email = this.Email,
       DateOfBirth = this.DateOfBirth,
       PersonGender = this.PersonGender,
+      CountryId = this.CountryId
     };
   }
 
@@ -64,7 +66,6 @@ public static class PersonResponseExtensions {
   /// <param name="person"></param>
   /// <returns></returns>
   public static PersonResponse ToPersonResponse(this Person person){
-
     return new PersonResponse(){
       PersonId = person.PersonId,
       Address = person.Address,
@@ -73,6 +74,7 @@ public static class PersonResponseExtensions {
       PersonName=person.PersonName,
       Email = person.Email,
       ReceiveNewsLetters = person.ReceiveNewsLetters,
+      CountryId=person.CountryId
     };
 
   }
