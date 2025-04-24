@@ -60,18 +60,18 @@ namespace Entities.Migrations
                 columns: new[] { "PersonId", "Address", "CountryId", "DateOfBirth", "Email", "PersonGender", "PersonName", "ReceiveNewsLetters" },
                 values: new object[,]
                 {
-                    { new Guid("1926fe42-d0d7-4423-88f7-ddec22896e8d"), "50467 Holy Cross Crossing", null, new DateTime(1995, 2, 11, 0, 0, 0, 0, DateTimeKind.Unspecified), "ttregona4@stumbleupon.com", null, "Tani", false },
-                    { new Guid("24ffd828-493c-49b3-b776-bc36f4c70774"), "73 Heath Avenue", null, new DateTime(1995, 2, 10, 0, 0, 0, 0, DateTimeKind.Unspecified), "fbowsher2@howstuffworks.com", null, "Franchot", true },
-                    { new Guid("3d403fb6-776b-420f-852d-89ddc3987de4"), "57449 Brown Way", null, new DateTime(1983, 2, 16, 0, 0, 0, 0, DateTimeKind.Unspecified), "mjarrell6@wisc.edu", null, "Maddy", true },
-                    { new Guid("6224e464-8a64-4a6e-b4e3-6350fd59248f"), "83187 Merry Drive", null, new DateTime(1987, 1, 9, 0, 0, 0, 0, DateTimeKind.Unspecified), "asarvar3@dropbox.com", null, "Angie", true },
-                    { new Guid("62fd20fc-65a7-41ad-b4a2-da521082fe95"), "2 Warrior Avenue", null, new DateTime(1990, 5, 24, 0, 0, 0, 0, DateTimeKind.Unspecified), "mconachya@va.gov", null, "Minta", true },
-                    { new Guid("6e569b63-a594-407c-9a32-647b793626db"), "484 Clarendon Court", null, new DateTime(1997, 9, 25, 0, 0, 0, 0, DateTimeKind.Unspecified), "lwoodwing9@wix.com", null, "Lombard", false },
-                    { new Guid("714d8831-ec8b-4305-9639-5a4a89ad3d00"), "97570 Raven Circle", null, new DateTime(1988, 1, 4, 0, 0, 0, 0, DateTimeKind.Unspecified), "mlingfoot5@netvibes.com", null, "Mitchael", false },
-                    { new Guid("754bf0c7-1862-41ba-b248-688032d1bf57"), "413 Sachtjen Way", null, new DateTime(1990, 9, 20, 0, 0, 0, 0, DateTimeKind.Unspecified), "hmosco8@tripod.com", null, "Hansiain", true },
-                    { new Guid("801aa514-22f8-4a96-abfa-b00e5e3fb47f"), "4 Parkside Point", null, new DateTime(1989, 8, 28, 0, 0, 0, 0, DateTimeKind.Unspecified), "mwebsdale0@people.com.cn", null, "Marguerite", false },
-                    { new Guid("8b82fd3c-a925-4a4c-9ad4-ac8f2ce363e8"), "9334 Fremont Street", null, new DateTime(1987, 1, 19, 0, 0, 0, 0, DateTimeKind.Unspecified), "vklussb@nationalgeographic.com", null, "Verene", true },
-                    { new Guid("b3ef2380-7bd3-4975-a8e8-b771c351e132"), "6 Morningstar Circle", null, new DateTime(1990, 10, 5, 0, 0, 0, 0, DateTimeKind.Unspecified), "ushears1@globo.com", null, "Ursa", false },
-                    { new Guid("e893c874-66c5-410d-9101-de179264a7cd"), "4 Stuart Drive", null, new DateTime(1998, 12, 2, 0, 0, 0, 0, DateTimeKind.Unspecified), "pretchford7@virginia.edu", null, "Pegeen", true }
+                    { new Guid("012107df-862f-4f16-ba94-e5c16886f005"), "413 Sachtjen Way", null, new DateTime(1990, 9, 20, 0, 0, 0, 0, DateTimeKind.Unspecified), "hmosco8@tripod.com", null, "Hansiain", true },
+                    { new Guid("28d11936-9466-4a4b-b9c5-2f0a8e0cbde9"), "2 Warrior Avenue", null, new DateTime(1990, 5, 24, 0, 0, 0, 0, DateTimeKind.Unspecified), "mconachya@va.gov", null, "Minta", true },
+                    { new Guid("29339209-63f5-492f-8459-754943c74abf"), "57449 Brown Way", null, new DateTime(1983, 2, 16, 0, 0, 0, 0, DateTimeKind.Unspecified), "mjarrell6@wisc.edu", null, "Maddy", true },
+                    { new Guid("2a6d3738-9def-43ac-9279-0310edc7ceca"), "97570 Raven Circle", null, new DateTime(1988, 1, 4, 0, 0, 0, 0, DateTimeKind.Unspecified), "mlingfoot5@netvibes.com", null, "Mitchael", false },
+                    { new Guid("89e5f445-d89f-4e12-94e0-5ad5b235d704"), "50467 Holy Cross Crossing", null, new DateTime(1995, 2, 11, 0, 0, 0, 0, DateTimeKind.Unspecified), "ttregona4@stumbleupon.com", null, "Tani", false },
+                    { new Guid("a3b9833b-8a4d-43e9-8690-61e08df81a9a"), "9334 Fremont Street", null, new DateTime(1987, 1, 19, 0, 0, 0, 0, DateTimeKind.Unspecified), "vklussb@nationalgeographic.com", null, "Verene", true },
+                    { new Guid("ac660a73-b0b7-4340-abc1-a914257a6189"), "4 Stuart Drive", null, new DateTime(1998, 12, 2, 0, 0, 0, 0, DateTimeKind.Unspecified), "pretchford7@virginia.edu", null, "Pegeen", true },
+                    { new Guid("c03bbe45-9aeb-4d24-99e0-4743016ffce9"), "4 Parkside Point", null, new DateTime(1989, 8, 28, 0, 0, 0, 0, DateTimeKind.Unspecified), "mwebsdale0@people.com.cn", null, "Marguerite", false },
+                    { new Guid("c3abddbd-cf50-41d2-b6c4-cc7d5a750928"), "6 Morningstar Circle", null, new DateTime(1990, 10, 5, 0, 0, 0, 0, DateTimeKind.Unspecified), "ushears1@globo.com", null, "Ursa", false },
+                    { new Guid("c6d50a47-f7e6-4482-8be0-4ddfc057fa6e"), "73 Heath Avenue", null, new DateTime(1995, 2, 10, 0, 0, 0, 0, DateTimeKind.Unspecified), "fbowsher2@howstuffworks.com", null, "Franchot", true },
+                    { new Guid("cb035f22-e7cf-4907-bd07-91cfee5240f3"), "484 Clarendon Court", null, new DateTime(1997, 9, 25, 0, 0, 0, 0, DateTimeKind.Unspecified), "lwoodwing9@wix.com", null, "Lombard", false },
+                    { new Guid("d15c6d9f-70b4-48c5-afd3-e71261f1a9be"), "83187 Merry Drive", null, new DateTime(1987, 1, 9, 0, 0, 0, 0, DateTimeKind.Unspecified), "asarvar3@dropbox.com", null, "Angie", true }
                 });
         }
 

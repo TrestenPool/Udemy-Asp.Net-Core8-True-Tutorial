@@ -14,7 +14,8 @@ builder.Services.AddSingleton<IPersonService, PersonService>();
 // add the connection to the sql db
 builder.Services.AddDbContext<PersonsDbContext>(
   options => {
-    options.UseSqlServer(builder.Configuration.GetConnectionString("Default"));
+    // options.UseSqlServer(builder.Configuration.GetConnectionString("Default"));
+    options.UseSqlServer(builder.Configuration.GetConnectionString("Thinkpad"));
   } 
 );
 

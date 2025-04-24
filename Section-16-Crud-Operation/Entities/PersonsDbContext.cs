@@ -17,9 +17,8 @@ namespace Entities
     {
       base.OnModelCreating(modelBuilder);
 
-      modelBuilder.Entity<Country>().ToTable("Countries");
+      modelBuilder.Entity<Country>().ToTable("Countries").HasKey(c => c.CountryId);
       modelBuilder.Entity<Person>().ToTable("Persons").HasKey(p => p.PersonId);
-
 
       //Seed to Countries
       string countriesJson = System.IO.File.ReadAllText("countries.json");
@@ -32,7 +31,7 @@ namespace Entities
       string personsJson = System.IO.File.ReadAllText("persons.json");
       List<Person>? persons = System.Text.Json.JsonSerializer.Deserialize<List<Person>>(personsJson);
 
-      foreach (Person person in persons)
+      foreach (Person person in persons ?? Enumerable.Empty<Person>())
         modelBuilder.Entity<Person>().HasData(person);
     }
   }

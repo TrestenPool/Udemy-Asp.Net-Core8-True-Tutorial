@@ -4,7 +4,7 @@ namespace Entities;
 
 public class Person{
   [Key]
-  public Guid PersonId { get; } = Guid.NewGuid();
+  public Guid PersonId { get; set; }
   [StringLength(40)]
   public string? PersonName { get; set; }
   public string? Email { get; set; }
