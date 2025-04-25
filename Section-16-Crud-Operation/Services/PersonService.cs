@@ -6,55 +6,25 @@ using ServiceContracts.Enums;
 namespace Services;
 
 public class PersonService : IPersonService{
-  private List<Person> _personsList;
+  // Properties
+  private PersonsDbContext _db;
+  ICountriesService _countriesService;
 
-  public PersonService(bool iniatalize = true) {
-    _personsList = new List<Person>();
-
-    // initialize the persons list with data
-    if(iniatalize) {
-      // create list of persons to add
-      List<Person> mockPersons = new List<Person>{
-        new(){
-          PersonName = "John Doe",
-          Email = "john@gmail.com",
-          PersonGender = Gender.Male,
-          DateOfBirth = new DateTime(1999, 1, 29),
-          CountryId = new Guid("e170468d-a1d2-4f2b-b1b0-ff4df8dac50d")
-        },
-        new(){
-          PersonName = "Pat Johnson",
-          Email = "pat@gmail.com",
-          PersonGender = Gender.Female,
-          DateOfBirth = new DateTime(2000, 1, 1),
-          CountryId = new Guid("fc4ad2d2-8c12-4eb1-840d-2e8d9f0687eb")
-        },
-        new(){
-          PersonName = "Jack Pearson",
-          Email = "jack@gmail.com",
-          PersonGender = Gender.Male,
-          DateOfBirth = new DateTime(1972, 12, 9),
-          CountryId = new Guid("e170468d-a1d2-4f2b-b1b0-ff4df8dac50d")
-        },
-        new(){
-          PersonName = "Rebecca Pearson",
-          Email = "rebecca@gmail.com",
-          PersonGender = Gender.Female,
-          DateOfBirth = new DateTime(1980, 10, 22),
-          CountryId = new Guid("84e34617-ea13-4025-af68-e6a027865c76")
-        }
-      };
-
-      // add to the persons list
-      _personsList.AddRange(mockPersons);
-    }
+  // Constructor
+  public PersonService(PersonsDbContext personsDbContext, ICountriesService countriesService) {
+    _db = personsDbContext;
+    _countriesService = countriesService;
   }
 
+  // Private methods
   private PersonResponse ConvertPersonToPersonResponse(Person person) {
     PersonResponse personResponse = person.ToPersonResponse();
+    var countryFound = _countriesService.GetCountryByCountryId(person.CountryId);
+    personResponse.Country = countryFound?.CountryName;
     return personResponse;
   }
 
+  // Public Methods
   public PersonResponse AddPerson(PersonAddRequest? personAddRequest){
     // personaddrequest is null
     ArgumentNullException.ThrowIfNull(personAddRequest,nameof(personAddRequest));
@@ -66,14 +36,15 @@ public class PersonService : IPersonService{
     Person person = personAddRequest.ToPerson();
 
     // add the person to the list
-    _personsList.Add(person);
+    _db.Persons.Add(person);
+    _db.SaveChanges();
 
     // return the person response
     return ConvertPersonToPersonResponse(person);
   }
 
   public List<PersonResponse> GetAllPersons(){
-    return _personsList.Select(p => p.ToPersonResponse()).ToList();
+    return _db.Persons.ToList().Select(p => ConvertPersonToPersonResponse(p)).ToList();
   }
 
   public PersonResponse? GetPersonByPersonId(Guid? personId){
@@ -81,7 +52,7 @@ public class PersonService : IPersonService{
     ArgumentNullException.ThrowIfNull(personId,nameof(personId));
     
     // return the first personId that matches in the list or null if it can't find it
-    return _personsList
+    return _db.Persons
       .Where(p => p.PersonId == personId)
       .Select(p => p.ToPersonResponse())
       .FirstOrDefault();
@@ -156,7 +127,7 @@ public class PersonService : IPersonService{
     ValidationHelper.ModelValidation(personUpdateRequest);
 
     // grab the person from the list
-    Person? personToUpdate = _personsList.FirstOrDefault(p => p.PersonId == personUpdateRequest.PersonId);
+    Person? personToUpdate = _db.Persons.FirstOrDefault(p => p.PersonId == personUpdateRequest.PersonId);
 
     // the person by that id was not found
     if(personToUpdate == null) {
@@ -172,25 +143,31 @@ public class PersonService : IPersonService{
     personToUpdate.CountryId = personUpdateRequest.CountryId;
     personToUpdate.ReceiveNewsLetters = personUpdateRequest.ReceiveNewsLetters;
 
+    // update the persons
+    _db.Persons.Update(personToUpdate);
+
+    // save the changes in the db
+    _db.SaveChanges();
+
     // return the object to the user
     return personToUpdate.ToPersonResponse();
   }
 
   public bool DeletePerson(Guid? personId){
-    // personid is null throw exception
+    // personid is null throw exceptionGender
     ArgumentNullException.ThrowIfNull(personId);
 
     // get the person from the list
-    Person? personToDelete = _personsList.FirstOrDefault(p => p.PersonId == personId);
+    Person? personToDelete = _db.Persons.FirstOrDefault(p => p.PersonId == personId);
 
 
     if(personToDelete == null) {
       return false;
     }
 
-    bool result = _personsList.Remove(personToDelete);
+    var result = _db.Persons.Remove(personToDelete);
+    _db.SaveChanges();
 
-    // return the result
-    return result;
+    return true;
   }
 }

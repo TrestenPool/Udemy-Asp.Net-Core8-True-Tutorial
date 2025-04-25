@@ -15,7 +15,7 @@ public class PersonResponse{
     if(DateOfBirth.Value.Date > today.AddYears(-age)) age--;
     return age;
   }}
-  public Gender? PersonGender { get; set; }
+  public string? PersonGender { get; set; }
   public Guid? CountryId { get; set; }
   public string? Country { get; set; }
   public bool ReceiveNewsLetters { get; set; }

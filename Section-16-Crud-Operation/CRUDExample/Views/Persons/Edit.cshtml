@@ -4,7 +4,7 @@
 
 @{
   ViewData["title"] = "Edit Person";
-  string[] genders = (string[]) Enum.GetNames(typeof(Gender));
+  string[] genders = (string[]) Enum.GetNames(typeof(Entities.Gender));
 }
 
 <a asp-controller="Persons" asp-action="Index" class="link-hover">Back to index page</a>
@@ -52,23 +52,37 @@
       </div>
     </div>
 
-    @* Gender *@
+    @*Gender*@
     <div class="form-field flex">
-
-      @* Label *@
-      <div class="w-25">
-        <label class="form-label" asp-for="PersonGender">Gender</label>
-      </div>
-
-      <div class="flex-1">
-        @foreach(var gender in genders) {
-          <input asp-for="PersonGender" type="radio" value="@gender">
-          <label for="@gender">@gender</label>
-          <span asp-validation-for="PersonGender" class="text-red"></span>
-        }
-      </div>
-
+    <div class="w-25">
+      <label class="form-label">Gender</label>
     </div>
+    <div class="flex-1">
+      @{
+      string[] genders = (string[])Enum.GetNames(typeof(Entities.Gender));
+      }
+      @foreach (string gender in genders)
+      {
+      <input type="radio" asp-for="PersonGender" value="@gender" />
+      <label for="@gender">@gender</label>
+      }
+      <span asp-validation-for="PersonGender" class="text-red"></span>
+    </div>
+    </div>
+
+    @*Country*@
+    <div class="form-field flex">
+    <div class="w-25">
+      <label class="form-label" asp-for="CountryId">Country</label>
+    </div>
+    <div class="flex-1">
+      <select asp-for="CountryId" class="form-input" asp-items="@ViewBag.Countries">
+      <option value="">Please Select</option>
+      </select>
+      <span asp-validation-for="CountryId" class="text-red"></span>
+    </div>
+    </div>
+
 
     @* Address *@
     <div class="form-field flex">

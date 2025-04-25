@@ -46,7 +46,6 @@ public class PersonsController: Controller {
 
     // get the list of persons
     List<PersonResponse> personsList = _personService.GetAllPersons();
-    personsList.ForEach(p => p.Country = _countriesService.GetCountryByCountryId(p?.CountryId)?.CountryName );
 
     // filter the persons
     if(!string.IsNullOrEmpty(searchBy) && !string.IsNullOrEmpty(searchString)) {
@@ -89,6 +88,10 @@ public class PersonsController: Controller {
     if(personResponse == null) {
       return RedirectToAction("Index");
     }
+
+    List<CountryResponse> countries = _countriesService.GetAllCountries();
+      ViewBag.Countries = countries.Select(temp =>
+      new SelectListItem() { Text = temp.CountryName, Value = temp.CountryId.ToString() });
 
     // go to the edit view
     return View(personResponse?.ToPersonUpdateRequest());

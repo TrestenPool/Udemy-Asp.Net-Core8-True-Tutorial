@@ -13,7 +13,7 @@ public class PersonServiceTest {
 
   // constructor
   public PersonServiceTest(ITestOutputHelper testOutputHelper) {
-    _personService = new PersonService(iniatalize:true);
+    _personService = new PersonService();
     _outputHelper = testOutputHelper;
   }
 

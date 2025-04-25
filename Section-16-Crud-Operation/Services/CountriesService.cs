@@ -5,22 +5,11 @@ namespace Services;
 
 public class CountriesService : ICountriesService{
   // fields
-  private readonly List<Country> _countries;
+  private readonly PersonsDbContext _db;
 
   // constructor
-  public CountriesService(bool initialize = true) {
-    // initialize
-    _countries = new List<Country>();
-
-    _countries.Add(
-      new Country(){Name="USA", CountryId=new Guid("e170468d-a1d2-4f2b-b1b0-ff4df8dac50d")}
-    );
-    _countries.Add(
-      new Country(){Name="Russia", CountryId=new Guid("fc4ad2d2-8c12-4eb1-840d-2e8d9f0687eb")}
-    );
-    _countries.Add(
-      new Country(){Name="China", CountryId=new Guid("84e34617-ea13-4025-af68-e6a027865c76")}
-    );
+  public CountriesService(PersonsDbContext personsDbContext) {
+    _db = personsDbContext;
   }
 
   public CountryResponse AddCountry(CountryAddRequest? countryAddRequest){
@@ -37,23 +26,24 @@ public class CountriesService : ICountriesService{
     Country country = countryAddRequest.ToCountry();
 
     // check if the country is already in the _countries list
-    if(_countries.Any(c => c.Name == country.Name)){
+    if(_db.Countries.Any(c => c.Name == country.Name)){
       throw new ArgumentException($"{country.Name}:: you are trying to insert duplicate");
     }
 
     // add country object into country list
-    _countries.Add(country);
+    _db.Countries.Add(country);
+    _db.SaveChanges();
 
     // send the country response back to the user
     return country.ToCountryResponse();
   }
 
   public List<CountryResponse> GetAllCountries(){
-    return _countries.Select(c => c.ToCountryResponse()).ToList();
+    return _db.Countries.Select(c => c.ToCountryResponse()).ToList();
   }
 
   public CountryResponse? GetCountryByCountryId(Guid? countryId){
-    Country? retrievedCountry = _countries.FirstOrDefault(c => c.CountryId == countryId);
+    Country? retrievedCountry = _db.Countries.FirstOrDefault(c => c.CountryId == countryId);
     return retrievedCountry?.ToCountryResponse();
   }
 

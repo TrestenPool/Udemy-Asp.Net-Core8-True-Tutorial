@@ -11,7 +11,8 @@ public class Person{
   [StringLength(200)]
   public string? Address { get; set; }
   public DateTime? DateOfBirth { get; set; }
-  public Gender? PersonGender { get; set; }
+  [StringLength(10)] //nvarchar(100)
+  public string? PersonGender { get; set; }
   public Guid? CountryId { get; set; }
   public bool ReceiveNewsLetters { get; set; }
 }

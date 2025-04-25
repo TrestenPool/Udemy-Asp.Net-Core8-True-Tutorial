@@ -8,16 +8,20 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddControllers();
 
 // registering an interface with a concrete type
-builder.Services.AddSingleton<ICountriesService, CountriesService>();
-builder.Services.AddSingleton<IPersonService, PersonService>();
+builder.Services.AddScoped<ICountriesService, CountriesService>();
+builder.Services.AddScoped<IPersonService, PersonService>();
 
 // add the connection to the sql db
 builder.Services.AddDbContext<PersonsDbContext>(
   options => {
-    // options.UseSqlServer(builder.Configuration.GetConnectionString("Default"));
-    options.UseSqlServer(builder.Configuration.GetConnectionString("Thinkpad"));
+    options.UseSqlServer(builder.Configuration.GetConnectionString("Default"));
+    // options.UseSqlServer(builder.Configuration.GetConnectionString("Thinkpad"));
   } 
 );
+
+Console.WriteLine("===========================================");
+Console.WriteLine($"Running in {builder.Environment.EnvironmentName}");
+Console.WriteLine("===========================================");
 
 var app = builder.Build();
 app.UseStaticFiles();
