@@ -1,4 +1,5 @@
 using Entities;
+using Microsoft.EntityFrameworkCore;
 using ServiceContracts;
 using ServiceContracts.Enums;
 using Services;
@@ -13,8 +14,17 @@ public class PersonServiceTest {
 
   // constructor
   public PersonServiceTest(ITestOutputHelper testOutputHelper) {
-    _personService = new PersonService();
+
+    ICountriesService countriesService = new CountriesService(new PersonsDbContext(
+      new DbContextOptionsBuilder<PersonsDbContext>().Options
+    ));
+
+    _personService = new PersonService(new PersonsDbContext(
+      new DbContextOptionsBuilder<PersonsDbContext>().Options
+    ), countriesService);
     _outputHelper = testOutputHelper;
+
+
   }
 
   public enum AddPersonTests {
@@ -51,7 +61,7 @@ public class PersonServiceTest {
       personRequest = new PersonAddRequest(){
         PersonName = "Tresten",
         Email="trestenpool@gmail.com",
-        PersonGender = Gender.Male,
+        PersonGender = "Male",
         Address="1150 Carnaby St",
         DateOfBirth=new DateTime(1999,1,29)
       };

@@ -15,7 +15,6 @@ builder.Services.AddScoped<IPersonService, PersonService>();
 builder.Services.AddDbContext<PersonsDbContext>(
   options => {
     options.UseSqlServer(builder.Configuration.GetConnectionString("Default"));
-    // options.UseSqlServer(builder.Configuration.GetConnectionString("Thinkpad"));
   } 
 );
 

@@ -6,8 +6,7 @@ namespace Entities
 {
   public class PersonsDbContext : DbContext
   {
-    public PersonsDbContext(DbContextOptions options) : base(options)
-    {
+    public PersonsDbContext(DbContextOptions options) : base(options){
     }
 
     public DbSet<Country> Countries { get; set; }
@@ -34,5 +33,12 @@ namespace Entities
       foreach (Person person in persons ?? Enumerable.Empty<Person>())
         modelBuilder.Entity<Person>().HasData(person);
     }
+
+
+    public List<Person> sp_GetAllPersons() {
+      // get the result set from the following query
+      return Persons.FromSqlRaw("Execute [dbo].[GetAllPersons]").ToList();
+    }
+
   }
 }

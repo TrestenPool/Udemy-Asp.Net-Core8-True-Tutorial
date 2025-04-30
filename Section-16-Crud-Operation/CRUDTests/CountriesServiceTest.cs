@@ -1,3 +1,5 @@
+using Entities;
+using Microsoft.EntityFrameworkCore;
 using ServiceContracts;
 using Services;
 
@@ -9,7 +11,10 @@ public class CountriesServiceTest{
 
   // constructor
   public CountriesServiceTest() {
-    _countriesService = new CountriesService(initialize:false);
+    _countriesService = new CountriesService(
+      new PersonsDbContext(new 
+        DbContextOptionsBuilder<PersonsDbContext>().Options
+    ));
   }
 
   // enum used for test

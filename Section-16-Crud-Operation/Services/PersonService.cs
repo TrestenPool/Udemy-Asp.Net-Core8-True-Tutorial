@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using Entities;
+using Microsoft.EntityFrameworkCore;
 using ServiceContracts;
 using ServiceContracts.Enums;
 
@@ -44,7 +45,8 @@ public class PersonService : IPersonService{
   }
 
   public List<PersonResponse> GetAllPersons(){
-    return _db.Persons.ToList().Select(p => ConvertPersonToPersonResponse(p)).ToList();
+    return _db.Persons.ToList()
+      .Select(p => ConvertPersonToPersonResponse(p)).ToList();
   }
 
   public PersonResponse? GetPersonByPersonId(Guid? personId){
@@ -79,7 +81,7 @@ public class PersonService : IPersonService{
         return allPersons.Where(p => p.Email?.Contains(searchString!,StringComparison.OrdinalIgnoreCase) ?? false).ToList();
 
       case nameof(PersonResponse.PersonGender):
-        return allPersons.Where(p => string.Equals(p.PersonGender.ToString(), searchString, StringComparison.OrdinalIgnoreCase) ).ToList();
+        return allPersons.Where(p => string.Equals(p.PersonGender, searchString, StringComparison.OrdinalIgnoreCase) ).ToList();
 
       case nameof(PersonResponse.DateOfBirth):
         return allPersons.Where(p => p.DateOfBirth?.ToString("dd MMMM yyyy").Contains(searchString!, StringComparison.OrdinalIgnoreCase) ?? false ).ToList();
