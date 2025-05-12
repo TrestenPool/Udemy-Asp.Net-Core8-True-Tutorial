@@ -20,7 +20,7 @@ public class PersonsController: Controller {
 
   [Route("")]
   [Route("[action]")]
-  public IActionResult Index(
+  public async Task<IActionResult> Index(
     [FromQuery]string searchBy, 
     [FromQuery]string searchString,
     [FromQuery]string sortBy="PersonName",
@@ -45,16 +45,16 @@ public class PersonsController: Controller {
     };
 
     // get the list of persons
-    List<PersonResponse> personsList = _personService.GetAllPersons();
+    List<PersonResponse> personsList = await _personService.GetAllPersons();
 
     // filter the persons
     if(!string.IsNullOrEmpty(searchBy) && !string.IsNullOrEmpty(searchString)) {
-      personsList = _personService.GetFilteredPersons(searchBy, searchString);
+      personsList = await _personService.GetFilteredPersons(searchBy, searchString);
     }
 
     // sort the persons
     if(!string.IsNullOrEmpty(sortBy)) {
-      personsList = _personService.GetSortedPersons(personsList, sortBy, sortOrder);
+      personsList = await _personService.GetSortedPersons(personsList, sortBy, sortOrder);
     }
 
     // populate the viewdata with the persons
@@ -80,16 +80,16 @@ public class PersonsController: Controller {
 
   [HttpGet]
   [Route("[action]/{personId}")]
-  public IActionResult Edit(Guid personId) {
+  public async Task<IActionResult> Edit(Guid personId) {
     // get the person object from the person id
-    PersonResponse? personResponse = _personService.GetPersonByPersonId(personId);
+    PersonResponse? personResponse = await _personService.GetPersonByPersonId(personId);
     
     // person id was not found, redirect to index page
     if(personResponse == null) {
       return RedirectToAction("Index");
     }
 
-    List<CountryResponse> countries = _countriesService.GetAllCountries();
+    List<CountryResponse> countries = await _countriesService.GetAllCountries();
       ViewBag.Countries = countries.Select(temp =>
       new SelectListItem() { Text = temp.CountryName, Value = temp.CountryId.ToString() });
 
@@ -117,12 +117,12 @@ public class PersonsController: Controller {
 
   [HttpPost]
   [Route("create")]
-  public IActionResult PersonCreated(PersonAddRequest person) {
+  public async Task<IActionResult> PersonCreated(PersonAddRequest person) {
 
     // The model validation was successful
     if(ModelState.IsValid) {
       // Add the person to the list of persons
-      PersonResponse personResponse =  _personService.AddPerson(person);
+      PersonResponse personResponse =  await _personService.AddPerson(person);
       TempData["SuccessAlert"] = $"Successfully created person: {personResponse.PersonName}";
       return RedirectToAction("Index", "Persons");
     }
@@ -141,9 +141,9 @@ public class PersonsController: Controller {
 
   [HttpGet]
   [Route("[action]/{personId}")]
-  public IActionResult Delete(Guid personId) {
+  public async Task<IActionResult> Delete(Guid personId) {
     // Get the person object
-    PersonResponse? personResponse = _personService.GetPersonByPersonId(personId);
+    PersonResponse? personResponse = await _personService.GetPersonByPersonId(personId);
 
     if(personResponse == null){
       TempData["ErrorAlert"] = $"Unable to find person with id {personId}";
@@ -155,8 +155,8 @@ public class PersonsController: Controller {
 
   [HttpPost]
   [Route("[action]/{personId}")]
-  public IActionResult DeletePerson(Guid personId) {
-    bool result = _personService.DeletePerson(personId);
+  public async Task<IActionResult> DeletePerson(Guid personId) {
+    bool result = await _personService.DeletePerson(personId);
 
     if(!result) {
       TempData["ErrorAlert"] = $"There was an issue deleting person with id: {personId}";

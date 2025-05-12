@@ -1,5 +1,6 @@
 using Entities;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Diagnostics;
 using ServiceContracts;
 using Services;
 
@@ -11,10 +12,19 @@ builder.Services.AddControllers();
 builder.Services.AddScoped<ICountriesService, CountriesService>();
 builder.Services.AddScoped<IPersonService, PersonService>();
 
-// add the connection to the sql db
+// register the persondbcontext
 builder.Services.AddDbContext<PersonsDbContext>(
   options => {
-    options.UseSqlServer(builder.Configuration.GetConnectionString("Default"));
+    options
+
+    // only get these log messages
+    // .LogTo(Console.WriteLine, new[] { DbLoggerCategory.Database.Name })
+
+    // enables lazy loading
+    // .UseLazyLoadingProxies()
+
+    // connection to the db
+    .UseSqlServer(builder.Configuration.GetConnectionString("Default"));
   } 
 );
 

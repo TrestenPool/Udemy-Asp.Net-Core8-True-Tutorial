@@ -16,7 +16,7 @@ namespace Entities.Migrations
             Begin
 
               Select 
-                Personid, PersonName, Email 
+                *
               From 
                 [dbo].[Persons]
 

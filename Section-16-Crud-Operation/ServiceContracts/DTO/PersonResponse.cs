@@ -74,7 +74,8 @@ public static class PersonResponseExtensions {
       PersonName=person.PersonName,
       Email = person.Email,
       ReceiveNewsLetters = person.ReceiveNewsLetters,
-      CountryId=person.CountryId
+      CountryId=person.CountryId,
+      Country=person.Country?.Name
     };
 
   }

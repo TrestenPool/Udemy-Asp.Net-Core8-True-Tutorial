@@ -13,6 +13,7 @@ namespace Entities.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            // createss the countries table
             migrationBuilder.CreateTable(
                 name: "Countries",
                 columns: table => new
@@ -25,6 +26,7 @@ namespace Entities.Migrations
                     table.PrimaryKey("PK_Countries", x => x.CountryId);
                 });
 
+            // creates the persons table
             migrationBuilder.CreateTable(
                 name: "Persons",
                 columns: table => new
@@ -43,6 +45,8 @@ namespace Entities.Migrations
                     table.PrimaryKey("PK_Persons", x => x.PersonId);
                 });
 
+            
+            // insert the data into countries table
             migrationBuilder.InsertData(
                 table: "Countries",
                 columns: new[] { "CountryId", "Name" },
@@ -55,6 +59,8 @@ namespace Entities.Migrations
                     { new Guid("8f30bedc-47dd-4286-8950-73d8a68e5d41"), "Palestinian Territory" }
                 });
 
+
+            // insert the data into the persons table
             migrationBuilder.InsertData(
                 table: "Persons",
                 columns: new[] { "PersonId", "Address", "CountryId", "DateOfBirth", "Email", "PersonGender", "PersonName", "ReceiveNewsLetters" },
