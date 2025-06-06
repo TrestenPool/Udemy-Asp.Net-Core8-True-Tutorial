@@ -2,7 +2,8 @@
 
 namespace ServiceContracts;
 
-public interface IPersonService{
+public interface IPersonService
+{
   /// <summary>
   /// Adds a new person to the persons list
   /// </summary>
@@ -39,7 +40,7 @@ public interface IPersonService{
   /// <param name="sortBy"></param>
   /// <param name="sortOrder"></param>
   /// <returns></returns>
-  Task<List<PersonResponse>> GetSortedPersons(List<PersonResponse> allPersons, string sortBy, SortOrderEnum sortOrder);
+  List<PersonResponse> GetSortedPersons(List<PersonResponse> allPersons, string sortBy, SortOrderEnum sortOrder);
 
   /// <summary>
   /// Updates a person in the person list
@@ -54,4 +55,12 @@ public interface IPersonService{
   /// <param name="personId"></param>
   /// <returns>Returns true or false depending on </returns>
   Task<bool> DeletePerson(Guid? personId);
+
+  /// <summary>
+  /// returns persons as CSV
+  /// </summary>
+  /// <returns>returns the memory stream with CSV</returns>
+  Task<MemoryStream> GetPersonsCSV();
+
+  Task<MemoryStream> GetPersonExcel();
 }

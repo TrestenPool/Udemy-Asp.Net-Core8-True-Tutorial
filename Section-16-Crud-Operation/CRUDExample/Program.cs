@@ -1,6 +1,7 @@
 using Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
+using OfficeOpenXml;
 using ServiceContracts;
 using Services;
 
@@ -11,6 +12,9 @@ builder.Services.AddControllers();
 // registering an interface with a concrete type
 builder.Services.AddScoped<ICountriesService, CountriesService>();
 builder.Services.AddScoped<IPersonService, PersonService>();
+
+// set the license context for the excel nuget package
+// ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
 
 // register the persondbcontext
 builder.Services.AddDbContext<PersonsDbContext>(
@@ -35,6 +39,9 @@ Console.WriteLine("===========================================");
 var app = builder.Build();
 app.UseStaticFiles();
 app.UseRouting();
+
+// setup the path to the html to pdf executable
+Rotativa.AspNetCore.RotativaConfiguration.Setup("wwwroot", "Rotativa");
 
 // enable exception page if in development mode
 if(builder.Environment.IsDevelopment()) {

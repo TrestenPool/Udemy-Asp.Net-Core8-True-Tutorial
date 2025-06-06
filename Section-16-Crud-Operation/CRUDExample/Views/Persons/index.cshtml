@@ -30,6 +30,12 @@
   <button class="button button-blue-back" type="submit">Add Person</button>
 </form>
 
+<!-- Link to generate pdf -->
+<a asp-asp-controller="Persons" asp-action="PersonsPDF">Generate PDF</a>
+
+<!-- Link to generate a csv -->
+<a asp-asp-controller="Persons" asp-action="PersonsCSV">Generate CSV</a>
+
 <!-- Form -->
 <form action="~/persons/index" method="get">
 

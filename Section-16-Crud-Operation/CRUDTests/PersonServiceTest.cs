@@ -37,22 +37,22 @@ public class PersonServiceTest {
   [InlineData(AddPersonTests.NullPerson)]
   [InlineData(AddPersonTests.PersonNameNull)]
   [InlineData(AddPersonTests.ValidPerson)]
-  public void AddPersonTest(AddPersonTests addPersonOption) {
+  public async Task AddPersonTest(AddPersonTests addPersonOption) {
     PersonAddRequest? personRequest;
     PersonResponse? personResponse;
     List<PersonResponse> persons_list;
     switch(addPersonOption) {
 
       case AddPersonTests.NullPerson:
-      Assert.Throws<ArgumentNullException>(() => {
-        _personService.AddPerson(null);
+      await Assert.ThrowsAsync<ArgumentNullException>(async () => {
+        await _personService.AddPerson(null);
       });
       break;
 
       case AddPersonTests.PersonNameNull:
       personRequest = new PersonAddRequest(){PersonName = null};
-      Assert.Throws<ArgumentException>(() => {
-        _personService.AddPerson(personRequest);
+      await Assert.ThrowsAsync<ArgumentException>(async () => {
+        await _personService.AddPerson(personRequest);
       });
       break;
 
@@ -67,8 +67,8 @@ public class PersonServiceTest {
       };
 
       // act
-      personResponse = _personService.AddPerson(personRequest);
-      persons_list = _personService.GetAllPersons();
+      personResponse = await _personService.AddPerson(personRequest);
+      persons_list = await _personService.GetAllPersons();
 
       // assert
       Assert.True(personResponse.PersonId != Guid.Empty);
@@ -88,15 +88,15 @@ public class PersonServiceTest {
   [InlineData(PersonIdOptions.NullPersonId)]
   [InlineData(PersonIdOptions.ValidPersonId)]
   [InlineData(PersonIdOptions.InvalidPersonId)]
-  public void GetPersonByPersonIdTest(PersonIdOptions personIdOption) {
+  public async Task GetPersonByPersonIdTest(PersonIdOptions personIdOption) {
     PersonAddRequest? personAddRequest;
     PersonResponse? personResponse;
 
     switch(personIdOption) {
 
       case PersonIdOptions.NullPersonId:
-        Assert.Throws<ArgumentNullException>(() => {
-          _personService.GetPersonByPersonId(null);
+        await Assert.ThrowsAsync<ArgumentNullException>(async () => {
+          await _personService.GetPersonByPersonId(null);
         });
         break;
 
@@ -106,13 +106,13 @@ public class PersonServiceTest {
           Email="tresten_email@gmail.com",
           Address="412 North Henderson"
         };
-        personResponse = _personService.AddPerson(personAddRequest);
-        PersonResponse? actualPerson = _personService.GetPersonByPersonId(personResponse.PersonId);
+        personResponse = await _personService.AddPerson(personAddRequest);
+        PersonResponse? actualPerson = await _personService.GetPersonByPersonId(personResponse.PersonId);
         Assert.True(personResponse.PersonId == actualPerson?.PersonId);
         break;
 
       case PersonIdOptions.InvalidPersonId:
-        personResponse = _personService.GetPersonByPersonId(Guid.NewGuid());
+        personResponse = await _personService.GetPersonByPersonId(Guid.NewGuid());
         Assert.Null(personResponse);
         break;
     }
@@ -127,24 +127,24 @@ public class PersonServiceTest {
   [Theory]
   [InlineData(AllPersonsOptions.NoPersons)]
   [InlineData(AllPersonsOptions.SomePersons)]
-  public void AllPersonsTest(AllPersonsOptions options) {
+  public async Task AllPersonsTest(AllPersonsOptions options) {
     List<PersonResponse> list_of_persons;
     switch(options) {
       case AllPersonsOptions.NoPersons:
-        list_of_persons = _personService.GetAllPersons();
+        list_of_persons = await _personService.GetAllPersons();
         Assert.Empty(list_of_persons);
         break;
 
       case AllPersonsOptions.SomePersons:
         // add our persons
-        _personService.AddPerson(
+        await _personService.AddPerson(
           new PersonAddRequest(){PersonName="Tresten",Address="110 Notyourbusiness",Email="Tresten@yahoo.com"}
         );
-        _personService.AddPerson(
+        await _personService.AddPerson(
           new PersonAddRequest(){PersonName="John",Address="4513 GetOffMyLawn St",Email="John@hotmail.com"}
         );
         // get the list of persons
-        list_of_persons = _personService.GetAllPersons();
+        list_of_persons = await _personService.GetAllPersons();
         // make sure the persons we added are in the collection
         Assert.Collection(list_of_persons, 
           p => {
@@ -168,11 +168,11 @@ public enum FilteredPersonsOptions {
 [Theory]
 [InlineData(FilteredPersonsOptions.SomePersons)]
 [InlineData(FilteredPersonsOptions.NoPersons)]
-public void GetFilteredPersonsTest(FilteredPersonsOptions option) {
+public async Task GetFilteredPersonsTest(FilteredPersonsOptions option) {
   switch(option) {
     case FilteredPersonsOptions.SomePersons:
-      List<PersonResponse> list_response_persons_added = AddToPersons();
-      List<PersonResponse> actual_list = _personService.GetFilteredPersons(nameof(Person.PersonName), "Tresten");
+      List<PersonResponse> list_response_persons_added = await AddToPersons();
+      List<PersonResponse> actual_list = await _personService.GetFilteredPersons(nameof(Person.PersonName), "Tresten");
       Assert.Collection(actual_list,
         p => Assert.True(p.PersonName == "Tresten")
       );
@@ -190,7 +190,7 @@ public enum SortedPersonsEnum {
 [Theory]
 [InlineData(SortedPersonsEnum.AscendingPersonName)]
 [InlineData(SortedPersonsEnum.DescendingPersonName)]
-public void GetSortedPersonsTest(SortedPersonsEnum options) {
+public async Task GetSortedPersonsTest(SortedPersonsEnum options) {
 
   // variable to be used in switch branch
   List<PersonResponse> expected;
@@ -198,14 +198,14 @@ public void GetSortedPersonsTest(SortedPersonsEnum options) {
 
   switch(options) {
     case SortedPersonsEnum.AscendingPersonName:
-      expected = AddToPersons();
+      expected = await AddToPersons();
       expected = expected.OrderBy(p => p.PersonName).ToList();
       actual = _personService.GetSortedPersons(expected,nameof(Person.PersonName),SortOrderEnum.Ascending);
       Assert.Equal(expected, actual);
       break;
 
     case SortedPersonsEnum.DescendingPersonName:
-      expected = AddToPersons();
+      expected = await AddToPersons();
       expected = expected
         .OrderBy(p => p.PersonName)
         .Reverse()
@@ -230,17 +230,17 @@ public enum UpdatePersonEnum {
 [Theory]
 [InlineData(UpdatePersonEnum.NullPersonUpdateRequest)]
 [InlineData(UpdatePersonEnum.ValidPersonUpdateRequest)]
-public void UpdatePersonTest(UpdatePersonEnum option) {
+public async Task UpdatePersonTest(UpdatePersonEnum option) {
   switch(option) {
 
     case UpdatePersonEnum.NullPersonUpdateRequest:
       PersonUpdateRequest? nullPersonUpdateRequest = null;
-      Assert.Throws<ArgumentNullException>(() => _personService.UpdatePerson(nullPersonUpdateRequest));
+      await Assert.ThrowsAsync<ArgumentNullException>(async () => await _personService.UpdatePerson(nullPersonUpdateRequest));
       break;
 
     case UpdatePersonEnum.ValidPersonUpdateRequest:
       // add to the list of persons
-      List<PersonResponse> personsAdded = AddToPersons();
+      List<PersonResponse> personsAdded = await AddToPersons();
       // grab the first person in the list
       PersonResponse personToUpdate = personsAdded[0];
       // convert the personResponse to a PersonUpdateRequest
@@ -248,7 +248,7 @@ public void UpdatePersonTest(UpdatePersonEnum option) {
       // change something in the personName
       personUpdateRequest.PersonName = "NotMyName Johnson";
       // Attempt to update the person
-      PersonResponse actual = _personService.UpdatePerson(personUpdateRequest);
+      PersonResponse actual = await _personService.UpdatePerson(personUpdateRequest);
 
       // assert the person name is set to what we changed
       Assert.True(actual.PersonName == "NotMyName Johnson");
@@ -265,38 +265,38 @@ public enum DeletePersonEnum {
 [InlineData(DeletePersonEnum.NullPerson)]
 [InlineData(DeletePersonEnum.ValidPerson)]
 [InlineData(DeletePersonEnum.InvalidPerson)]
-public void DeletePersonTest(DeletePersonEnum option) {
+public async Task DeletePersonTest(DeletePersonEnum option) {
   List<PersonResponse> personsAdded;
   PersonResponse? personResponse;
   bool deleted;
   switch(option) {
     case DeletePersonEnum.NullPerson:
       // add to the list of person
-      personsAdded = AddToPersons();
+      personsAdded = await AddToPersons();
       // passing null to delete person throws an exception
-      Assert.Throws<ArgumentNullException>(() => {
-        _personService.DeletePerson(null);
+      await Assert.ThrowsAsync<ArgumentNullException>(async () => {
+        await _personService.DeletePerson(null);
       });
       break;
 
     case DeletePersonEnum.ValidPerson:
       // add to the list of person
-      personsAdded = AddToPersons();
+      personsAdded = await AddToPersons();
       // grab the first person in the list
       personResponse = personsAdded[0];
       // delete the person
-      deleted = _personService.DeletePerson(personResponse.PersonId);
+      deleted = await _personService.DeletePerson(personResponse.PersonId);
       // make sure the person was deleted from the list
-      Assert.DoesNotContain(personResponse, _personService.GetAllPersons());
+      Assert.DoesNotContain(personResponse, await _personService.GetAllPersons());
       // make sure the response was true
       Assert.True(deleted);
       break;
 
     case DeletePersonEnum.InvalidPerson:
       // add to the list of person
-      personsAdded = AddToPersons();
+      personsAdded = await AddToPersons();
       // Attempt to delete a person that doesn't exist
-      deleted = _personService.DeletePerson(Guid.NewGuid());
+      deleted = await _personService.DeletePerson(Guid.NewGuid());
       // make sure the response was true
       Assert.False(deleted);
       break;
@@ -308,22 +308,22 @@ public void DeletePersonTest(DeletePersonEnum option) {
 /// Returns a List<PersonResponse> of all of the persons that have been added
 /// </summary>
 /// <returns></returns>
-private List<PersonResponse> AddToPersons(){
+private async Task<List<PersonResponse>> AddToPersons(){
   List<PersonResponse> list_persons_added = new();
 
-  list_persons_added.Add(_personService.AddPerson(
+  list_persons_added.Add(await _personService.AddPerson(
     new PersonAddRequest(){
       PersonName="Tresten",Address="1120 Rex Dr",Email="trestenp@gmail.com"
     }
   ));
 
-  list_persons_added.Add(_personService.AddPerson(
+  list_persons_added.Add(await _personService.AddPerson(
     new PersonAddRequest(){
       PersonName="Yahan",Address="322 mulburry dr",Email="yahan@yahoo.com"
     }
   ));
 
-  list_persons_added.Add(_personService.AddPerson(
+  list_persons_added.Add(await _personService.AddPerson(
     new PersonAddRequest(){
       PersonName="Dave",Address="1243 Qwerty St",Email="DaveB@yahoo.com"
     }
