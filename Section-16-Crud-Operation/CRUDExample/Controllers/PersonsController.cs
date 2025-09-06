@@ -7,6 +7,8 @@ using ServiceContracts.Enums;
 using Services;
 using Rotativa.AspNetCore;
 
+namespace CRUDExample.Controllers;
+
 [Route("[controller]")]
 public class PersonsController : Controller
 {
@@ -213,6 +215,16 @@ public class PersonsController : Controller
     // get the persons csv in memory
     var csvfile = await _personService.GetPersonsCSV();
     return File(csvfile, "application/octet-stream", "persons.csv");
+  }
+
+  [Route("[action]")]
+  public async Task<IActionResult> PersonsExcel()
+  {
+    // get the persons csv in memory
+    var excelFile = await _personService.GetPersonExcel();
+
+    // return the excel file to the user
+    return File(excelFile, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "persons.xlsx");
   }
 
 }

@@ -1,11 +1,13 @@
 ﻿using Entities;
+using Microsoft.AspNetCore.Http;
 
 namespace ServiceContracts;
 
 /// <summary>
 /// Represents business logic for manipulating country entity
 /// </summary>
-public interface ICountriesService{
+public interface ICountriesService
+{
   //  List<Country> _countries {get; set;}
 
   /// <summary>
@@ -27,4 +29,11 @@ public interface ICountriesService{
   /// <param name="countryId">CountryID (guid) to search</param>
   /// <returns>Matching Country as countryResponse object</returns>
   Task<CountryResponse?> GetCountryByCountryId(Guid? countryId);
+
+  /// <summary>
+  /// Uploads countries using an excel file into the database 
+  /// </summary>
+  /// <param name="formFile">The file of countries to import</param>
+  /// <returns></returns>
+  Task<int> UploadFromExcelFile(IFormFile formFile);
 }

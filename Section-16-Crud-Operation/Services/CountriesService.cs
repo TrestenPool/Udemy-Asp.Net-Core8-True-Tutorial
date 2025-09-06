@@ -1,5 +1,7 @@
 ﻿using Entities;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
+using OfficeOpenXml;
 using ServiceContracts;
 
 namespace Services;
@@ -48,4 +50,43 @@ public class CountriesService : ICountriesService{
     return retrievedCountry?.ToCountryResponse();
   }
 
+  public async Task<int> UploadFromExcelFile(IFormFile formFile)
+  {
+    // create the memory stream to be used to return to the caller
+    MemoryStream ms = new MemoryStream();
+
+    // copy the file that was passed to the memory stream
+    await formFile.CopyToAsync(ms);
+
+    int countriesInserted = 0;
+
+    using (ExcelPackage excel = new ExcelPackage(ms))
+    {
+      ExcelWorksheet worksheet = excel.Workbook.Worksheets["Countries"];
+      int rowCount = worksheet.Dimension.Rows;
+
+      // go through the rows and insert the country
+      for (int row = 2; row <= rowCount; row++)
+      {
+        string? cellValue = Convert.ToString(worksheet.Cells[row, 1].Value);
+        if (!string.IsNullOrEmpty(cellValue))
+        {
+          string CountryName = cellValue;
+
+          // only insert if there is not a country with that name already
+          if (!_db.Countries.Any(c => c.Name == CountryName))
+          {
+            Country countryToBeAdded = new Country() { Name = CountryName, CountryId = Guid.NewGuid() };
+            _db.Countries.Add(countryToBeAdded);
+            await _db.SaveChangesAsync();
+            countriesInserted++;
+          }
+        }
+      }
+
+    }
+
+    // return the number of countries inserted
+    return countriesInserted;
+  }
 }

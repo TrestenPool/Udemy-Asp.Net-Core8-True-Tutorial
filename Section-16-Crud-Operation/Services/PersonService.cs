@@ -223,13 +223,21 @@ public class PersonService : IPersonService
     // get all of the persons from the db
     List<PersonResponse> persons = _db.Persons.Include(nameof(Person.Country)).Select(p => p.ToPersonResponse()).ToList();
 
+    // add each of the persons to the csv
     foreach (var p in persons)
     {
       csvWriter.WriteField(p.PersonName);
       csvWriter.WriteField(p.Email);
-      csvWriter.WriteField(p!.DateOfBirth!.Value.ToString("yyyy-MM-dd"));
-      csvWriter.WriteField(p!.PersonGender);
-      csvWriter.WriteField(p!.Country);
+      if (p.DateOfBirth != null)
+      {
+        csvWriter.WriteField(p.DateOfBirth.Value.ToString("yyyy-MM-dd"));
+      }
+      else
+      {
+        csvWriter.WriteField(null);
+      }
+      csvWriter.WriteField(p?.PersonGender);
+      csvWriter.WriteField(p?.Country);
       csvWriter.NextRecord();
       csvWriter.Flush();
     }
@@ -242,8 +250,10 @@ public class PersonService : IPersonService
   }
 
   public async Task<MemoryStream> GetPersonExcel(){
+    // this is the memory stream we will be using
     MemoryStream memoryStream = new MemoryStream();
-    using (ExcelPackage excelPackage = new ExcelPackage())
+
+    using (ExcelPackage excelPackage = new ExcelPackage(memoryStream))
     {
       // add a new worksheet to the workbook
       ExcelWorksheet excelWorksheet = excelPackage.Workbook.Worksheets.Add("PersonsSheet");
@@ -266,10 +276,10 @@ public class PersonService : IPersonService
       {
         excelWorksheet.Cells[$"A{rowIdx}"].Value = p.PersonName;
         excelWorksheet.Cells[$"B{rowIdx}"].Value = p.Email;
-        excelWorksheet.Cells[$"C{rowIdx}"].Value = p.DateOfBirth;
+        excelWorksheet.Cells[$"C{rowIdx}"].Value = p.DateOfBirth.ToString();
         excelWorksheet.Cells[$"D{rowIdx}"].Value = p.PersonGender;
         excelWorksheet.Cells[$"E{rowIdx}"].Value = p.Country;
-
+        rowIdx += 1;
       }
 
       // autofit the table

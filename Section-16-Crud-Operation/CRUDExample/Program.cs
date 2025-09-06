@@ -6,6 +6,8 @@ using ServiceContracts;
 using Services;
 
 var builder = WebApplication.CreateBuilder(args);
+
+// add the controllers
 builder.Services.AddControllersWithViews();
 builder.Services.AddControllers();
 
